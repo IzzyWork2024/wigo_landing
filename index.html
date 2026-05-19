@@ -1,173 +1,213 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Wigo - Dale GO a tu talento</title>
-    
-  <link rel="stylesheet" href="css/styles.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>WiGo - Compra, vende y conecta en ferias digitales</title>
+  <meta name="description" content="WiGo: marketplace social peruano para descubrir productos, publicar anuncios, comprar, vender y participar en ferias digitales." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+  <link rel="stylesheet" href="css/styles.css" />
 </head>
 <body>
-    <!-- Navigation -->
-    <nav>
-    <div class="nav-container">
-        <img src="assets/sources/wigo_slogan.png" alt="Wigo Logo" class="logo">
-        
-        <!-- Menú hamburguesa - solo para móvil -->
-        <div class="menu-toggle" onclick="toggleMenu()">
-            <span></span>
-            <span></span>
-            <span></span>
-        </div>
-        
-        <ul class="nav-links" id="navLinks">
-            <li><a href="#home" onclick="closeMenu()">Home</a></li>
-            <li><a href="#quienes-somos" onclick="closeMenu()">¿Quiénes Somos?</a></li>
-            <li><a href="#nosotros" onclick="closeMenu()">Nosotros</a></li>
-            <li><a href="#historia" onclick="closeMenu()">Historia</a></li>
-            <li><a href="#ferias" onclick="closeMenu()">Ferias</a></li>
-            <li><a href="#descargas" onclick="closeMenu()">Descargas</a></li>
-            <li><a href="#contacto" onclick="closeMenu()">Contáctanos</a></li>
-        </ul>
-    </div>
-</nav>
+  <!-- Navigation -->
+  <header class="site-header">
+    <nav class="nav" aria-label="Navegación principal">
+      <div class="nav__container">
+        <a class="nav__brand" href="#home" aria-label="Ir al inicio">
+          <!-- Ajusta esta ruta según tu carpeta real de assets -->
+          <img
+            src="assets/sources/wigo_slogan.png"
+            alt="WiGo"
+            class="nav__logo"
+            loading="eager"
+            decoding="async"
+          />
+        </a>
 
+        <!-- Menú hamburguesa - solo para móvil -->
+        <button
+          class="nav__toggle"
+          id="menuToggle"
+          type="button"
+          aria-label="Abrir menú"
+          aria-controls="navLinks"
+          aria-expanded="false"
+        >
+          <span></span><span></span><span></span>
+        </button>
+
+        <ul class="nav__links" id="navLinks">
+          <li><a href="#home">Inicio</a></li>
+          <li><a href="#quienes-somos">Qué ofrece</a></li>
+          <li><a href="#ferias">Ferias</a></li>
+          <li><a href="#descargas">App</a></li>
+          <li><a href="#nosotros">Equipo</a></li>
+          <li><a href="#contacto" class="nav__cta">Contáctanos</a></li>
+        </ul>
+      </div>
+    </nav>
+  </header>
+
+  <main>
     <!-- Home Section -->
-    <section id="home">
-        <div class="container">
-            <div class="home-content">
-                <h1>Bienvenido a Wigo</h1>
-                <p>
-                    En Wigo, estamos revolucionando la manera en que las personas se conectan y colaboran. 
-                    Nuestro proyecto nace de la visión de crear una plataforma innovadora que facilite la 
-                    comunicación y mejore la productividad de equipos y comunidades. Con tecnología de punta 
-                    y un diseño centrado en el usuario, Wigo se está convirtiendo en la herramienta preferida 
-                    para miles de usuarios que buscan eficiencia y simplicidad en sus interacciones diarias.
-                </p>
+    <section id="home" class="section hero-section">
+      <div class="hero-bg" aria-hidden="true"></div>
+      <div class="container">
+        <div class="hero">
+          <div class="hero__content reveal">
+            <span class="eyebrow">Marketplace social peruano</span>
+            <h1 class="hero__title">Compra, vende y participa en ferias digitales desde una sola app.</h1>
+            <p class="hero__text">
+              WiGo conecta usuarios, emprendimientos y empresas en un ecosistema móvil para publicar anuncios,
+              descubrir productos, gestionar compras y participar en ferias virtuales con alcance local y nacional.
+            </p>
+
+            <div class="hero__actions">
+              <a href="#descargas" class="btn">Ver la app</a>
+              <a href="#ferias" class="btn btn--light">Explorar ferias</a>
             </div>
+
+            <div class="hero__stats" aria-label="Beneficios principales">
+              <div><strong>Ferias</strong><span>por región y temporada</span></div>
+              <div><strong>Comercio</strong><span>compras, ventas y entregas</span></div>
+              <div><strong>Identidad</strong><span>usuarios y empresas verificables</span></div>
+            </div>
+          </div>
+
+          <div class="hero__visual reveal">
+            <div class="phone-card phone-card--back">
+              <img src="assets/sources/screen_ferias.png" alt="Pantalla de ferias de WiGo" />
+            </div>
+            <div class="phone-card phone-card--front">
+              <img src="assets/sources/screen_pantallaprincipal.png" alt="Pantalla principal de WiGo" />
+            </div>
+            <div class="floating-card floating-card--top">🛍️ Productos y anuncios</div>
+            <div class="floating-card floating-card--bottom">📍 Ferias cerca de ti</div>
+          </div>
         </div>
+      </div>
     </section>
 
     <!-- Quienes Somos Section -->
-    <section id="quienes-somos">
-        <div class="container">
-            <h2>¿Quiénes Somos?</h2>
-            <div class="about-grid">
-                <div class="about-card">
-                    <h3>Nuestra Misión</h3>
-                    <p>
-                        Transformar la comunicación digital mediante soluciones innovadoras y accesibles 
-                        que empoderen a las personas y organizaciones para alcanzar su máximo potencial. 
-                        Nos comprometemos a ofrecer herramientas intuitivas que simplifiquen procesos 
-                        complejos y fomenten la colaboración efectiva.
-                    </p>
-                </div>
-                <div class="about-card">
-                    <h3>Nuestra Visión</h3>
-                    <p>
-                        Ser la plataforma líder global en conectividad y colaboración, reconocida por 
-                        nuestra excelencia tecnológica, compromiso con la innovación continua y dedicación 
-                        al éxito de nuestros usuarios. Aspiramos a crear un ecosistema donde cada interacción 
-                        sea significativa y productiva.
-                    </p>
-                </div>
-            </div>
+    <section id="quienes-somos" class="section section--light">
+      <div class="container">
+        <div class="section-heading reveal">
+          <span class="eyebrow">Qué ofrecemos</span>
+          <h2 class="section__title">Una vitrina digital para personas, negocios y ferias</h2>
+          <p class="section__lead">
+            WiGo no es solo una página de anuncios. Es una experiencia móvil pensada para descubrir,
+            comprar, vender y conectar con comercios reales de manera ordenada.
+          </p>
         </div>
+
+        <div class="features">
+          <article class="feature-card reveal">
+            <div class="feature-card__icon">🏪</div>
+            <h3>Publica y descubre productos</h3>
+            <p>Crea anuncios, enlaza productos, muestra imágenes y permite que los compradores encuentren lo que ofreces.</p>
+          </article>
+          <article class="feature-card reveal">
+            <div class="feature-card__icon">🎪</div>
+            <h3>Ferias digitales</h3>
+            <p>Organiza campañas por temporada, región o temática para impulsar vendedores y emprendimientos.</p>
+          </article>
+          <article class="feature-card reveal">
+            <div class="feature-card__icon">🚚</div>
+            <h3>Ventas y entregas</h3>
+            <p>Gestiona compras, ventas, comprobantes, estados y evidencia de entrega en un flujo claro.</p>
+          </article>
+          <article class="feature-card reveal">
+            <div class="feature-card__icon">🛡️</div>
+            <h3>Confianza e identidad</h3>
+            <p>Base preparada para usuarios, empresas, direcciones y validaciones que fortalecen la seguridad del ecosistema.</p>
+          </article>
+        </div>
+      </div>
     </section>
 
     <!-- Nosotros Section -->
-    <section id="nosotros">
-        <div class="container">
-            <h2>Nuestro Equipo</h2>
-            <div class="team-grid">
-                <div class="team-member">
-                    <div class="team-photo"><img src="assets/sources/avatar_daniel.jpg" alt="Daniel Pinillos" style="width:100%;height:100%;object-fit:cover;border-radius:50%;display:block;"></div>
-                    <div class="team-info">
-                        <h3>Daniel Pinillos</h3>
-                        <div class="role">CEO & Fundador</div>
-                        <p>
-                            Con más de 5 años de experiencia en marketing y liderazgo empresarial, 
-                            Daniel ha dirigido múltiples proyectos exitosos en el sector de comunicaciones 
-                            digitales. Su visión estratégica y pasión por la innovación son el motor 
-                            que impulsa a Wigo hacia nuevos horizontes.
-                        </p>
-                    </div>
-                </div>
-                <div class="team-member">
-                    <div class="team-photo"><img src="assets/sources/avatar_amir.jpg" alt="Amir Mehrez" style="width:100%;height:100%;object-fit:cover;border-radius:50%;display:block;"></div>
-                    <div class="team-info">
-                        <h3>Amir Mehrez</h3>
-                        <div class="role">CTO</div>
-                        <p>
-                            Ingeniero en sistemas con especialización en Ciberseguridad y 
-                            hacking etico. Lidera el equipo técnico con una visión 
-                            innovadora, asegurando que cada desarrollo cumpla con los más altos 
-                            estándares de calidad y seguridad.
-                        </p>
-                    </div>
-                </div>
-                <div class="team-member">
-                    <div class="team-photo"><img src="assets/sources/avatar_milton.jpg" alt="Milton Maqque" style="width:100%;height:100%;object-fit:cover;border-radius:50%;display:block;"></div>
-                    <div class="team-info">
-                        <h3>Milton Maqque</h3>
-                        <div class="role">Director de Desarrollo</div>
-                        <p>
-                            Ingeniero de sistemas con mas de 3 años de experiencia en gestion de proyectos.
-                            Haciendo de Wigo una plataforma fácil de usar y visualmente impactante, garantizando 
-                            la satisfacción de nuestros usuarios.
-                        </p>
-                    </div>
-                </div>
-            </div>
+    <section id="nosotros" class="section section--light">
+      <div class="container">
+        <div class="section-heading reveal">
+          <span class="eyebrow">Equipo</span>
+          <h2 class="section__title">El equipo detrás de WiGo</h2>
+          <p class="section__lead">Un equipo orientado a producto, tecnología y crecimiento para construir una app útil, clara y escalable.</p>
         </div>
+
+        <div class="team">
+          <article class="member reveal">
+            <div class="member__photo">
+              <img src="assets/sources/avatar_daniel.jpg" alt="Foto de Daniel Pinillos" loading="lazy" decoding="async" />
+            </div>
+            <div class="member__info">
+              <h3>Daniel Pinillos</h3>
+              <p class="member__role">Dirección y estrategia</p>
+              <p>Enfocado en crecimiento, posicionamiento y visión comercial para llevar WiGo a usuarios y negocios reales.</p>
+            </div>
+          </article>
+
+          <article class="member reveal">
+            <div class="member__photo">
+              <img src="assets/sources/avatar_amir.jpg" alt="Foto de Amir Mehrez" loading="lazy" decoding="async" />
+            </div>
+            <div class="member__info">
+              <h3>Amir Mehrez</h3>
+              <p class="member__role">Tecnología y seguridad</p>
+              <p>Responsable de impulsar una base técnica confiable, segura y preparada para crecer.</p>
+            </div>
+          </article>
+
+          <article class="member reveal">
+            <div class="member__photo">
+              <img src="assets/sources/avatar_milton.jpg" alt="Foto de Milton Maqque" loading="lazy" decoding="async" />
+            </div>
+            <div class="member__info">
+              <h3>Milton Maqque</h3>
+              <p class="member__role">Producto y desarrollo</p>
+              <p>Enfocado en arquitectura, experiencia móvil y construcción progresiva de módulos funcionales para WiGo.</p>
+            </div>
+          </article>
+        </div>
+      </div>
     </section>
 
     <!-- Historia Section -->
-    <section id="historia">
-        <div class="container">
-            <h2>Nuestra Historia</h2>
-            <div class="timeline">
-                <div class="timeline-item">
-                    <div class="timeline-dot"></div>
-                    <div class="timeline-content">
-                        <div class="timeline-year">2023</div>
-                        <p>Fundación de Wigo con un equipo de 5 visionarios comprometidos con cambiar la comunicación digital.</p>
-                    </div>
-                </div>
-                <div class="timeline-item">
-                    <div class="timeline-dot"></div>
-                    <div class="timeline-content">
-                        <div class="timeline-year">2024</div>
-                        <p>Lanzamiento de la versión beta con 1,000 usuarios iniciales y feedback excepcional de la comunidad.</p>
-                    </div>
-                </div>
-                <div class="timeline-item">
-                    <div class="timeline-dot"></div>
-                    <div class="timeline-content">
-                        <div class="timeline-year">2025</div>
-                        <p>Expansión internacional alcanzando 50,000 usuarios activos en 15 países y múltiples reconocimientos.</p>
-                    </div>
-                </div>
-                <div class="timeline-item">
-                    <div class="timeline-dot"></div>
-                    <div class="timeline-content">
-                        <div class="timeline-year">2026</div>
-                        <p>Lanzamiento de funciones avanzadas de IA y consolidación como líder del mercado con 200,000+ usuarios.</p>
-                    </div>
-                </div>
-            </div>
+    <section id="historia" class="section section--dark">
+      <div class="container">
+        <div class="section-heading reveal">
+          <span class="eyebrow eyebrow--light">Cómo funciona</span>
+          <h2 class="section__title section__title--light">Del descubrimiento a la compra</h2>
+          <p class="section__lead section__lead--light">El flujo de WiGo está pensado para que el usuario encuentre, confíe, compre y reciba sin perder claridad.</p>
         </div>
+
+        <div class="process">
+          <article class="process-card reveal"><span>01</span><h3>Descubre</h3><p>Explora anuncios, productos y ferias activas por interés, temporada o ubicación.</p></article>
+          <article class="process-card reveal"><span>02</span><h3>Conecta</h3><p>Revisa perfiles, publicaciones, comercios y detalles antes de decidir.</p></article>
+          <article class="process-card reveal"><span>03</span><h3>Compra</h3><p>Gestiona pedidos, comprobantes y estados de pago desde la app.</p></article>
+          <article class="process-card reveal"><span>04</span><h3>Recibe</h3><p>Coordina recojo, reparto o envío con evidencia y seguimiento del proceso.</p></article>
+        </div>
+      </div>
     </section>
 
     <!-- Ferias Section -->
-    <section id="ferias">
-        <div class="container">
-            <h2>Ferias del Perú</h2>
-            <div class="ferias-container">
-                <div class="peru-map">
-    <svg class="map-svg" viewBox="0 0 600 800" xmlns="http://www.w3.org/2000/svg">
-        <!-- Mapa detallado del Perú con formas realistas de provincias -->
-        <g id="provinces">
+    <section id="ferias" class="section section--soft">
+      <div class="container">
+        <div class="section-heading reveal">
+          <span class="eyebrow">Ferias WiGo</span>
+          <h2 class="section__title">Ferias digitales por región</h2>
+          <p class="section__lead">Una vitrina para campañas comerciales, eventos regionales, emprendimientos y promociones por temporada.</p>
+        </div>
+
+        <div class="ferias reveal">
+          <div class="map">
+            <div class="map__frame" aria-label="Mapa del Perú (selecciona una región)">
+              <!-- SVG original (sin tocar la data de provincias) -->
+              <!-- IMPORTANTE: aquí solo se mantuvo el SVG que ya tenías. -->
+              <svg class="map__svg" viewBox="0 0 600 800" xmlns="http://www.w3.org/2000/svg">
+                        <g id="provinces">
             <!-- Amazonas -->
             <path class="province" data-province="amazonas" d="m 154.144,293.955 -1.29,0.282 -2.86,1.045 -2.605,0.595 0,-1.787 -0.671,-4.469 -1.117,-1.564 -1.327,-1.327 -0.007,-0.379 -5.243,-10.642 -1.747,-2.655 -4.093,-2.46 -1.497,-0.427 -1.415,-0.785 -0.746,-1.099 -0.426,-0.966 -0.563,-1.467 -0.944,-2.302 -2.318,-3.88 -4.102,-3.056 -0.693,-0.422 0.156,-2.964 -2.625,-2.251 -2.251,-1.875 0,-3.751 1.5,-3.375 1.126,-3.001 0.375,-3 1.5,-3.751 1.875,-2.626 0,-3.75 -1.875,-1.126 -1.639,-0.468 -0.089,-0.55 -2.023,-0.107 -3,-3 0,-3.751 0,-3.751 1.5,-3.001 1.5,-2.625 1.244,-4.56 -0.393,-0.599 -0.368,-0.81 -0.166,-1.247 -1.434,-4.869 -0.99,-2.337 1.084,-0.44 0.718,-0.833 0.705,-3.456 -0.109,-2.38 -0.738,-2.233 -0.101,-1.057 0.018,-1.411 0.538,-0.273 0.766,-0.944 3.326,-7.777 0.237,-0.956 0.107,-1.11 0.005,-1.565 0.078,-1.34 0.545,-1.983 0.391,-0.815 2.775,-3.412 1.95,-1.982 0.291,-0.396 0.628,-1.293 0.462,-1.475 0.689,-3.293 0.231,-2.594 -0.154,-1.407 0.118,-0.909 0.67,-2.619 0.261,-0.921 0.711,-0.755 1.198,-0.401 0.937,0.094 0.77,0.626 0.362,1.15 -0.125,2.767 0.38,0.124 2.798,-2.024 0.463,-0.861 -0.454,-1.649 -0.951,-0.879 -0.523,-1.354 0.653,-1.114 1.049,-0.856 1.471,-0.85 1.067,-0.772 2.099,-2.578 1.399,-2.509 4.656,-4.935 2.808,-2.299 2.107,-0.75 1.563,6.824 0.178,4.282 0.106,1.34 0.422,1.303 1.665,2.702 1.435,2.885 0.344,1.091 1.82,8.172 -0.243,1.8 -0.119,1.688 0.095,1.062 0.261,0.909 0.581,1.157 1.624,2.089 0.475,0.708 0.356,0.791 0.213,0.957 0.379,6.252 -0.415,0.856 -0.628,7.44 -0.065,2.232 0.278,0.945 0.238,1.418 -0.356,2.421 -0.297,1.241 -2.733,5.754 -1.043,1.648 -0.801,0.644 -0.889,0.945 -0.77,1.005 -0.772,1.182 -0.747,1.831 -0.592,2.069 -0.237,2.47 0.082,1.3 0.343,1.987 -2.753,3.097 0,3 4.126,3.376 0.29,0.145 0.438,2.384 0.415,1.242 2.572,5.548 0.427,0.556 -0.534,0.26 -1.066,0.887 -0.961,1.272 -0.498,0.858 -0.237,1.243 -0.385,8.959 0.586,1.538 0.629,1.362 4.434,8.466 1.767,1.977 1.128,0.488 1.19,0.3 1.935,0.394 1.872,0.436 1.661,0.41 3.826,1.347 2.093,2.191 1.06,1.721 0.524,1.232 0.814,1.979 0.688,2.778 -0.919,1.743 -1.548,1.268 -1.577,0.978 -1.008,0.758 -0.83,1.008 -0.682,1.357 -0.355,1.21 -0.421,1.677 -0.451,0.972 -0.374,0.214 0,1.854 -2.25,2.625 -2.251,1.125 -3,-2.25 -4.501,-0.375 -2.251,0.375 -2.269,1.92 -0.558,4.255 -0.688,1.477 -0.723,2.065 -0.071,1.59 z"/>
             
@@ -249,88 +289,107 @@
             <!-- Lake Titicaca (Lago Titicaca) -->
             <path class="province lake" data-province="lake-titicaca" d="m 495.494,649.265 3.348,2.739 0.913,3.652 3.044,0 2.435,0.609 1.522,3.044 4.262,0.304 1.826,1.522 1.544,0.662 -3.512,7.476 3.478,9.294 3.439,9.186 1.537,0.8 3.352,2.234 2.986,2.19 -2.171,1.336 -1.826,3.348 -3.957,1.522 -3.349,-0.609 -2.131,-3.348 -2.13,0 -3.957,1.826 -2.435,-2.435 1.218,-3.348 2.131,-2.435 -0.61,-1.826 -4.565,-0.913 -1.767,-0.936 -0.059,0.326 -3.653,0 -1.218,-2.434 -0.913,-2.436 -1.217,0.61 -1.217,2.434 -1.523,-0.608 -2.131,-1.826 -1.826,0 -2.434,0.303 -0.913,-2.739 -0.61,-3.348 -0.913,-3.348 3.044,-1.218 2.131,-0.913 0.913,-2.739 1.826,-0.305 0,-3.957 -2.131,-1.217 -0.608,-3.044 1.521,-1.522 2.436,-1.522 -0.609,-4.261 -1.827,-0.914 -3.652,0.305 -2.739,-0.305 -2.739,0 -0.61,-1.826 0.61,-1.826 3.347,-0.305 3.349,0 3.044,0.914 3.652,0.914 z"/>
         </g>
-        
-        <!-- Etiquetas de provincias seleccionadas -->
-        <text x="55" y="220" text-anchor="middle" font-size="15" fill="#fff" font-weight="bold">Piura</text>
-        <text x="75" y="280" text-anchor="middle" font-size="10" fill="#fff" font-weight="bold">Lambayeque</text>
-        <text x="200" y="500" text-anchor="middle" font-size="15" fill="#fff" font-weight="bold">Lima</text>
-        <text x="397" y="565" text-anchor="middle" font-size="15" fill="#fff" font-weight="bold">Cusco</text>
-        <text x="377" y="690" text-anchor="middle" font-size="15" fill="#fff" font-weight="bold">Arequipa</text>
-    </svg>
-    <br>
-    <br>
-    <br>
-</div>
-                <div class="feria-carousel">
-                    <div class="province-name" id="currentProvince">Lima</div>
-                    <div id="feriaSlides">
-                        <!-- Slides se cargarán dinámicamente -->
-                    </div>
-                    <div class="carousel-indicators" id="feriaIndicators">
-                        <!-- Indicadores se cargarán dinámicamente -->
-                    </div>
-                </div>
+
+                <text x="200" y="500" text-anchor="middle" font-size="15" fill="#fff" font-weight="bold">Lima</text>
+                <text x="397" y="565" text-anchor="middle" font-size="15" fill="#fff" font-weight="bold">Cusco</text>
+                <text x="377" y="690" text-anchor="middle" font-size="15" fill="#fff" font-weight="bold">Arequipa</text>
+                <text x="55" y="220" text-anchor="middle" font-size="15" fill="#fff" font-weight="bold">Piura</text>
+                <text x="75" y="280" text-anchor="middle" font-size="10" fill="#fff" font-weight="bold">Lambayeque</text>
+              </svg>
             </div>
+          </div>
+
+          <aside class="feria" aria-label="Carrusel de ferias">
+            <div class="feria__province" id="currentProvince">Lima</div>
+            <div id="feriaSlides"></div>
+            <div class="feria__indicators" id="feriaIndicators" aria-hidden="true"></div>
+          </aside>
         </div>
+        <p class="note">Selecciona una región del mapa para visualizar ferias destacadas y eventos comerciales.</p>
+      </div>
     </section>
 
     <!-- Descargas Section -->
-    <section id="descargas">
-        <div class="container">
-            <h2>Descarga Wigo</h2>
-            <div class="download-container">
-                <div class="carousel">
-                    <div class="carousel-item active"><img src="assets/sources/screen_pantallaprincipal.png" alt="Pantalla Principal" style="width:100%;height:100%;object-fit:cover;border-radius:inherit;display:block;"></div>
-                    <div class="carousel-item"><img src="assets/sources/screen_menu.png" alt="Tienda" style="width:100%;height:100%;object-fit:cover;border-radius:inherit;display:block;"></div>
-                    <div class="carousel-item"><img src="assets/sources/screen_ferias.png" alt="Ferias" style="width:100%;height:100%;object-fit:cover;border-radius:inherit;display:block;"></div>
-                    <div class="carousel-item"><img src="assets/sources/screen_intuitivo.png" alt="Configuración" style="width:100%;height:100%;object-fit:cover;border-radius:inherit;display:block;"></div>
-                    <div class="carousel-controls">
-                        <span class="carousel-dot active" onclick="goToSlide(0)"></span>
-                        <span class="carousel-dot" onclick="goToSlide(1)"></span>
-                        <span class="carousel-dot" onclick="goToSlide(2)"></span>
-                        <span class="carousel-dot" onclick="goToSlide(3)"></span>
-                    </div>
-                </div>
-                <div class="download-description">
-                    <h3 id="feature-title">Interfaz Intuitiva</h3>
-                    <p id="feature-description">
-                        Nuestra pantalla principal está diseñada para que encuentres todo lo que necesitas 
-                        al alcance de tu mano. Navegación simple, diseño limpio y acceso rápido a todas 
-                        las funciones principales de Wigo.
-                    </p>
-                    <a href="#" class="download-btn">Descargar Ahora</a>
-                </div>
-            </div>
+    <section id="descargas" class="section">
+      <div class="container">
+        <div class="section-heading reveal">
+          <span class="eyebrow">App móvil</span>
+          <h2 class="section__title">Una experiencia diseñada para moverse rápido</h2>
+          <p class="section__lead">Pantallas simples, navegación clara y módulos preparados para comercio, ferias y publicaciones.</p>
         </div>
+
+        <div class="download reveal">
+          <div class="download__carousel" aria-label="Capturas de la app">
+            <div class="appshots" id="appShots">
+              <!-- Las imágenes se inyectan desde JS para mantener HTML limpio -->
+            </div>
+
+            <div class="appshots__controls" id="appShotsDots" aria-label="Indicadores del carrusel"></div>
+          </div>
+
+          <div class="download__content">
+            <h3 id="featureTitle">Interfaz Intuitiva</h3>
+            <p id="featureDescription">
+              Nuestra pantalla principal está diseñada para que encuentres todo lo que necesitas
+              al alcance de tu mano. Navegación simple, diseño limpio y acceso rápido a todas
+              las funciones principales de WiGo.
+            </p>
+
+            <div class="download__actions">
+              <a href="#contacto" class="btn" role="button">Solicitar demo</a>
+              <a href="#ferias" class="btn btn--ghost" role="button">Ver ferias</a>
+            </div>
+
+            <p class="download__hint">Versión de presentación lista para enlazar a Play Store, App Store o descarga interna.</p>
+          </div>
+        </div>
+      </div>
     </section>
 
     <!-- Contacto Section -->
-    <section id="contacto">
-        <div class="container">
-            <h2>Contáctanos</h2>
-            <form class="contact-form" onsubmit="handleSubmit(event)">
-                <div class="form-group">
-                    <label for="nombre">Nombre Completo</label>
-                    <input type="text" id="nombre" name="nombre" required>
-                </div>
-                <div class="form-group">
-                    <label for="email">Correo Electrónico</label>
-                    <input type="email" id="email" name="email" required>
-                </div>
-                <div class="form-group">
-                    <label for="asunto">Asunto</label>
-                    <input type="text" id="asunto" name="asunto" required>
-                </div>
-                <div class="form-group">
-                    <label for="mensaje">Mensaje</label>
-                    <textarea id="mensaje" name="mensaje" required></textarea>
-                </div>
-                <button type="submit" class="submit-btn">Enviar Mensaje</button>
-            </form>
+    <section id="contacto" class="section section--soft">
+      <div class="container">
+        <div class="section-heading reveal">
+          <span class="eyebrow">Contacto</span>
+          <h2 class="section__title">Hablemos de WiGo</h2>
+          <p class="section__lead">Déjanos un mensaje para recibir información sobre el lanzamiento, ferias o alianzas comerciales.</p>
         </div>
-    </section>
 
-    
-  <script src="js/main.js"></script>
+        <form class="form" id="contactForm" novalidate>
+          <div class="form__group">
+            <label for="nombre">Nombre Completo</label>
+            <input type="text" id="nombre" name="nombre" autocomplete="name" required />
+          </div>
+
+          <div class="form__group">
+            <label for="email">Correo Electrónico</label>
+            <input type="email" id="email" name="email" autocomplete="email" required />
+          </div>
+
+          <div class="form__group">
+            <label for="asunto">Asunto</label>
+            <input type="text" id="asunto" name="asunto" required />
+          </div>
+
+          <div class="form__group">
+            <label for="mensaje">Mensaje</label>
+            <textarea id="mensaje" name="mensaje" rows="5" required></textarea>
+          </div>
+
+          <button type="submit" class="btn btn--full">Enviar Mensaje</button>
+          <p class="form__status" id="formStatus" role="status" aria-live="polite"></p>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer__inner">
+      <small>© <span id="year"></span> WiGo. Todos los derechos reservados.</small>
+    </div>
+  </footer>
+
+  <script src="js/ferias.js" defer></script>
+  <script src="js/main.js" defer></script>
 </body>
 </html>
