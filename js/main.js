@@ -50,28 +50,34 @@
 
   const appShots = [
     {
-      label: 'Pantalla Principal',
+      label: 'Inicio',
       img: 'assets/sources/screen_pantallaprincipal.png',
-      title: 'Inicio claro para descubrir y publicar',
-      text: 'Una pantalla principal enfocada en acceso rápido a publicaciones, productos, ferias y navegación del ecosistema WiGo.',
+      title: 'Todo WiGo desde el inicio',
+      text: 'Accede rápidamente a publicaciones, productos, ferias y navegación principal sin perderte en menús complicados.',
     },
     {
-      label: 'Menú',
-      img: 'assets/sources/screen_menu.png',
-      title: 'Menú simple para moverte rápido',
-      text: 'Accesos ordenados para comprador, vendedor, perfil, ferias y funcionalidades principales sin saturar la experiencia.',
+      label: 'Tienda',
+      img: 'assets/sources/screen_tienda.png',
+      title: 'Productos listos para descubrir y comprar',
+      text: 'Una vitrina móvil para revisar productos, precios, imágenes y opciones comerciales de forma clara.',
     },
     {
       label: 'Ferias',
       img: 'assets/sources/screen_ferias.png',
-      title: 'Ferias para campañas y temporadas',
-      text: 'Un espacio ideal para agrupar vendedores, anuncios y promociones por región, fecha o temática comercial.',
+      title: 'Ferias digitales para impulsar negocios',
+      text: 'Agrupa vendedores, campañas, eventos y promociones por región, temporada o temática comercial.',
     },
     {
-      label: 'Experiencia',
+      label: 'Perfil',
+      img: 'assets/sources/screen_perfil.png',
+      title: 'Perfiles para compradores, vendedores y empresas',
+      text: 'Cada usuario puede mostrar su actividad, gestionar accesos y construir presencia dentro del ecosistema WiGo.',
+    },
+    {
+      label: 'Publicación',
       img: 'assets/sources/screen_intuitivo.png',
-      title: 'Diseño móvil pensado para usuarios reales',
-      text: 'Flujos directos, jerarquía visual clara y componentes preparados para crecer sin perder orden.',
+      title: 'Publicar es directo y ordenado',
+      text: 'Flujos preparados para crear anuncios, seleccionar imágenes y mantener una experiencia simple para usuarios reales.',
     },
   ];
 

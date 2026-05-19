@@ -14,6 +14,75 @@
     return Array.from(root.querySelectorAll(sel));
   }
 
+
+  const feriaImageCandidates = {
+    'Feria Gastronómica Mistura': ['mistura.jfif', 'mistura.jpg', 'mistura.jpeg', 'mistura.png'],
+    'Feria del Señor de los Milagros': ['señor de los milagros.jfif', 'senor de los milagros.jfif', 'señor de los milagros.jpg'],
+    'Feria Internacional del Libro': ['feria del libro.png', 'feria del libro.jpg'],
+    'Inti Raymi': ['intiraymi.jfif', 'inti raymi.jpg'],
+    'Feria de Santurantikuy': ['santurantikuy.jpeg', 'santurantikuy.jpg'],
+    'Corpus Christi': ['corpus.jpg', 'corpus.jpeg', 'corpus.png'],
+    'Aniversario de Arequipa': ['aniversario arequipa.jfif', 'aniversario arequipa.jpg'],
+    'Feria del Queso y Vino': ['feria queso y vino.jpg', 'feria del queso y vino.jpg'],
+    'Festival del Rocoto Relleno': ['festival del rocoto relleno.jfif', 'festival del rocoto relleno.jpg'],
+    'Feria de Reyes': ['reyes.jfif', 'reyes.jpg'],
+    'Festival del Limón': ['festival del limon.jfif', 'festival del limón.jfif', 'festival del limon.jpg'],
+    'Feria del Mango': ['festival del mango.jfif', 'feria del mango.jfif', 'festival del mango.jpg'],
+    'Festival del King Kong': ['festival del king kong.jfif', 'festival del king kong.jpg'],
+    'Feria del Caballo de Paso': ['feria del caballo.png', 'feria del caballo.jpg'],
+    'Semana Turística de Lambayeque': ['turismo lambayeque.jfif', 'semana turistica de lambayeque.jfif', 'semana turística de lambayeque.jfif'],
+  };
+
+  function buildAssetPath(fileName) {
+    return `assets/sources/${fileName}`;
+  }
+
+  window.tryNextFeriaImage = function tryNextFeriaImage(img) {
+    const raw = img.getAttribute('data-candidates');
+    if (!raw) return;
+
+    let candidates = [];
+    try { candidates = JSON.parse(raw); } catch (_) { candidates = []; }
+
+    const currentIndex = Number(img.getAttribute('data-current-index') || '0');
+    const nextIndex = currentIndex + 1;
+
+    if (nextIndex < candidates.length) {
+      img.setAttribute('data-current-index', String(nextIndex));
+      img.src = buildAssetPath(candidates[nextIndex]);
+      return;
+    }
+
+    const fallback = img.closest('.feria-image')?.querySelector('.feria-image__fallback');
+    img.style.display = 'none';
+    if (fallback) fallback.style.display = 'grid';
+  };
+
+  function renderFeriaImage(feria) {
+    const candidates = feriaImageCandidates[feria.name] || [];
+    const initial = feria.name.substring(0, 1);
+
+    if (!candidates.length) {
+      return `<div class="feria-image"><span class="feria-image__fallback">${initial}</span></div>`;
+    }
+
+    const encoded = JSON.stringify(candidates).replace(/"/g, '&quot;');
+    return `
+        <div class="feria-image">
+          <img
+            src="${buildAssetPath(candidates[0])}"
+            alt="${feria.name}"
+            loading="lazy"
+            decoding="async"
+            data-candidates="${encoded}"
+            data-current-index="0"
+            onerror="tryNextFeriaImage(this)"
+          />
+          <span class="feria-image__fallback" style="display:none">${initial}</span>
+        </div>
+      `;
+  }
+
   // ===== Data =====
   const feriasData = {
     lima: [
@@ -154,7 +223,7 @@
       const slide = document.createElement('div');
       slide.className = `feria-slide ${index === 0 ? 'active' : ''}`;
       slide.innerHTML = `
-        <div class="feria-image">${feria.name.substring(0, 1)}</div>
+        ${renderFeriaImage(feria)}
         <div class="feria-info">
           <h3>${feria.name}</h3>
           <div class="feria-date">${feria.date}</div>
