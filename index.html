@@ -3,8 +3,17 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>WiGo - Compra, vende y conecta en ferias digitales</title>
-  <meta name="description" content="WiGo: marketplace social peruano para descubrir productos, publicar anuncios, comprar, vender y participar en ferias digitales." />
+  <title>WIGO | Compra, vende y conecta en ferias digitales</title>
+  <meta name="description" content="WIGO: marketplace social peruano para descubrir productos, publicar anuncios, comprar, vender y participar en ferias digitales." />
+
+  <meta name="theme-color" content="#0b5b9e" />
+  <meta property="og:title" content="WIGO | Compra, vende y conecta en ferias digitales" />
+  <meta property="og:description" content="Marketplace social peruano para descubrir productos, publicar anuncios, comprar, vender y participar en ferias digitales." />
+  <meta property="og:type" content="website" />
+
+  <link rel="icon" type="image/png" href="assets/sources/icono_go_app.png" />
+  <link rel="shortcut icon" type="image/png" href="assets/sources/icono_go_app.png" />
+  <link rel="apple-touch-icon" href="assets/sources/icono_go_app.png" />
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -58,10 +67,9 @@
       <div class="container">
         <div class="hero">
           <div class="hero__content reveal">
-            <span class="eyebrow">Marketplace social peruano</span>
             <h1 class="hero__title">Compra, vende y participa en ferias digitales desde una sola app.</h1>
             <p class="hero__text">
-              WiGo conecta usuarios, emprendimientos y empresas en un ecosistema móvil para publicar anuncios,
+              WIGO conecta usuarios, emprendimientos y empresas en un ecosistema móvil para publicar anuncios,
               descubrir productos, gestionar compras y participar en ferias virtuales con alcance local y nacional.
             </p>
 
@@ -70,10 +78,38 @@
               <a href="#ferias" class="btn btn--light">Explorar ferias</a>
             </div>
 
-            <div class="hero__stats" aria-label="Beneficios principales">
-              <div><strong>Ferias</strong><span>por región y temporada</span></div>
-              <div><strong>Comercio</strong><span>compras, ventas y entregas</span></div>
-              <div><strong>Identidad</strong><span>usuarios y empresas verificables</span></div>
+            <div class="hero__benefits" aria-label="Beneficios principales">
+              <article class="hero-benefit">
+                <div class="hero-benefit__icon" aria-hidden="true">🛡️</div>
+                <div>
+                  <strong>Entorno seguro</strong>
+                  <span>Validación de identidad y verificación de vendedores.</span>
+                </div>
+              </article>
+
+              <article class="hero-benefit">
+                <div class="hero-benefit__icon" aria-hidden="true">👥</div>
+                <div>
+                  <strong>Ferias colaborativas</strong>
+                  <span>Participa en ferias digitales organizadas por regiones.</span>
+                </div>
+              </article>
+
+              <article class="hero-benefit">
+                <div class="hero-benefit__icon" aria-hidden="true">🏪</div>
+                <div>
+                  <strong>Productos de calidad</strong>
+                  <span>Encuentra productos regionales únicos y confiables.</span>
+                </div>
+              </article>
+
+              <article class="hero-benefit">
+                <div class="hero-benefit__icon" aria-hidden="true">📈</div>
+                <div>
+                  <strong>Apoya lo local</strong>
+                  <span>Fortalecemos la economía regional y el talento emprendedor.</span>
+                </div>
+              </article>
             </div>
           </div>
 
@@ -88,86 +124,248 @@
             <div class="floating-card floating-card--bottom">📍 Ferias cerca de ti</div>
           </div>
         </div>
+
+        <div class="hero-allies reveal" aria-label="Instituciones y aliados">
+          <p>Con la confianza de instituciones y aliados que impulsan el desarrollo regional</p>
+
+          <div class="ally-logos">
+            <img src="assets/sources/LOGOCCPC.png" alt="Cámara de Comercio y Producción de Cajamarca" loading="lazy" decoding="async" />
+            <img src="assets/sources/logoInnova.png" alt="Innova ESAN" loading="lazy" decoding="async" />
+            <img src="assets/sources/logo_UCV_large.png" alt="Universidad César Vallejo" loading="lazy" decoding="async" />
+            <img src="assets/sources/LOGOCAJAMARCAINCUBA.png" alt="Cajamarca Incuba" loading="lazy" decoding="async" />
+            <img src="assets/sources/logo-Mision-3.png" alt="Municipalidades y gobiernos regionales" loading="lazy" decoding="async" />
+          </div>
+        </div>
       </div>
     </section>
 
     <!-- Quienes Somos Section -->
     <section id="quienes-somos" class="section section--light">
       <div class="container">
-        <div class="section-heading reveal">
-          <span class="eyebrow">Qué ofrecemos</span>
-          <h2 class="section__title">Una vitrina digital para personas, negocios y ferias</h2>
+        <div class="section-heading section-heading--wide reveal">
+          <span class="eyebrow">Lo que hacemos</span>
+
+          <h2 class="section__title section__title--impact">
+            Transformamos ferias tradicionales en experiencias digitales que generan
+            <span class="text-blue">oportunidades</span>
+            <span class="text-orange">reales.</span>
+          </h2>
+
           <p class="section__lead">
-            WiGo no es solo una página de anuncios. Es una experiencia móvil pensada para descubrir,
-            comprar, vender y conectar con comercios reales de manera ordenada.
+            En WIGO conectamos a personas, negocios y regiones en un ecosistema digital
+            seguro y colaborativo para <strong>comprar, vender y crecer juntos.</strong>
           </p>
         </div>
 
-        <div class="features">
-          <article class="feature-card reveal">
-            <div class="feature-card__icon">🏪</div>
-            <h3>Publica y descubre productos</h3>
-            <p>Crea anuncios, enlaza productos, muestra imágenes y permite que los compradores encuentren lo que ofreces.</p>
+        <div class="value-grid">
+          <article class="value-card value-card--blue reveal">
+            <div class="value-card__icon">🛍️</div>
+
+            <h3>
+              Descubre productos
+              <span>con identidad</span>
+            </h3>
+
+            <p>
+              Explora productos únicos de emprendedores y empresas de todas las regiones
+              del Perú.
+            </p>
+
+            <ul>
+              <li>Productos verificados</li>
+              <li>Emprendedores reales</li>
+              <li>Calidad que representa nuestras regiones</li>
+            </ul>
           </article>
-          <article class="feature-card reveal">
-            <div class="feature-card__icon">🎪</div>
-            <h3>Ferias digitales</h3>
-            <p>Organiza campañas por temporada, región o temática para impulsar vendedores y emprendimientos.</p>
+
+          <article class="value-card value-card--green reveal">
+            <div class="value-card__icon">🎪</div>
+
+            <h3>
+              Participa en ferias
+              <span>digitales</span>
+            </h3>
+
+            <p>
+              Organizamos ferias virtuales por región, temática o temporada que impulsan
+              vendedores y economías locales.
+            </p>
+
+            <ul>
+              <li>Ferias regionales y temáticas</li>
+              <li>Visibilidad para emprendedores</li>
+              <li>Eventos que activan economías</li>
+            </ul>
           </article>
-          <article class="feature-card reveal">
-            <div class="feature-card__icon">🚚</div>
-            <h3>Ventas y entregas</h3>
-            <p>Gestiona compras, ventas, comprobantes, estados y evidencia de entrega en un flujo claro.</p>
+
+          <article class="value-card value-card--orange reveal">
+            <div class="value-card__icon">📦</div>
+
+            <h3>
+              Compra y recibe
+              <span>con confianza</span>
+            </h3>
+
+            <p>
+              Gestionamos el proceso de compra y entrega para que tengas una experiencia
+              segura, clara y sin complicaciones.
+            </p>
+
+            <ul>
+              <li>Pagos seguros</li>
+              <li>Envíos trazables</li>
+              <li>Atención y soporte real</li>
+            </ul>
           </article>
-          <article class="feature-card reveal">
-            <div class="feature-card__icon">🛡️</div>
-            <h3>Confianza e identidad</h3>
-            <p>Base preparada para usuarios, empresas, direcciones y validaciones que fortalecen la seguridad del ecosistema.</p>
+
+          <article class="value-card value-card--purple reveal">
+            <div class="value-card__icon">🛡️</div>
+
+            <h3>
+              Confianza que
+              <span>nos diferencia</span>
+            </h3>
+
+            <p>
+              Validamos usuarios, aliados y negocios para proteger a nuestra comunidad
+              y fortalecer el comercio digital.
+            </p>
+
+            <ul>
+              <li>Validación con RENIEC, SUNAT y SUNEDU</li>
+              <li>Perfiles y negocios verificados</li>
+              <li>Ecosistema seguro</li>
+            </ul>
           </article>
         </div>
       </div>
     </section>
 
     <!-- Nosotros Section -->
-    <section id="nosotros" class="section section--light">
+    <section id="nosotros" class="section section--light team-section">
       <div class="container">
-        <div class="section-heading reveal">
-          <span class="eyebrow">Equipo</span>
-          <h2 class="section__title">El equipo detrás de WiGo</h2>
-          <p class="section__lead">Un equipo orientado a producto, tecnología y crecimiento para construir una app útil, clara y escalable.</p>
+        <div class="section-heading section-heading--team reveal">
+          <span class="eyebrow">Quiénes somos</span>
+          <h2 class="section__title team-title">El equipo detrás de WIGO</h2>
+          <p class="section__lead">
+            Somos un equipo multidisciplinario con experiencia real en tecnología, negocios y crecimiento.
+            Trabajamos con un mismo propósito: <strong>transformar ferias en oportunidades.</strong>
+          </p>
         </div>
 
-        <div class="team">
-          <article class="member reveal">
-            <div class="member__photo">
+        <div class="team team--detailed">
+          <article class="member member--detailed reveal">
+            <div class="member__photo member__photo--framed">
               <img src="assets/sources/avatar_daniel.jpg" alt="Foto de Daniel Pinillos" loading="lazy" decoding="async" />
             </div>
-            <div class="member__info">
-              <h3>Daniel Pinillos</h3>
-              <p class="member__role">Dirección y estrategia</p>
-              <p>Enfocado en crecimiento, posicionamiento y visión comercial para llevar WiGo a usuarios y negocios reales.</p>
+
+            <div class="member__info member__info--detailed">
+              <h3>Daniel<br />Pinillos</h3>
+              <span class="member__line"></span>
+              <p class="member__role">Líder comercial y estratégico</p>
+              <p class="member__bio">
+                Especialista en crecimiento comercial, posicionamiento y expansión regional.
+                Enfocado en conectar emprendedores, aliados e instituciones para impulsar el ecosistema digital de WIGO.
+              </p>
+
+              <div class="member__tags" aria-label="Áreas de Daniel">
+                <span>Growth</span>
+                <span>Marketing</span>
+                <span>Alianzas</span>
+                <span>Expansión regional</span>
+              </div>
+
+              <a class="member__link" href="https://www.linkedin.com/" target="_blank" rel="noopener">
+                <span>in</span> Ver perfil en LinkedIn <strong>→</strong>
+              </a>
             </div>
           </article>
 
-          <article class="member reveal">
-            <div class="member__photo">
+          <article class="member member--detailed reveal">
+            <div class="member__photo member__photo--framed">
               <img src="assets/sources/avatar_amir.jpg" alt="Foto de Amir Mehrez" loading="lazy" decoding="async" />
             </div>
-            <div class="member__info">
-              <h3>Amir Mehrez</h3>
-              <p class="member__role">Tecnología y seguridad</p>
-              <p>Responsable de impulsar una base técnica confiable, segura y preparada para crecer.</p>
+
+            <div class="member__info member__info--detailed">
+              <h3>Amir<br />Mehrez</h3>
+              <span class="member__line"></span>
+              <p class="member__role">Líder tecnológico</p>
+              <p class="member__bio">
+                Responsable de la arquitectura tecnológica y ciberseguridad de WIGO,
+                enfocado en construir una plataforma segura, escalable y preparada para el crecimiento regional.
+              </p>
+
+              <div class="member__tags" aria-label="Áreas de Amir">
+                <span>Arquitectura</span>
+                <span>Ciberseguridad</span>
+                <span>Cloud</span>
+                <span>Escalabilidad</span>
+              </div>
+
+              <a class="member__link" href="https://www.linkedin.com/" target="_blank" rel="noopener">
+                <span>in</span> Ver perfil en LinkedIn <strong>→</strong>
+              </a>
             </div>
           </article>
 
-          <article class="member reveal">
-            <div class="member__photo">
+          <article class="member member--detailed reveal">
+            <div class="member__photo member__photo--framed">
               <img src="assets/sources/avatar_milton.jpg" alt="Foto de Milton Maqque" loading="lazy" decoding="async" />
             </div>
-            <div class="member__info">
-              <h3>Milton Maqque</h3>
-              <p class="member__role">Producto y desarrollo</p>
-              <p>Enfocado en arquitectura, experiencia móvil y construcción progresiva de módulos funcionales para WiGo.</p>
+
+            <div class="member__info member__info--detailed">
+              <h3>Milton<br />Maqque</h3>
+              <span class="member__line"></span>
+              <p class="member__role">Líder de producto</p>
+              <p class="member__bio">
+                Encargado del desarrollo y evolución del producto digital,
+                creando experiencias funcionales, intuitivas y escalables para emprendedores y usuarios de WIGO.
+              </p>
+
+              <div class="member__tags" aria-label="Áreas de Milton">
+                <span>Producto</span>
+                <span>UX / UI</span>
+                <span>Mobile</span>
+                <span>Experiencia de usuario</span>
+              </div>
+
+              <a class="member__link" href="https://www.linkedin.com/" target="_blank" rel="noopener">
+                <span>in</span> Ver perfil en LinkedIn <strong>→</strong>
+              </a>
+            </div>
+          </article>
+        </div>
+
+        <div class="team-values reveal" aria-label="Valores del equipo WIGO">
+          <article>
+            <div class="team-values__icon">∞</div>
+            <div>
+              <h3>Un equipo, un propósito.</h3>
+              <p>Combinamos habilidades y experiencia para crear tecnología que impulse regiones y transforme ferias en oportunidades.</p>
+            </div>
+          </article>
+
+          <article>
+            <div class="team-values__icon">↗</div>
+            <div>
+              <h3>Enfoque en impacto</h3>
+              <p>Creamos soluciones que generan oportunidades reales para emprendedores.</p>
+            </div>
+          </article>
+
+          <article>
+            <div class="team-values__icon">☷</div>
+            <div>
+              <h3>Colaboración constante</h3>
+              <p>Trabajamos junto a emprendedores, empresas e instituciones para multiplicar resultados.</p>
+            </div>
+          </article>
+
+          <article>
+            <div class="team-values__icon">▲</div>
+            <div>
+              <h3>Innovación con propósito</h3>
+              <p>Usamos tecnología para resolver problemas reales y crear valor para nuestras regiones.</p>
             </div>
           </article>
         </div>
@@ -175,37 +373,77 @@
     </section>
 
     <!-- Historia Section -->
-    <section id="historia" class="section section--dark">
+    <section id="historia" class="section section--light process-section">
+      <div class="process-bg" aria-hidden="true">
+        <span class="process-float process-float--search">⌕</span>
+        <span class="process-float process-float--cart">🛒</span>
+        <span class="process-float process-float--box">◇</span>
+      </div>
+
       <div class="container">
-        <div class="section-heading reveal">
-          <span class="eyebrow eyebrow--light">Cómo funciona</span>
-          <h2 class="section__title section__title--light">Del descubrimiento a la compra</h2>
-          <p class="section__lead section__lead--light">El flujo de WiGo está pensado para que el usuario encuentre, confíe, compre y reciba sin perder claridad.</p>
+        <div class="section-heading section-heading--process reveal">
+          <span class="eyebrow">Cómo funciona</span>
+          <h2 class="section__title section__title--impact">
+            Del descubrimiento a la compra,
+            <span class="text-blue">todo en un</span>
+            <span class="text-orange">solo flujo.</span>
+          </h2>
+          <p class="section__lead">
+            En WIGO simplificamos cada paso para que encuentres lo que buscas,
+            compres <strong>con confianza</strong> y recibas <strong>sin complicaciones.</strong>
+          </p>
         </div>
 
-        <div class="process">
-          <article class="process-card reveal"><span>01</span><h3>Descubre</h3><p>Explora anuncios, productos y ferias activas por interés, temporada o ubicación.</p></article>
-          <article class="process-card reveal"><span>02</span><h3>Conecta</h3><p>Revisa perfiles, publicaciones, comercios y detalles antes de decidir.</p></article>
-          <article class="process-card reveal"><span>03</span><h3>Compra</h3><p>Gestiona pedidos, comprobantes y estados de pago desde la app.</p></article>
-          <article class="process-card reveal"><span>04</span><h3>Recibe</h3><p>Coordina recojo, reparto o envío con evidencia y seguimiento del proceso.</p></article>
+        <div class="process process--cards">
+          <article class="process-card process-card--discover reveal">
+            <div class="process-card__number">01</div>
+            <div class="process-card__visual" aria-hidden="true"><span class="process-card__emoji">🔎</span><span class="process-card__ghost">👟</span></div>
+            <h3>Descubre</h3><span class="process-card__line"></span>
+            <p>Explora anuncios, productos y ferias activas por interés, temporada o ubicación.</p>
+            <div class="process-card__footer"><span>◎</span><strong>Encuentra lo que necesitas fácilmente</strong></div>
+          </article>
+
+          <article class="process-card process-card--connect reveal">
+            <div class="process-card__number">02</div>
+            <div class="process-card__visual" aria-hidden="true"><span class="process-card__emoji">💬</span><span class="process-card__ghost">👥</span></div>
+            <h3>Conecta</h3><span class="process-card__line"></span>
+            <p>Revisa perfiles, publicaciones, comercios y detalles antes de decidir.</p>
+            <div class="process-card__footer"><span>🛡</span><strong>Información clara para decisiones seguras</strong></div>
+          </article>
+
+          <article class="process-card process-card--buy reveal">
+            <div class="process-card__number">03</div>
+            <div class="process-card__visual" aria-hidden="true"><span class="process-card__emoji">🛒</span><span class="process-card__ghost">💳</span></div>
+            <h3>Compra</h3><span class="process-card__line"></span>
+            <p>Gestiona pedidos, comprobantes y estados de pago desde la app.</p>
+            <div class="process-card__footer"><span>🔒</span><strong>Pagos seguros y control de cada pedido</strong></div>
+          </article>
+
+          <article class="process-card process-card--receive reveal">
+            <div class="process-card__number">04</div>
+            <div class="process-card__visual" aria-hidden="true"><span class="process-card__emoji">📍</span><span class="process-card__ghost">📦</span></div>
+            <h3>Recibe</h3><span class="process-card__line"></span>
+            <p>Coordina recojo, reparto o envío con evidencia y seguimiento del proceso.</p>
+            <div class="process-card__footer"><span>✓</span><strong>Seguimiento en tiempo real hasta que lo recibas</strong></div>
+          </article>
         </div>
       </div>
     </section>
 
     <!-- Ferias Section -->
-    <section id="ferias" class="section section--soft">
+    <section id="ferias" class="section section--soft ferias-section">
       <div class="container">
-        <div class="section-heading reveal">
-          <span class="eyebrow">Ferias WiGo</span>
-          <h2 class="section__title">Ferias digitales por región</h2>
+        <div class="section-heading section-heading--ferias reveal">
+          <span class="eyebrow">Ferias por región</span>
+          <h2 class="section__title section__title--impact">Ferias digitales por región</h2>
           <p class="section__lead">Una vitrina para campañas comerciales, eventos regionales, emprendimientos y promociones por temporada.</p>
         </div>
 
-        <div class="ferias reveal">
-          <div class="map">
+        <div class="ferias ferias--showcase reveal">
+          <div class="map map--showcase">
             <div class="map__frame" aria-label="Mapa del Perú (selecciona una región)">
-              <!-- SVG original (sin tocar la data de provincias) -->
-              <!-- IMPORTANTE: aquí solo se mantuvo el SVG que ya tenías. -->
+              <div class="map__label map__label--left"><span>🌐</span><strong>Explora ferias<br />en todo el Perú</strong></div>
+              <div class="map__label map__label--right"><span>🗺️</span><strong>Actualizado hoy</strong></div>
               <svg class="map__svg" viewBox="0 0 600 800" xmlns="http://www.w3.org/2000/svg">
                         <g id="provinces">
             <!-- Amazonas -->
@@ -296,16 +534,22 @@
                 <text x="55" y="220" text-anchor="middle" font-size="15" fill="#fff" font-weight="bold">Piura</text>
                 <text x="75" y="280" text-anchor="middle" font-size="10" fill="#fff" font-weight="bold">Lambayeque</text>
               </svg>
+              <div class="map__stats" aria-label="Indicadores de ferias WIGO">
+                <article><span>🏪</span><strong>120+</strong><small>Ferias activas</small></article>
+                <article><span>📅</span><strong>25+</strong><small>Regiones conectadas</small></article>
+                <article><span>👥</span><strong>3K+</strong><small>Emprendedores</small></article>
+                <article><span>📣</span><strong>1M+</strong><small>Visitantes</small></article>
+              </div>
             </div>
           </div>
 
-          <aside class="feria" aria-label="Carrusel de ferias">
+          <aside class="feria feria--featured" aria-label="Carrusel de ferias">
             <div class="feria__province" id="currentProvince">Lima</div>
             <div id="feriaSlides"></div>
             <div class="feria__indicators" id="feriaIndicators" aria-hidden="true"></div>
           </aside>
         </div>
-        <p class="note">Selecciona una región del mapa para visualizar ferias destacadas y eventos comerciales.</p>
+        <p class="note note--ferias">Selecciona una región del mapa para visualizar ferias destacadas y eventos comerciales.</p>
       </div>
     </section>
 
