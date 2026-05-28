@@ -30,7 +30,7 @@
     'Feria del Mango': ['festival del mango.jfif', 'feria del mango.jfif', 'festival del mango.jpg'],
     'Festival del King Kong': ['festival del king kong.jfif', 'festival del king kong.jpg'],
     'Feria del Caballo de Paso': ['feria del caballo.png', 'feria del caballo.jpg'],
-    'Semana Turística de Lambayeque': ['turismo lambayeque.jfif', 'semana turistica de lambayeque.jfif', 'semana turística de lambayeque.jfif'],
+    'Semana Turística de Lambayeque': ['GOCajamarca.jpg', 'semana turistica de lambayeque.jfif', 'semana turística de lambayeque.jfif'],
   };
 
   function buildAssetPath(fileName) {
