@@ -217,7 +217,7 @@ a { color: inherit; }
 
 .member__role {
   margin: 0 0 12px;
-  color: var(--wigo-orange-2);
+  color: var(--wigo-orange-2); 
   font-weight: 1000;
   line-height: 1.25;
 }
@@ -267,7 +267,7 @@ a { color: inherit; }
   font-size: .9rem;
 }
 
-.member__link span {
+.linkedin-icon {
   width: 28px;
   height: 28px;
   display: grid;
@@ -277,17 +277,43 @@ a { color: inherit; }
   color: #fff;
   font-weight: 1000;
   font-size: .85rem;
+  flex-shrink: 0;
 }
 
-.member__link strong {
-  margin-left: auto;
-  color: var(--wigo-orange-2);
-  font-size: 1.15rem;
+.member__link-text {
+  flex: 1;
+  width: auto;
+  height: auto;
+  display: inline;
+  background: transparent;
+  color: var(--ink);
+  font-size: .9rem;
+  font-weight: 900;
+  white-space: nowrap;
+}
+
+.member__go {
+  width: 34px;
+  height: 34px;
+  object-fit: contain;
+  margin-left: 16px;
   transition: transform .2s ease;
+  animation: go-bounce 1.8s ease-in-out infinite;
 }
 
-.member__link:hover strong {
-  transform: translateX(4px);
+.member__link:hover .member__go {
+  transform: scale(1.12);
+  animation-play-state: paused;
+}
+
+@keyframes go-bounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+
+   50% {
+    transform: translateY(-4px);
+  }
 }
 
 .team-values {
@@ -756,7 +782,7 @@ a { color: inherit; }
 }
 
 .member__role {
-  color: var(--wigo-blue);
+  color: var(--wigo-orange-2);
 }
 
 .member__bio {
@@ -782,10 +808,6 @@ a { color: inherit; }
 .member__link {
   padding-top: 8px;
   font-size: .84rem;
-}
-
-.member__link span {
-  background: var(--wigo-blue);
 }
 
 .team-values {
@@ -1048,7 +1070,7 @@ a { color: inherit; }
 
 #nosotros .member__role {
   margin: 0 0 8px;
-  color: var(--wigo-blue);
+  color: var(--wigo-orange-2);
   font-size: .9rem;
   font-weight: 1000;
   line-height: 1.18;
@@ -1106,7 +1128,7 @@ a { color: inherit; }
   text-decoration: none;
 }
 
-#nosotros .member__link span {
+#nosotros .member__link .linkedin-icon {
   width: 28px;
   height: 28px;
   display: grid;
@@ -1115,11 +1137,6 @@ a { color: inherit; }
   border-radius: 8px;
   background: var(--wigo-blue);
   color: #fff;
-}
-
-#nosotros .member__link strong {
-  margin-left: auto;
-  color: var(--wigo-orange-2);
 }
 
 @media (min-width: 1180px) {
