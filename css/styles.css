@@ -475,16 +475,41 @@ a { color: inherit; }
   .nav__links { position: absolute; left: 10px; right: 10px; top: calc(100% + 8px); background: rgba(255,255,255,.96); border: 1px solid var(--line); border-radius: 22px; box-shadow: var(--shadow); flex-direction: column; align-items: stretch; gap: 0; max-height: 0; overflow: hidden; transition: max-height .25s ease, padding .25s ease; padding: 0 .75rem; backdrop-filter: blur(18px); }
   .nav__links.is-open { max-height: 520px; padding: .75rem; }
   .nav__links a { width: 100%; justify-content: center; }
-  .hero-section { padding-top: 124px; }
-  .hero__title { font-size: clamp(2.3rem, 13vw, 4rem); }
-  .hero__stats { grid-template-columns: 1fr; }
+  .hero-section { padding-top: 160px; }
+  .hero__title { 
+      font-size: clamp(2.1rem, 11vw, 3.2rem);
+      line-height: .95;
+    }
+  .hero__stats { 
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 14px;
+  }
+  .hero__benefits {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    gap: 14px !important;
+  }
+  .hero-benefit {
+    width: 100% !important;
+  }
   .hero__visual { min-height: 500px; }
   .phone-card { width: min(235px, 58vw); }
   .phone-card--back { transform: translate(-70px, -16px) rotate(-8deg) scale(.88); }
   .floating-card { font-size: .84rem; }
   .floating-card--top { top: 70px; right: 0; }
   .floating-card--bottom { bottom: 70px; left: 0; }
-  .features, .process { grid-template-columns: 1fr; }
+  .features {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 14px;
+  }
+  .feature-card {
+    min-width: 0;
+  }
+  .process { 
+    grid-template-columns: 1fr;
+   }
   .member--detailed { grid-template-columns: 1fr; min-height: auto; }
   .member__photo--framed { min-height: 360px; }
   .member__info--detailed { padding: 8px 4px 0; }
@@ -1207,3 +1232,15 @@ a { color: inherit; }
   }
 }
 
+@media (max-width: 768px) {
+  .hero-section .features {
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 14px !important;
+  }
+
+  .hero-section .feature-card {
+    min-width: 0 !important;
+    width: auto !important;
+  }
+}
