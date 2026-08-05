@@ -21,6 +21,7 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&display=swap" />
 
   <link rel="stylesheet" href="css/styles.css" />
 </head>
@@ -31,9 +32,16 @@
       <div class="nav__container">
         <a class="nav__brand" href="index.html#home" aria-label="Ir al inicio">
           <img
-            src="assets/sources/wigo_slogan.png"
-            alt="WiGo"
-            class="nav__logo"
+            src="assets/sources/wigo-header01.png"
+            alt="WIGO"
+            class="nav__logo nav__logo--default"
+            loading="eager"
+            decoding="async"
+          />
+          <img
+            src="assets/sources/wigo-header02.png"
+            alt="WIGO"
+            class="nav__logo nav__logo--scrolled"
             loading="eager"
             decoding="async"
           />
@@ -52,9 +60,24 @@
 
         <ul class="nav__links" id="navLinks">
           <li><a href="index.html#home">Inicio</a></li>
-          <li><a href="index.html#quienes-somos">Qué ofrece</a></li>
-          <li><a href="index.html#ferias">Ferias</a></li>
+
+          <li>
+            <a
+              href="index.html#quienes-somos"
+              class="nav__go"
+              aria-label="Ir a qué ofrecemos y cómo funciona"
+            >
+              <img
+                src="assets/sources/go_header01.png"
+                alt="go"
+                loading="eager"
+                decoding="async"
+              />
+            </a>
+          </li>
+
           <li><a href="index.html#descargas">App</a></li>
+          <li><a href="index.html#ferias">Ferias</a></li>
           <li><a href="index.html#nosotros">Equipo</a></li>
           <li><a href="index.html#contacto" class="nav__cta">Contáctanos</a></li>
         </ul>
@@ -83,7 +106,7 @@
             <p>
               El titular y responsable del tratamiento de los datos personales recopilados
               mediante WiGo es <strong>IZZYWORK S.A.C.</strong>, con RUC
-              <strong>20609681803</strong>, domicilio en <strong>Urb. Larapa Grande D - 4 Cusco - Cusco - San Jeronimo</strong>,
+              <strong>20609681803</strong>, domicilio en <strong>Urb. Larapa Grande D - 4 Cusco - Cusco - San Jerónimo</strong>,
               correo de contacto legal <strong>wigocompany.peru@gmail.com</strong> y dominio
               oficial <strong>www.wigo.pe</strong>.
             </p>
@@ -263,7 +286,7 @@
             <p>
               Razón social: IZZYWORK S.A.C.<br />
               RUC: 20609681803<br />
-              Domicilio: Urb. Larapa Grande D - 4 Cusco - Cusco - San Jeronimo<br />
+              Domicilio: Urb. Larapa Grande D - 4 Cusco - Cusco - San Jerónimo<br />
               Correo legal: wigocompany.peru@gmail.com<br />
               Dominio oficial: www.wigo.pe
             </p>
