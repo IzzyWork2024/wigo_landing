@@ -16,21 +16,7 @@
 
 
   const feriaImageCandidates = {
-    'Feria Gastronómica Mistura': ['mistura.jfif', 'mistura.jpg', 'mistura.jpeg', 'mistura.png'],
-    'Feria del Señor de los Milagros': ['señor de los milagros.jfif', 'senor de los milagros.jfif', 'señor de los milagros.jpg'],
-    'Feria Internacional del Libro': ['feria del libro.png', 'feria del libro.jpg'],
-    'Inti Raymi': ['intiraymi.jfif', 'inti raymi.jpg'],
-    'Feria de Santurantikuy': ['santurantikuy.jpeg', 'santurantikuy.jpg'],
-    'Corpus Christi': ['corpus.jpg', 'corpus.jpeg', 'corpus.png'],
-    'Aniversario de Arequipa': ['aniversario arequipa.jfif', 'aniversario arequipa.jpg'],
-    'Feria del Queso y Vino': ['feria queso y vino.jpg', 'feria del queso y vino.jpg'],
-    'Festival del Rocoto Relleno': ['festival del rocoto relleno.jfif', 'festival del rocoto relleno.jpg'],
-    'Feria de Reyes': ['reyes.jfif', 'reyes.jpg'],
-    'Festival del Limón': ['festival del limon.jfif', 'festival del limón.jfif', 'festival del limon.jpg'],
-    'Feria del Mango': ['festival del mango.jfif', 'feria del mango.jfif', 'festival del mango.jpg'],
-    'Festival del King Kong': ['festival del king kong.jfif', 'festival del king kong.jpg'],
-    'Feria del Caballo de Paso': ['feria del caballo.png', 'feria del caballo.jpg'],
-    'Semana Turística de Lambayeque': ['GOCajamarca.jpg', 'semana turistica de lambayeque.jfif', 'semana turística de lambayeque.jfif'],
+    'CONAMB - Convención Nacional Ambiental': ['logotipo_1.jpeg', 'logotipo_1.jpg', 'logotipo_1.png'],
   };
 
   function buildAssetPath(fileName) {
@@ -61,14 +47,15 @@
   function renderFeriaImage(feria) {
     const candidates = feriaImageCandidates[feria.name] || [];
     const initial = feria.name.substring(0, 1);
+    const logoClass = feria.logo ? ' feria-image--logo' : '';
 
     if (!candidates.length) {
-      return `<div class="feria-image"><span class="feria-image__fallback">${initial}</span></div>`;
+      return `<div class="feria-image${logoClass}"><span class="feria-image__fallback">${initial}</span></div>`;
     }
 
     const encoded = JSON.stringify(candidates).replace(/"/g, '&quot;');
     return `
-        <div class="feria-image">
+        <div class="feria-image${logoClass}">
           <img
             src="${buildAssetPath(candidates[0])}"
             alt="${feria.name}"
@@ -84,116 +71,53 @@
   }
 
   // ===== Data =====
+  // Primer evento real de WIGO: CONAMB en Cajamarca. El resto de regiones ya no tiene
+  // ferias de relleno — se irán sumando aquí a medida que existan eventos reales.
   const feriasData = {
-    lima: [
+    cajamarca: [
       {
-        name: 'Feria Gastronómica Mistura',
-        date: '5-14 de Septiembre',
+        name: 'CONAMB - Convención Nacional Ambiental',
+        date: '26, 27 y 28 de agosto de 2026',
+        location: 'Universidad Nacional de Cajamarca, Cajamarca, Perú',
         description:
-          'La feria gastronómica más grande de América Latina. Celebra la diversidad culinaria peruana con los mejores chefs y productos del país.',
-      },
-      {
-        name: 'Feria del Señor de los Milagros',
-        date: '18-28 de Octubre',
-        description:
-          'Tradicional festividad religiosa que congrega a miles de devotos. Incluye procesiones, gastronomía y actividades culturales.',
-      },
-      {
-        name: 'Feria Internacional del Libro',
-        date: '20-31 de Julio',
-        description:
-          'Evento cultural que reúne a escritores, editoriales y amantes de la lectura. Literatura, conferencias y talleres.',
-      },
-    ],
-    cusco: [
-      {
-        name: 'Inti Raymi',
-        date: '24 de Junio',
-        description:
-          'Fiesta del Sol, la celebración inca más importante. Ceremonia ancestral con danzas, música y representaciones.',
-      },
-      {
-        name: 'Feria de Santurantikuy',
-        date: '24 de Diciembre',
-        description:
-          'Tradicional mercado navideño cusqueño. Artesanías, retablos y arte popular en la Plaza de Armas.',
-      },
-      {
-        name: 'Corpus Christi',
-        date: 'Mayo-Junio',
-        description:
-          'Festividad religiosa con procesión de 15 santos. Gastronomía tradicional, danzas y música en el centro histórico.',
-      },
-    ],
-    arequipa: [
-      {
-        name: 'Aniversario de Arequipa',
-        date: '15 de Agosto',
-        description:
-          'Celebración de la fundación española de la ciudad. Desfiles, fuegos artificiales, eventos culturales y corso de la amistad.',
-      },
-      {
-        name: 'Feria del Queso y Vino',
-        date: '15-17 de Septiembre',
-        description:
-          'Exhibición de quesos artesanales y vinos de la región. Degustaciones, concursos y gastronomía arequipeña.',
-      },
-      {
-        name: 'Festival del Rocoto Relleno',
-        date: '10-12 de Noviembre',
-        description:
-          'Homenaje al plato emblemático arequipeño. Concursos culinarios, degustaciones y actividades tradicionales.',
-      },
-    ],
-    piura: [
-      {
-        name: 'Feria de Reyes',
-        date: '6 de Enero',
-        description:
-          'Tradicional feria comercial y ganadera. Artesanías, gastronomía norteña y presentaciones folclóricas.',
-      },
-      {
-        name: 'Festival del Limón',
-        date: '20-25 de Junio',
-        description:
-          'Celebración del cítrico emblemático de Piura. Concursos gastronómicos y productos derivados del limón.',
-      },
-      {
-        name: 'Feria del Mango',
-        date: '15-20 de Enero',
-        description:
-          'Exhibición de variedades de mango piurano. Degustaciones, productos derivados y gastronomía regional.',
-      },
-    ],
-    lambayeque: [
-      {
-        name: 'Festival del King Kong',
-        date: '18-20 de Julio',
-        description:
-          'Homenaje al dulce tradicional lambayecano. Concursos de elaboración, degustaciones y dulces típicos.',
-      },
-      {
-        name: 'Feria del Caballo de Paso',
-        date: '25-30 de Abril',
-        description:
-          'Exhibición del caballo peruano de paso. Concursos ecuestres, shows de marinera y actividades culturales.',
-      },
-      {
-        name: 'Semana Turística de Lambayeque',
-        date: '5-12 de Marzo',
-        description:
-          'Promoción del patrimonio cultural. Tours, danzas, gastronomía y visitas a museos y sitios históricos.',
+          'Espacio de diálogo que reúne a jóvenes, profesionales e instituciones públicas y privadas para proponer soluciones frente a los desafíos ambientales del país, con miras a una agenda sostenible al 2030.',
+        logo: true,
+        link: 'https://www.facebook.com/convencionnacionalambiental',
       },
     ],
   };
 
-  const provinces = ['lima', 'cusco', 'arequipa', 'piura', 'lambayeque'];
+  const provinces = ['cajamarca'];
+  // Nombres bien escritos (con tildes) de los 25 departamentos reales del SVG — se usa tanto
+  // para la pastilla "Lima/Cusco/..." del carrusel (loadFeriaSlides) como para la nueva pastilla
+  // flotante de hover (bootMapHover). Los identificadores son los data-province REALES del SVG
+  // (revisados en index.html), no inventados.
   const provinceNames = {
-    lima: 'Lima',
-    cusco: 'Cusco',
+    amazonas: 'Amazonas',
+    ancash: 'Áncash',
+    apurimac: 'Apurímac',
     arequipa: 'Arequipa',
-    piura: 'Piura',
+    ayacucho: 'Ayacucho',
+    cajamarca: 'Cajamarca',
+    callao: 'Callao',
+    cusco: 'Cusco',
+    huancavelica: 'Huancavelica',
+    huanuco: 'Huánuco',
+    ica: 'Ica',
+    junin: 'Junín',
+    lalibertad: 'La Libertad',
     lambayeque: 'Lambayeque',
+    lima: 'Lima',
+    loreto: 'Loreto',
+    madrededios: 'Madre de Dios',
+    moquegua: 'Moquegua',
+    pasco: 'Pasco',
+    piura: 'Piura',
+    puno: 'Puno',
+    sanmartin: 'San Martín',
+    tacna: 'Tacna',
+    tumbes: 'Tumbes',
+    ucayali: 'Ucayali',
   };
 
   // ===== State =====
@@ -205,7 +129,7 @@
   // ===== UI refs =====
   const slidesContainer = () => qs('#feriaSlides');
   const indicatorsContainer = () => qs('#feriaIndicators');
-  const provinceNameEl = () => qs('#currentProvince');
+  const provinceNameEl = () => qs('#currentProvinceName');
 
   function loadFeriaSlides(province) {
     const slides = feriasData[province] ?? [];
@@ -222,12 +146,22 @@
     slides.forEach((feria, index) => {
       const slide = document.createElement('div');
       slide.className = `feria-slide ${index === 0 ? 'active' : ''}`;
+      const locationHtml = feria.location
+        ? `<p class="feria-location">${feria.location}</p>`
+        : '';
+      const linkHtml = feria.link
+        ? `<a class="feria-cta" href="${feria.link}" target="_blank" rel="noopener noreferrer" data-cursor-theme="yellow" aria-label="Ver ${feria.name}">
+             <img src="${buildAssetPath('go_header01.png')}" alt="" class="feria-cta__icon" loading="lazy" decoding="async" />
+           </a>`
+        : '';
       slide.innerHTML = `
         ${renderFeriaImage(feria)}
         <div class="feria-info">
           <h3>${feria.name}</h3>
           <div class="feria-date">${feria.date}</div>
+          ${locationHtml}
           <p class="feria-description">${feria.description}</p>
+          ${linkHtml}
         </div>
       `;
       sc.appendChild(slide);
@@ -236,6 +170,9 @@
       dot.className = `indicator-dot ${index === 0 ? 'active' : ''}`;
       ic.appendChild(dot);
     });
+
+    // Con un solo evento los puntos de paginación no aportan nada — se ocultan.
+    ic.style.display = slides.length > 1 ? '' : 'none';
 
     currentSlideIndex = 0;
   }
@@ -254,12 +191,140 @@
     indicators[currentSlideIndex]?.classList.add('active');
   }
 
+  // ===== Profundidad 2.5D del mapa =====
+  // Genera capas puramente decorativas detrás de #provinces, desplazadas SOLO hacia abajo,
+  // en azules progresivamente más oscuros. Cada path clonado pierde la clase "province" y el
+  // atributo data-province (pasa a usar "province-depth"), así querySelectorAll('.province') y
+  // los selectores por [data-province] de este archivo siguen apuntando EXCLUSIVAMENTE a los
+  // paths reales del mapa. No se toca ni se reordena el <g id="provinces"> original.
+  function bootMapDepth() {
+    const svg = qs('.map__svg');
+    const provinces = qs('#provinces');
+    if (!svg || !provinces) return;
+    if (svg.querySelector('.map__depth-layer')) return; // evita duplicar si boot() corre más de una vez
+
+    const isMobile = window.innerWidth <= 768;
+    const LAYERS = isMobile ? 4 : 7;
+    // El SVG usa viewBox="0 0 600 800" y se escala para caber en .map__frame, así que
+    // "translate(0, Npx)" con N en unidades de usuario NO equivale a N px reales en pantalla:
+    // el resultado visible depende de cuánto se reduce el SVG al ajustarse al contenedor.
+    // Para lograr un grosor real y consistente (no una suposición fija), medimos la escala
+    // efectiva actual del SVG vía getScreenCTM() y calculamos las unidades de usuario
+    // necesarias para producir el grosor deseado en px reales de pantalla.
+    const TARGET_THICKNESS_PX = isMobile ? 4.5 : 7; // grosor visible real objetivo
+    let scale = 1;
+    try {
+      const ctm = svg.getScreenCTM();
+      if (ctm && ctm.a) scale = Math.abs(ctm.a);
+    } catch (_) { /* getScreenCTM no disponible: se usa escala 1 como respaldo */ }
+    const MAX_OFFSET = TARGET_THICKNESS_PX / (scale || 1);
+    const colors = isMobile
+      ? ['#155186', '#124A7B', '#10436F', '#0A3559']
+      : ['#195B95', '#155186', '#124A7B', '#10436F', '#0D3D66', '#0A3559', '#0A3559'];
+
+    for (let i = LAYERS; i >= 1; i--) {
+      const offset = (MAX_OFFSET / LAYERS) * i;
+      const color = colors[Math.min(i - 1, colors.length - 1)];
+
+      const layerGroup = provinces.cloneNode(true);
+      layerGroup.removeAttribute('id');
+      layerGroup.setAttribute('class', 'map__depth-layer');
+      layerGroup.setAttribute('aria-hidden', 'true');
+      layerGroup.setAttribute('pointer-events', 'none');
+      layerGroup.setAttribute('transform', `translate(0, ${offset.toFixed(2)})`);
+      layerGroup.style.pointerEvents = 'none';
+
+      qsa('.province', layerGroup).forEach((path) => {
+        path.removeAttribute('data-province');
+        path.removeAttribute('class');
+        path.classList.add('province-depth');
+        path.removeAttribute('style');
+        path.style.fill = color;
+        path.style.stroke = 'none';
+        path.style.pointerEvents = 'none';
+      });
+
+      svg.insertBefore(layerGroup, provinces);
+    }
+  }
+
+  // ===== Tooltip minimalista de hover (pastilla + línea + punto) =====
+  // Una sola instancia en el DOM (#mapHoverUI), reposicionada por JS para cada departamento.
+  // No sigue al cursor: el punto se ancla al centro de la región usando getBBox() (coordenadas
+  // locales del path, estables) + getScreenCTM() del propio path (matriz real a pantalla, ya
+  // incluye el viewBox/preserveAspectRatio y cualquier transform CSS vigente, incluida la
+  // elevación de :hover) — la misma técnica ya usada en bootMapDepth para medir el mapa con
+  // precisión, en vez de calcular a mano el ratio de escala del SVG.
+  function bootMapHover() {
+    const hoverUI = qs('#mapHoverUI');
+    const hoverLabel = qs('#mapHoverLabel');
+    const frame = qs('.map__frame');
+    const svg = qs('.map__svg');
+    const badge = qs('.map__badge'); // pastilla "go Perú" — la pastilla de hover no debe taparla
+    if (!hoverUI || !hoverLabel || !frame || !svg) return null;
+
+    function positionHoverUI(el) {
+      if (typeof el.getBBox !== 'function' || typeof el.getScreenCTM !== 'function') return false;
+
+      const bbox = el.getBBox();
+      const ctm = el.getScreenCTM();
+      if (!ctm) return false;
+
+      const point = svg.createSVGPoint();
+      point.x = bbox.x + bbox.width / 2; // centro horizontal del departamento
+      point.y = bbox.y + bbox.height / 2; // centro vertical del departamento (el punto se ancla aquí)
+      const screenPoint = point.matrixTransform(ctm);
+      const frameRect = frame.getBoundingClientRect();
+
+      const anchorX = screenPoint.x - frameRect.left;
+      let anchorY = screenPoint.y - frameRect.top;
+
+      // Departamentos muy al norte y alargados (Loreto, Tumbes...) pueden tener su centro
+      // igual bastante arriba, cerca de donde vive la pastilla "go Perú". Si dejáramos el ancla
+      // ahí, el stack pastilla+línea+punto (que se dibuja HACIA ARRIBA desde el ancla) taparía
+      // el badge. Medimos la altura real del stack (hoverUI.offsetHeight, ya con el texto puesto)
+      // y el borde inferior real del badge, y empujamos el ancla hacia abajo lo mínimo necesario
+      // para que nunca se solapen — el resto de departamentos no se ven afectados porque su
+      // anchorY natural ya cae por debajo de ese límite. Es el mismo cálculo genérico para las
+      // 25 regiones, sin coordenadas manuales por departamento.
+      if (badge) {
+        const badgeRect = badge.getBoundingClientRect();
+        const badgeBottomRelative = badgeRect.bottom - frameRect.top;
+        const pillStackHeight = hoverUI.offsetHeight || 50;
+        const SAFETY_GAP = 14;
+        const minAnchorY = badgeBottomRelative + pillStackHeight + SAFETY_GAP;
+        anchorY = Math.max(anchorY, minAnchorY);
+      }
+
+      hoverUI.style.left = `${anchorX}px`;
+      hoverUI.style.top = `${anchorY}px`;
+      return true;
+    }
+
+    function showHoverUI(el) {
+      const province = el.getAttribute('data-province');
+      const label = province ? provinceNames[province] : null;
+      if (!label) return; // ignora elementos .province sin nombre real (p.ej. el lago Titicaca)
+
+      hoverLabel.textContent = label; // se fija ANTES de medir, para que offsetHeight sea exacto
+      if (!positionHoverUI(el)) return;
+
+      hoverUI.classList.add('is-visible');
+    }
+
+    function hideHoverUI() {
+      hoverUI.classList.remove('is-visible');
+    }
+
+    return { showHoverUI, hideHoverUI };
+  }
+
   function activateProvinceOnMap(province) {
     const all = qsa('.province');
     all.forEach((p) => p.classList.remove('active'));
 
-    const provinceEl = qs(`[data-province="${province}"]`);
-    if (provinceEl) provinceEl.classList.add('active');
+    const provinceEls = qsa(`[data-province="${province}"]`);
+    provinceEls.forEach((el) => el.classList.add('active'));
   }
 
   function changeProvince(index) {
@@ -268,7 +333,12 @@
     loadFeriaSlides(province);
 
     if (slideTimer) clearInterval(slideTimer);
-    slideTimer = setInterval(changeSlide, 5000);
+    // Con una sola feria no hay nada que rotar: evita el parpadeo de la clase
+    // "active" quitándose y volviéndose a poner sobre el mismo slide cada 5s.
+    const slideCount = (feriasData[province] ?? []).length;
+    if (slideCount > 1) {
+      slideTimer = setInterval(changeSlide, 5000);
+    }
   }
 
   function nextProvince() {
@@ -277,6 +347,12 @@
   }
 
   function boot() {
+    // Capas decorativas de profundidad 2.5D (solo visuales, no interactivas)
+    bootMapDepth();
+
+    // Pastilla flotante de hover (null si el markup #mapHoverUI no está presente)
+    const mapHover = bootMapHover();
+
     // Click en provincias
     const provinceElements = qsa('.province');
 
@@ -287,18 +363,27 @@
         if (idx === -1) return;
 
         if (provinceTimer) clearInterval(provinceTimer);
-        if (slideTimer) clearInterval(slideTimer);
 
         currentProvinceIndex = idx;
         changeProvince(idx);
-        provinceTimer = setInterval(nextProvince, 15000);
+        if (provinces.length > 1) {
+          provinceTimer = setInterval(nextProvince, 15000);
+        }
       });
+
+      // Microinteracción de hover: solo pastilla + punto de luz, no toca el click de arriba
+      if (mapHover) {
+        el.addEventListener('mouseenter', () => mapHover.showHoverUI(el));
+        el.addEventListener('mouseleave', () => mapHover.hideHoverUI());
+      }
     });
 
-    // Iniciar con Lima
+    // Inicia fijo en Cajamarca, nuestra primera feria real. changeProvince() ya arma
+    // su propio slideTimer solo si hay más de un slide que rotar.
     changeProvince(0);
-    slideTimer = setInterval(changeSlide, 5000);
-    provinceTimer = setInterval(nextProvince, 15000);
+    if (provinces.length > 1) {
+      provinceTimer = setInterval(nextProvince, 15000);
+    }
   }
 
   document.addEventListener('DOMContentLoaded', boot);
