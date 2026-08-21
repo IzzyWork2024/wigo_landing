@@ -11,7 +11,10 @@
   const headerOffset = 112;
 
   function qs(sel, root = document) { return root.querySelector(sel); }
-  function qsa(sel, root = document) { return Array.from(root.querySelectorAll(sel)); }
+  function qsa(sel, root = document) {
+    if (!root) return [];
+    return Array.from(root.querySelectorAll(sel));
+  }
 
   const menuToggle = qs('#menuToggle');
   const navLinks = qs('#navLinks');
@@ -93,6 +96,8 @@
   }
 
   function syncDots() {
+    if (!dotsEl) return;
+
     qsa('.download__dot', dotsEl).forEach((dot, idx) => {
       dot.classList.toggle('is-active', idx === current);
     });
