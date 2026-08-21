@@ -160,7 +160,10 @@
           return;
         }
         const img = el.querySelector('img');
-        if (img) openAppZoom(idx);
+        if (img) {
+          if (timer) clearInterval(timer);
+          openZoom(appShots.map((s) => ({ src: s.img, alt: s.label })), idx, resetTimer);
+        }
       });
     });
   }
@@ -170,29 +173,33 @@
   const appZoomClose = qs('#appZoomClose');
   const appZoomPrev = qs('#appZoomPrev');
   const appZoomNext = qs('#appZoomNext');
+  let zoomList = [];
   let zoomIndex = 0;
+  let zoomOnClose = null;
 
   function renderZoomImage() {
-    if (!appZoomImg) return;
-    const shot = appShots[zoomIndex];
-    appZoomImg.src = shot.img;
-    appZoomImg.alt = shot.label;
+    if (!appZoomImg || !zoomList.length) return;
+    const shot = zoomList[zoomIndex];
+    appZoomImg.src = shot.src;
+    appZoomImg.alt = shot.alt || '';
   }
 
   const siteHeader = qs('.site-header');
 
-  function openAppZoom(idx) {
-    if (!appZoom || !appZoomImg) return;
+  function openZoom(list, idx, onClose) {
+    if (!appZoom || !appZoomImg || !list.length) return;
+    zoomList = list;
     zoomIndex = idx;
+    zoomOnClose = onClose || null;
     renderZoomImage();
     appZoom.classList.add('is-open');
     appZoom.setAttribute('aria-hidden', 'false');
     if (siteHeader) siteHeader.style.display = 'none';
-    if (timer) clearInterval(timer);
   }
 
   function zoomStep(offset) {
-    const n = appShots.length;
+    const n = zoomList.length;
+    if (!n) return;
     zoomIndex = ((zoomIndex + offset) % n + n) % n;
     renderZoomImage();
   }
@@ -202,7 +209,7 @@
     appZoom.classList.remove('is-open');
     appZoom.setAttribute('aria-hidden', 'true');
     if (siteHeader) siteHeader.style.display = '';
-    resetTimer();
+    if (zoomOnClose) zoomOnClose();
   }
 
   if (appZoomClose) appZoomClose.addEventListener('click', closeAppZoom);
@@ -260,9 +267,9 @@
       e.preventDefault();
       const nombre = qs('#nombre')?.value?.trim();
       const email = qs('#email')?.value?.trim();
-      const asunto = qs('#asunto')?.value?.trim();
+      const tipo = qs('input[name="tipo"]:checked')?.value;
       const mensaje = qs('#mensaje')?.value?.trim();
-      if (!nombre || !email || !asunto || !mensaje) {
+      if (!nombre || !email || !tipo || !mensaje) {
         setStatus('Completa todos los campos, por favor.');
         return;
       }
@@ -615,8 +622,105 @@
     setInterval(swap, 4000);
   }
 
+  // Abanico de 2 teléfonos de la sección "Confianza que nos diferencia": rota
+  // automáticamente cuál queda al frente (naranja, grande) y cuál atrás (azul, chico).
+  function bootConfianzaFan() {
+    const wrap = qs('#confianzaFan');
+    if (!wrap) return;
+    const phones = qsa('.confianza-fan__phone', wrap);
+    if (phones.length < 2) return;
+
+    let timer;
+
+    function swapSlots() {
+      phones.forEach((el) => {
+        const current = el.getAttribute('data-slot');
+        el.setAttribute('data-slot', current === 'front' ? 'back' : 'front');
+      });
+    }
+
+    function resetTimer() {
+      if (timer) clearInterval(timer);
+      timer = setInterval(swapSlots, 4500);
+    }
+
+    phones.forEach((el) => {
+      el.addEventListener('click', () => {
+        if (el.getAttribute('data-slot') !== 'front') {
+          swapSlots();
+          resetTimer();
+          return;
+        }
+        const img = el.querySelector('img');
+        if (img) {
+          if (timer) clearInterval(timer);
+          const gallery = phones.map((p) => {
+            const i = p.querySelector('img');
+            return { src: i.src, alt: i.alt };
+          });
+          const idx = phones.indexOf(el);
+          openZoom(gallery, idx, resetTimer);
+        }
+      });
+    });
+
+    resetTimer();
+  }
+
+  // Video del mockup del hero: se reproduce una vez y, al terminar, espera
+  // 5s antes de volver a empezar (en vez del loop instantáneo por defecto).
+  // El <video> en index.html no lleva el atributo "loop" a propósito: con
+  // loop nativo el evento "ended" nunca dispara, así que el reinicio con
+  // pausa solo se puede lograr escuchándolo a mano y reiniciando con
+  // setTimeout.
+  function bootHeroVideoLoop() {
+    const video = qs('.hero-v2__phone-video');
+    if (!video) return;
+
+    const REPLAY_DELAY = 5000;
+
+    video.addEventListener('ended', () => {
+      setTimeout(() => {
+        video.currentTime = 0;
+        video.play().catch(() => {});
+      }, REPLAY_DELAY);
+    });
+  }
+
+  // Acordeón del footer (Explora / Wigo / Contáctanos) en mobile. El botón
+  // existe siempre (desktop y tablet incluidos) para tener un <button> real
+  // con aria-expanded, pero en ≤768px .footer__accordion-toggle es el único
+  // que queda con cursor:pointer y .footer__accordion-panel es el único que
+  // colapsa vía max-height (ver css/styles.css) — en desktop/tablet el click
+  // no cambia nada visualmente porque el panel siempre está visible ahí.
+  // Solo un acordeón abierto a la vez, como en la referencia.
+  function bootFooterAccordion() {
+    const toggles = qsa('.footer__accordion-toggle');
+    if (!toggles.length) return;
+
+    function closeOthers(except) {
+      toggles.forEach((btn) => {
+        if (btn === except) return;
+        btn.setAttribute('aria-expanded', 'false');
+        const wrap = btn.closest('.footer__accordion');
+        if (wrap) wrap.classList.remove('is-open');
+      });
+    }
+
+    toggles.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const wasOpen = btn.getAttribute('aria-expanded') === 'true';
+        closeOthers(btn);
+        btn.setAttribute('aria-expanded', String(!wasOpen));
+        const wrap = btn.closest('.footer__accordion');
+        if (wrap) wrap.classList.toggle('is-open', !wasOpen);
+      });
+    });
+  }
+
   document.addEventListener('DOMContentLoaded', () => {
     bootAppFan();
+    bootConfianzaFan();
     bootReveal();
     bootActiveNav();
     bootScrollHeader();
@@ -625,5 +729,7 @@
     bootRegionCards();
     bootCounters();
     bootFloatingParticles();
+    bootHeroVideoLoop();
+    bootFooterAccordion();
   });
 })();

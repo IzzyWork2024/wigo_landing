@@ -325,6 +325,12 @@ a { color: inherit; }
 .site-header.is-scrolled .nav__links .nav__cta { color: #fff; }
 .site-header.is-scrolled .nav__links .nav__cta:hover { background: var(--wigo-blue) !important; }
 .nav__cta.zone-active { background: var(--wigo-blue) !important; }
+
+/* Solo aparece dentro del menú hamburguesa (ver @media max-width:768px más
+   abajo); en el nav de escritorio, .nav__links es la misma fila de enlaces
+   de siempre y esta línea queda oculta. */
+.nav__tagline { display: none; }
+
 .nav__toggle { display: none; background: rgba(255,255,255,.14); border: 0; padding: .55rem .62rem; cursor: pointer; border-radius: 999px; transition: background .3s ease; }
 .site-header.is-scrolled .nav__toggle { background: rgba(13,83,144,.1); }
 .nav__toggle span { display: block; width: 24px; height: 2px; background: #fff; border-radius: 999px; margin: 5px 0; transition: transform .25s ease, opacity .25s ease, background .3s ease; }
@@ -345,10 +351,35 @@ a { color: inherit; }
 .hero-v2 { position: relative; z-index: 1; display: grid; grid-template-columns: minmax(0,1fr) minmax(340px,1.05fr); gap: 90px; align-items: center; padding-top: 20px; padding-bottom: 34px; }
 .hero-v2__visual { position: relative; min-height: 560px; display: flex; align-items: center; justify-content: center; }
 .hero-v2__phone { position: relative; z-index: 2; width: min(320px, 80%); }
-.hero-v2__phone-img { width: 100%; height: auto; display: block; }
+.hero-v2__phone-img { position: relative; z-index: 2; width: 100%; height: auto; display: block; pointer-events: none; }
+
+/* Video del hero: vive detrás del marco (z-index:1 contra el z-index:2 de la
+   imagen de arriba), recortado en % del propio wrapper .hero-v2__phone —
+   así escala en cualquier ancho exactamente igual que el marco, sin
+   necesitar breakpoints propios. Los valores de top/left/width/height están
+   medidos en píxeles reales sobre hero_phone_mockup_frame.png (imagen
+   1799×3239) para que coincidan con el hueco transparente de la pantalla:
+   left 220px→12.23%, top 145px→4.48%, ancho 1404px→78.04%, alto 3010px→92.93%.
+   El border-radius es solo un respaldo (por si el video carga antes que el
+   marco): el recorte real y definitivo lo da la transparencia del PNG del
+   marco, que va encima. */
+.hero-v2__phone-video {
+  position: absolute;
+  z-index: 1;
+  top: 4.48%;
+  left: 12.23%;
+  width: 78.04%;
+  height: 92.93%;
+  object-fit: cover;
+  border-radius: 8%;
+  display: block;
+  pointer-events: none;
+}
+
 .hero-v2__phone--missing { display: flex; align-items: center; justify-content: center; min-height: 480px; border: 2px dashed rgba(255,255,255,.6); border-radius: 28px; background: rgba(255,255,255,.08); }
-.hero-v2__phone--missing img { display: none; }
-.hero-v2__phone--missing::after { content: 'Sube tu mockup del celular a assets/sources/hero_phone_mockup.png'; color: #fff; font-size: .82rem; font-weight: 700; text-align: center; padding: 24px; opacity: .85; }
+.hero-v2__phone--missing img,
+.hero-v2__phone--missing .hero-v2__phone-video { display: none; }
+.hero-v2__phone--missing::after { content: 'Sube tu mockup del celular a assets/sources/hero_phone_mockup_frame.png'; color: #fff; font-size: .82rem; font-weight: 700; text-align: center; padding: 24px; opacity: .85; }
 
 .hero-v2__cluster { position: absolute; z-index: 3; display: flex; flex-direction: column; align-items: center; gap: 10px; transform: translate(-50%, -42px); }
 .hero-v2__cluster--a { top: 44%; left: 95%; }
@@ -400,6 +431,10 @@ a { color: inherit; }
 .hero-v2__cta:hover { background: var(--wigo-orange); color: #fff; transform: translateY(-2px); }
 .hero-v2__cta svg { flex-shrink: 0; transition: transform .2s ease; }
 .hero-v2__cta:hover svg { transform: translateX(3px); }
+/* Variantes de copy/ícono del CTA para el rediseño mobile (ver media queries más abajo).
+   En desktop se mantiene oculto: el CTA se ve exactamente igual que antes. */
+.hero-v2__cta-text--mobile { display: none; }
+.hero-v2__cta-go { display: none; }
 .hero-v2__title--v3 { font-size: clamp(1.9rem, 3.2vw, 2.9rem); }
 .hero-v2__checklist { display: flex; flex-direction: column; gap: 10px; margin: 26px 0 0; }
 .hero-v2__check { display: flex; align-items: center; gap: 12px; padding: 9px 16px 9px 9px; border-radius: 14px; background: rgba(13,83,144,.05); opacity: 0; transform: translateX(-14px); animation: hero-check-in .5s ease forwards; transition: background .2s ease, transform .2s ease; }
@@ -423,6 +458,11 @@ a { color: inherit; }
 .hero-v2__ally-carousel { position: relative; overflow: hidden; width: 100%; margin: 14px 0 0; mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent); -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent); }
 .hero-v2__ally-track { display: flex; align-items: center; gap: 34px; width: max-content; animation: hero-ally-scroll 18s linear infinite; }
 .hero-v2__ally-track img { height: 58px; width: auto; max-width: 170px; object-fit: contain; flex-shrink: 0; }
+/* Los logos ahora son enlaces a los sitios de cada aliado (ver index.html):
+   el <a> pasó a ser el item del flex en vez del <img>, así que necesita el
+   mismo flex-shrink:0 para no encogerse, y display:flex para que envuelva
+   el logo sin agregar espacio extra propio de un elemento inline. */
+.hero-v2__ally-track a { display: flex; align-items: center; flex-shrink: 0; }
 
 @keyframes hero-ally-scroll {
   from { transform: translateX(0); }
@@ -459,8 +499,9 @@ a { color: inherit; }
   .hero-v2__region-card span { font-size: 1.2rem; max-width: 90px; }
 
   .hero-v2__checklist { align-items: center; }
-  .hero-v2__check { width: 100%; max-width: 360px; justify-content: center; }
-  .hero-v2__check span:last-child { color: #fff; }
+  .hero-v2__check { width: 100%; max-width: 360px; justify-content: center; background: rgba(255,255,255,.94); box-shadow: 0 6px 18px rgba(13,43,76,.14); }
+  .hero-v2__check:hover { background: #fff; }
+  .hero-v2__check span:last-child { color: var(--wigo-blue); }
   .hero-v2__ally-carousel { max-width: 360px; margin: 14px auto 0; }
   .hero-v2__ally-track { justify-content: center; }
 }
@@ -478,6 +519,132 @@ a { color: inherit; }
   .hero-v2__region-card span { font-size: .6rem; max-width: 72px; }
   .hero-v2__title--v3 { font-size: clamp(1.6rem, 6vw, 2.1rem); }
 }
+
+/* ==========================================================================
+   HERO — REDISEÑO MOBILE (solo responsive, no toca desktop)
+   Se apoya en las reglas de arriba (1100px/980px/560px) y las refina para
+   que la sección se sienta pensada para móvil, no un desktop comprimido.
+   ========================================================================== */
+@media (max-width: 768px) {
+  .hero-v2 { row-gap: 0; }
+
+  /* Fondo circular: el .hero-v2__bgfill se ancla exactamente al punto donde
+     arranca .hero-v2__visual (85px de la sección + 20px del grid .hero-v2 =
+     105px, constante en todos los breakpoints). El centro del círculo
+     naranja/amarillo se fija en top:260px, que es EXACTAMENTE el centro
+     vertical de .hero-v2__visual (min-height:520px / 2), el mismo punto en el
+     que ya se auto-centran tanto el celular (flex center) como la órbita
+     (top:50%/left:50%) — así los tres (círculo, celular, órbita+badges)
+     comparten un único centro real, en vez de coordenadas aproximadas. El
+     círculo naranja pasa a ser el contenedor principal (más grande, con
+     margen de sobra para celular + órbita + badges); el azul queda del MISMO
+     diámetro que el naranja (misma fórmula width) pero detrás (menor
+     z-index, se dibuja primero) y más arriba, pegado al header, solapando lo
+     suficiente para que no quede ningún espacio blanco entre ambos. Ambos
+     siguen siendo perfectamente circulares. */
+  .hero-v2__bgfill { top: 105px; width: 100%; height: 600px; aspect-ratio: unset; }
+  .hero-v2__bgfill-circle--blue { top: 55px; left: 50%; width: min(128%, 560px); }
+  .hero-v2__bgfill-circle--orange { top: 260px; left: 50%; width: min(128%, 560px); }
+
+  /* Celular: un poco más chico y perfectamente centrado. La altura del
+     contenedor se ajusta a la proporción real del mockup (celular vertical,
+     no un cuadrado 1:1) y define el centro que usan el círculo, la órbita y
+     los badges de arriba. */
+  .hero-v2__visual { aspect-ratio: unset; height: auto; min-height: 520px; margin-bottom: 6px; }
+  .hero-v2__phone { width: 60vw; max-width: 250px; margin: 0 auto; }
+
+  /* Órbita punteada: tamaño acotado en px (no en % del contenedor) para que
+     quede SIEMPRE dentro del círculo amarillo, en vez de crecer con el ancho
+     del viewport. Sigue centrada en el mismo punto que el celular. */
+  .hero-v2__ring { width: min(76%, 420px); }
+
+  /* Badges Áncash/Puno: se posicionan a una distancia fija (px) del centro
+     real del grupo (celular + órbita), proporcional al radio del círculo
+     amarillo, para que celular + órbita + badges se perciban como un solo
+     conjunto centrado dentro del círculo. */
+  .hero-v2__cluster { transform: translate(-50%, -22px); gap: 4px; }
+  .hero-v2__cluster--a { left: min(90%, calc(50% + 190px)); }
+  .hero-v2__cluster--b { left: max(10%, calc(50% - 190px)); }
+  .hero-v2__icon-badge { width: 68px; height: 68px; padding: 10px; }
+  .hero-v2__region-card { padding: 7px 14px 7px 7px; gap: 6px; box-shadow: 0 8px 20px rgba(13,43,76,.22); }
+  .hero-v2__region-icon { width: 26px; height: 26px; min-width: 26px; padding: 4px; }
+  .hero-v2__region-card span { font-size: .72rem; max-width: 76px; line-height: 1.1; }
+
+  /* Título: mantiene el efecto "e-commerce" (no se toca), solo se adapta tamaño/salto de línea */
+  .hero-v2__title--v3 {
+    font-size: clamp(1.6rem, 7vw, 2rem);
+    line-height: 1.12;
+    text-align: center;
+    max-width: 90%;
+    margin-inline: auto;
+  }
+
+  /* Beneficios: tarjetas más compactas */
+  .hero-v2__checklist { gap: 8px; margin-top: 22px; }
+  .hero-v2__check {
+    min-height: 46px;
+    padding: 10px 16px;
+    border-radius: 16px;
+    box-shadow: 0 6px 16px rgba(13,43,76,.10);
+  }
+  .hero-v2__check span:last-child { font-size: .86rem; }
+
+  /* Carrusel de aliados: automático, sin controles (no existen flechas/dots en el
+     markup — es un marquee CSS por keyframes que se deja intacto), se ve más
+     compacto para mostrar 2-3 logos sin saturar */
+  .hero-v2__ally-carousel { max-width: 300px; margin: 16px auto 0; }
+  .hero-v2__ally-track { gap: 28px; }
+  .hero-v2__ally-track img { height: 40px; max-width: 120px; }
+
+  /* CTA: copy corto + logo go blanco en vez de flecha, un solo azul */
+  .hero-v2__cta-wrap { margin-top: 28px; }
+  .hero-v2__cta-text--desktop { display: none; }
+  .hero-v2__cta-text--mobile { display: inline; }
+  .hero-v2__cta-arrow { display: none; }
+  .hero-v2__cta-go { display: inline-block; width: 24px; height: 24px; object-fit: contain; flex-shrink: 0; }
+  .hero-v2__cta {
+    width: 84%;
+    max-width: 320px;
+    height: 54px;
+    padding: 0 1.4rem;
+    background: var(--wigo-blue);
+  }
+  .hero-v2__cta:hover { background: var(--wigo-blue); }
+}
+
+@media (max-width: 480px) {
+  /* Mismo criterio que en el bloque de 768px: el centro del círculo naranja
+     (top:230px) coincide exactamente con el centro real de .hero-v2__visual
+     (min-height:460px / 2), el mismo punto en el que se auto-centran el
+     celular y la órbita. */
+  .hero-v2__bgfill { height: 500px; }
+  .hero-v2__bgfill-circle--blue { top: 45px; left: 50%; width: min(128%, 480px); }
+  .hero-v2__bgfill-circle--orange { top: 230px; left: 50%; width: min(128%, 480px); }
+
+  .hero-v2__visual { min-height: 460px; }
+  .hero-v2__phone { width: 58vw; max-width: 210px; }
+  .hero-v2__ring { width: min(74%, 350px); }
+  .hero-v2__cluster { transform: translate(-50%, -18px); }
+  .hero-v2__cluster--a { left: min(88%, calc(50% + 160px)); }
+  .hero-v2__cluster--b { left: max(12%, calc(50% - 160px)); }
+  .hero-v2__icon-badge { width: 50px; height: 50px; padding: 8px; }
+  .hero-v2__region-card { padding: 6px 10px 6px 6px; gap: 5px; }
+  .hero-v2__region-icon { width: 20px; height: 20px; min-width: 20px; }
+  .hero-v2__region-card span { font-size: .58rem; max-width: 54px; }
+
+  .hero-v2__title--v3 { font-size: clamp(1.4rem, 8vw, 1.7rem); }
+
+  .hero-v2__check { min-height: 42px; padding: 9px 14px; }
+  .hero-v2__check span:last-child { font-size: .8rem; }
+
+  .hero-v2__ally-carousel { max-width: 260px; }
+  .hero-v2__ally-track { gap: 22px; }
+  .hero-v2__ally-track img { height: 34px; max-width: 100px; }
+
+  .hero-v2__cta { width: 90%; max-width: 300px; height: 52px; padding: 0 1.1rem; }
+  .hero-v2__cta-text--mobile { font-size: .92rem; }
+}
+
 .hero-bg { position: absolute; inset: 0; background: radial-gradient(circle at 15% 20%, rgba(13,83,144,.18), transparent 28%), radial-gradient(circle at 85% 15%, rgba(255,162,26,.24), transparent 26%), radial-gradient(circle at 70% 80%, rgba(13,83,144,.10), transparent 30%); pointer-events: none; }
 .hero { display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(340px, .95fr); gap: 56px; align-items: center; position: relative; }
 .hero__title { margin: 18px 0 0; color: var(--ink); font-size: clamp(2.65rem, 5vw, 5.4rem); line-height: .95; letter-spacing: -0.07em; }
@@ -544,11 +711,6 @@ a { color: inherit; }
 .section-heading--team {
   width: min(920px, 100%);
   margin-bottom: 34px;
-}
-
-.team-title {
-  font-size: clamp(2.35rem, 5vw, 4.6rem);
-  letter-spacing: -0.065em;
 }
 
 .section-heading--team .section__lead strong {
@@ -646,14 +808,6 @@ a { color: inherit; }
   letter-spacing: -0.04em;
 }
 
-.member__line {
-  width: 42px;
-  height: 3px;
-  border-radius: 999px;
-  margin-bottom: 12px;
-  background: linear-gradient(90deg, var(--wigo-blue) 50%, var(--wigo-orange) 50%);
-}
-
 .member__role {
   margin: 0 0 12px;
   color: var(--wigo-orange-2); 
@@ -694,133 +848,17 @@ a { color: inherit; }
   line-height: 1;
 }
 
-.member__link {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin-top: auto;
-  padding: 12px 0 2px;
-  color: var(--ink);
-  text-decoration: none;
-  font-weight: 900;
-  font-size: .9rem;
-}
-
-.linkedin-icon {
-  width: 28px;
-  height: 28px;
-  display: grid;
-  place-items: center;
-  border-radius: 8px;
-  background: var(--wigo-blue);
-  color: #fff;
-  font-weight: 1000;
-  font-size: .85rem;
-  flex-shrink: 0;
-}
-
-.member__link-text {
-  flex: 1;
-  width: auto;
-  height: auto;
-  display: inline;
-  background: transparent;
-  color: var(--ink);
-  font-size: .9rem;
-  font-weight: 900;
-  white-space: nowrap;
-}
-
-.member__go {
-  width: 34px;
-  height: 34px;
-  object-fit: contain;
-  margin-left: 16px;
-  transition: transform .2s ease;
-  animation: go-bounce 1.8s ease-in-out infinite;
-}
-
-.member__link:hover .member__go {
-  transform: scale(1.12);
-  animation-play-state: paused;
-}
-
-@keyframes go-bounce {
-  0%, 100% {
-    transform: translateY(0);
-  }
-
-   50% {
-    transform: translateY(-4px);
-  }
-}
-
-.team-values {
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 0;
-  margin-top: 22px;
-  padding: 18px;
-  border: 1px solid var(--line);
-  border-radius: 26px;
-  background: rgba(255,255,255,.88);
-  box-shadow: 0 18px 48px rgba(13,43,76,.08);
-}
-
-.team-values article {
-  display: grid;
-  grid-template-columns: 42px 1fr;
-  gap: 12px;
-  padding: 6px 18px;
-  border-right: 1px solid rgba(13,43,76,.10);
-}
-
-.team-values article:last-child {
-  border-right: 0;
-}
-
-.team-values__icon {
-  width: 42px;
-  height: 42px;
-  display: grid;
-  place-items: center;
-  border-radius: 14px;
-  background: linear-gradient(135deg, rgba(13,83,144,.11), rgba(255,162,26,.16));
-  color: var(--wigo-blue);
-  font-weight: 1000;
-  font-size: 1.25rem;
-}
-
-.team-values h3 {
-  margin: 0 0 4px;
-  color: var(--ink);
-  font-size: .95rem;
-  line-height: 1.2;
-}
-
-.team-values p {
-  margin: 0;
-  color: var(--muted);
-  font-size: .8rem;
-  line-height: 1.45;
-}
-
 /* Process */
-.process { display: grid; grid-template-columns: repeat(4, minmax(0,1fr)); gap: 16px; }
-.process-card { padding: 24px; border-radius: var(--radius); background: rgba(255,255,255,.09); border: 1px solid rgba(255,255,255,.14); box-shadow: 0 24px 70px rgba(0,0,0,.16); }
-.process-card span { display: inline-flex; color: var(--wigo-orange); font-weight: 1000; margin-bottom: 26px; }
-.process-card h3 { margin: 0 0 8px; color: #fff; font-size: 1.4rem; }
-.process-card p { margin: 0; color: rgba(255,255,255,.72); }
 
 /* Ferias */
-.ferias { display: grid; grid-template-columns: .9fr 1.1fr; gap: 24px; align-items: stretch; }
-.map__frame { background: rgba(255,255,255,.82); border: 1px solid rgba(255,255,255,.8); border-radius: var(--radius); box-shadow: var(--shadow); padding: 1.1rem; height: 610px; }
-.map__svg { width: 100%; height: 100%; filter: drop-shadow(0 14px 22px rgba(13,43,76,.10)); }
-.province { fill: var(--wigo-blue); stroke: #ffffff; stroke-width: 1.1; cursor: pointer; transition: fill .2s ease, opacity .2s ease, transform .2s ease; opacity: .76; }
-.province:hover { opacity: .95; fill: #ffb55a; }
-.province.active { fill: var(--wigo-orange); stroke: var(--ink); stroke-width: 1.7; opacity: 1; }
-.lake { fill: #72bff6; opacity: .9; }
-.feria { background: #fff; border: 1px solid var(--line); border-radius: var(--radius); box-shadow: var(--shadow); padding: 24px; min-height: 520px; display: flex; flex-direction: column; justify-content: center; }
+/* Nota: el layout, colores e interacción reales del mapa viven exclusivamente en las reglas
+   #ferias .* más abajo. Este bloque (.ferias/.map__frame/.map__svg/.province/.lake/.feria sin
+   scope) era una versión anterior del componente, totalmente reemplazada — se eliminó porque
+   quedaba "compitiendo" en la cascada sin aportar nada (mismo problema documentado en el
+   informe de sesiones anteriores, sección 6.1.2). Antes de borrarlo se confirmó que ninguna
+   propiedad dependía solo de aquí: `.feria` sí aportaba `display:flex; flex-direction:column`
+   que `#ferias .feria--featured` no redeclaraba — eso se migró a la regla con scope. `.lake` no
+   tiene ningún elemento en el HTML actual. */
 .feria__province { display: inline-flex; align-self: center; padding: 8px 16px; border-radius: 999px; background: rgba(13,83,144,.08); color: var(--wigo-blue); font-weight: 1000; font-size: .9rem; margin: 0 0 18px; text-transform: uppercase; letter-spacing: .08em; }
 .feria-slide { display: none; }
 .feria-slide.active { display: block; animation: fadeIn .35s ease; }
@@ -837,13 +875,13 @@ a { color: inherit; }
 .note { margin: 18px 0 0; color: var(--muted); font-size: .96rem; text-align: center; }
 
 /* Download */
-.download { display: grid; grid-template-columns: minmax(300px, 460px) 1fr; gap: 48px; align-items: center; }
+.download { display: grid; grid-template-columns: minmax(320px, 520px) 1fr; gap: 30px; align-items: center; }
 
 .download__fan {
   position: relative;
   width: 100%;
-  max-width: 460px;
-  height: clamp(360px, 40vw, 480px);
+  max-width: 520px;
+  height: clamp(400px, 44vw, 520px);
   margin: 0 auto;
 }
 
@@ -889,31 +927,349 @@ a { color: inherit; }
 }
 .fan-phone:hover { opacity: 1; }
 
-.download__content { padding: 10px 0; }
+.download__content { padding: 10px 0; text-align: center; }
 #descargas .section__title,
+#historia .section__title,
+#quienes-somos .section__title,
+#ferias .section__title,
+#nosotros .section__title,
+#contacto .section__title,
 .download__text h3 { font-family: var(--font-display); }
 #descargas .section-heading { width: min(900px, 100%); }
-#descargas .section__title { font-size: clamp(1.6rem, 2.5vw, 2.6rem); }
-#descargas .section__lead { margin-top: 6px; }
-#descargas { padding-top: 56px; background: linear-gradient(135deg, #f3f8ff 0%, #fff7ed 100%); }
+#descargas .section__title { font-size: clamp(1.6rem, 2.5vw, 2.6rem); text-wrap: balance; }
+#descargas .section__lead { margin-top: 6px; text-wrap: balance; }
+#descargas { padding-top: 56px; padding-bottom: 56px; background: linear-gradient(135deg, #f3f8ff 0%, #fff7ed 100%); }
 .download__text { transition: opacity .8s ease-in-out; margin-top: -12px; }
-.download__text h3 { margin: 0 0 12px; color: var(--ink); font-size: clamp(1.8rem, 2.4vw, 2.8rem); line-height: 1.05; letter-spacing: -0.04em; }
-.download__text p { margin: 0; color: var(--muted); font-size: 1.05rem; }
-.download__dots { display: flex; align-items: center; gap: 8px; margin-top: 22px; }
+.download__text h3 { margin: 0 0 12px; color: var(--ink); font-size: clamp(1.8rem, 2.4vw, 2.8rem); line-height: 1.05; letter-spacing: -0.04em; text-wrap: balance; }
+.download__text p { margin: 0; color: var(--muted); font-size: 1.05rem; text-wrap: balance; }
+.download__dots { display: flex; align-items: center; justify-content: center; gap: 8px; margin-top: 22px; }
 .download__dot { width: 8px; height: 8px; padding: 0; border: 0; border-radius: 50%; background: rgba(13,83,144,.25); cursor: pointer; transition: background .3s ease, transform .3s ease; }
 .download__dot.is-active { width: 8px; transform: scale(1.4); background: var(--wigo-orange); }
 .download__actions .btn--ghost { background: var(--wigo-orange); border: 0; color: #fff; box-shadow: 0 14px 30px rgba(13,43,76,.18); }
 .download__actions .btn--ghost:hover { background: var(--wigo-orange); }
-.download__actions { display: flex; gap: 12px; margin-top: 24px; flex-wrap: wrap; }
-.download__hint { margin-top: 14px !important; color: var(--muted); font-size: .95rem !important; }
+.download__actions { display: flex; justify-content: center; gap: 12px; margin-top: 24px; flex-wrap: wrap; }
+.download__hint { margin-top: 14px !important; color: var(--muted); font-size: .95rem !important; text-align: center; text-wrap: balance; }
 
-/* Form */
-.form { width: min(700px, 100%); margin: 0 auto; background: rgba(255,255,255,.86); border: 1px solid rgba(255,255,255,.8); border-radius: var(--radius); box-shadow: var(--shadow); padding: 28px; backdrop-filter: blur(18px); }
-.form__group { margin-bottom: 1rem; }
-.form label { display: block; margin-bottom: .4rem; color: var(--ink); font-weight: 900; }
-.form input, .form textarea { width: 100%; padding: .95rem 1rem; border: 1px solid var(--line); border-radius: 14px; color: var(--ink); background: #fff; font-size: 1rem; transition: border-color .2s ease, box-shadow .2s ease; }
-.form input:focus, .form textarea:focus { outline: none; border-color: rgba(13,83,144,.6); box-shadow: 0 0 0 4px rgba(13,83,144,.12); }
-.form__status { margin: .8rem 0 0; color: var(--wigo-blue); font-weight: 800; }
+/* Contacto — panel informativo + formulario en dos columnas */
+#contacto { padding: 64px 0; }
+
+#contacto .section-heading { width: min(640px, 100%); }
+
+#contacto.section--soft {
+  background:
+    radial-gradient(circle at 14% 18%, rgba(13,83,144,.07), transparent 34%),
+    radial-gradient(circle at 88% 12%, rgba(255,162,26,.08), transparent 30%),
+    linear-gradient(180deg, #ffffff 0%, #f6faff 100%);
+}
+
+#contacto .contact-layout {
+  display: grid;
+  grid-template-columns: minmax(280px, .75fr) minmax(0, 1.25fr);
+  gap: 28px;
+  align-items: stretch;
+  width: min(1120px, 100%);
+  margin: 0 auto;
+}
+
+/* Panel informativo */
+#contacto .contact-panel {
+  position: relative;
+  overflow: hidden;
+  padding: 34px 32px;
+  border-radius: 26px;
+  background: rgba(255,255,255,.86);
+  border: 1px solid rgba(255,255,255,.8);
+  box-shadow: 0 20px 60px rgba(13,43,76,.10);
+  backdrop-filter: blur(18px);
+  display: flex;
+  flex-direction: column;
+}
+
+#contacto .contact-panel__badge {
+  position: relative;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  align-self: center;
+  margin: 0 0 20px;
+  padding: 8px 18px 8px 10px;
+  border-radius: 999px;
+  background: var(--wigo-orange);
+  color: #fff;
+  font-weight: 900;
+  font-size: .82rem;
+  letter-spacing: -0.01em;
+  box-shadow: 0 10px 22px rgba(255,162,26,.28);
+  overflow: hidden;
+}
+
+#contacto .contact-panel__badge-icon { width: 24px; height: 24px; object-fit: contain; flex-shrink: 0; position: relative; }
+
+#contacto .contact-panel__badge::after {
+  content: "";
+  position: absolute;
+  top: -20%;
+  left: -60%;
+  width: 35%;
+  height: 140%;
+  background: linear-gradient(115deg, transparent, rgba(255,255,255,.85), transparent);
+  transform: skewX(-22deg);
+  animation: map-badge-shine 6s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #contacto .contact-panel__badge::after { animation: none; display: none; }
+}
+
+#contacto .contact-panel__text {
+  position: relative;
+  z-index: 1;
+  margin: 0 0 10px;
+  color: var(--ink);
+  font-size: 1rem;
+  line-height: 1.55;
+}
+
+#contacto .contact-panel__highlight {
+  color: var(--wigo-orange);
+  font-weight: 900;
+}
+
+#contacto .contact-panel__subtext {
+  position: relative;
+  z-index: 1;
+  margin: 0 0 28px;
+  color: var(--muted);
+  font-size: .88rem;
+  line-height: 1.55;
+}
+
+#contacto .contact-reasons {
+  position: relative;
+  z-index: 1;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+#contacto .contact-reasons__item {
+  padding: 16px 0;
+  border-top: 1px solid rgba(13,43,76,.1);
+  transition: transform .2s ease;
+}
+
+#contacto .contact-reasons__item:first-child { border-top: 1px solid rgba(13,43,76,.1); }
+
+#contacto .contact-reasons__item:hover { transform: translateX(3px); }
+
+#contacto .contact-reasons__item strong {
+  display: block;
+  margin-bottom: 4px;
+  color: var(--ink);
+  font-size: .94rem;
+  font-weight: 900;
+}
+
+#contacto .contact-reasons__item p {
+  margin: 0;
+  color: var(--muted);
+  font-size: .84rem;
+  line-height: 1.45;
+}
+
+/* Formulario */
+#contacto .contact-form {
+  padding: 34px 32px;
+  border-radius: 26px;
+  background: rgba(255,255,255,.92);
+  border: 1px solid rgba(255,255,255,.8);
+  box-shadow: 0 20px 60px rgba(13,43,76,.10);
+  backdrop-filter: blur(18px);
+}
+
+#contacto .contact-form__row {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+}
+
+#contacto .contact-form__group { margin-bottom: 20px; }
+
+#contacto .contact-form label:not(.contact-option),
+#contacto .contact-form__legend {
+  display: block;
+  width: 100%;
+  margin-bottom: 8px;
+  padding: 0;
+  color: var(--ink);
+  font-weight: 900;
+  font-size: .88rem;
+}
+
+#contacto .contact-form__control {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+#contacto .contact-form__control--textarea { align-items: flex-start; }
+
+#contacto .contact-form input,
+#contacto .contact-form textarea {
+  width: 100%;
+  border: 1px solid rgba(13,83,144,.14);
+  border-radius: 14px;
+  background: #fff;
+  color: var(--ink);
+  font: inherit;
+  transition: border-color .2s ease, box-shadow .2s ease;
+}
+
+#contacto .contact-form input {
+  height: 54px;
+  padding: 0 18px;
+}
+
+#contacto .contact-form textarea {
+  min-height: 150px;
+  padding: 16px 18px;
+  resize: vertical;
+  line-height: 1.5;
+}
+
+#contacto .contact-form input:focus,
+#contacto .contact-form textarea:focus {
+  outline: none;
+  border-color: var(--wigo-blue);
+  box-shadow: 0 0 0 4px rgba(13,83,144,.08);
+}
+
+#contacto .contact-form input::placeholder,
+#contacto .contact-form textarea::placeholder {
+  color: rgba(13,43,76,.36);
+}
+
+/* Fieldset "¿Cómo podemos ayudarte?" */
+#contacto .contact-form__fieldset {
+  margin: 0 0 20px;
+  padding: 0;
+  border: 0;
+  min-width: 0;
+}
+
+#contacto .contact-options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+#contacto .contact-option__input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0,0,0,0);
+  white-space: nowrap;
+  border: 0;
+}
+
+#contacto .contact-option {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  flex: 0 0 auto;
+  max-width: 100%;
+  min-height: 52px;
+  padding: 14px 22px;
+  border: 1.5px solid rgba(13,83,144,.16);
+  border-radius: 16px;
+  background: #fff;
+  color: var(--muted);
+  font-size: .85rem;
+  font-weight: 800;
+  cursor: pointer;
+  transition: border-color .2s ease, background .2s ease, color .2s ease, transform .15s ease, box-shadow .2s ease;
+}
+
+#contacto .contact-option:hover { border-color: rgba(13,83,144,.36); }
+
+#contacto .contact-option:active { transform: scale(.97); }
+
+#contacto .contact-option__input:checked + .contact-option {
+  border-color: var(--wigo-blue);
+  background: var(--wigo-blue);
+  color: #fff;
+  box-shadow: 0 10px 22px rgba(13,83,144,.28);
+}
+
+#contacto .contact-option__input:focus-visible + .contact-option {
+  outline: 2px solid var(--wigo-blue);
+  outline-offset: 2px;
+}
+
+/* Botón enviar */
+#contacto .contact-submit {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 64px;
+  height: 64px;
+  margin: 6px auto 0;
+  border: 0;
+  border-radius: 50%;
+  background: var(--wigo-blue);
+  cursor: pointer;
+  box-shadow: 0 14px 30px rgba(13,83,144,.22);
+  transition: transform .22s ease, box-shadow .22s ease, background .22s ease;
+}
+
+#contacto .contact-submit__icon { width: 30px; height: 30px; object-fit: contain; flex-shrink: 0; }
+
+#contacto .contact-submit:hover {
+  background: #0a4577;
+  transform: translateY(-2px);
+  box-shadow: 0 18px 38px rgba(13,83,144,.28);
+}
+
+/* Mensaje de confianza */
+#contacto .contact-trust {
+  margin: 16px 0 0;
+  color: var(--muted);
+  font-size: .78rem;
+  line-height: 1.4;
+  text-align: center;
+}
+
+#contacto .contact-status {
+  margin: .8rem 0 0;
+  color: var(--wigo-blue);
+  font-weight: 800;
+  min-height: 1.2em;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #contacto .contact-reasons__item,
+  #contacto .contact-submit,
+  #contacto .contact-option {
+    transition: none;
+  }
+}
+
+@media (max-width: 980px) {
+  #contacto .contact-layout { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 640px) {
+  #contacto { padding: 48px 0; }
+  #contacto .contact-form__row { grid-template-columns: 1fr; }
+  #contacto .contact-panel,
+  #contacto .contact-form { padding: 24px 20px; }
+}
 
 /* Buttons */
 .btn { display: inline-flex; align-items: center; justify-content: center; gap: .5rem; padding: .95rem 1.25rem; border-radius: 999px; text-decoration: none; font-weight: 1000; color: #fff; background: var(--wigo-blue); border: 0; cursor: pointer; box-shadow: 0 14px 30px rgba(13,83,144,.22); transition: transform .2s ease, box-shadow .2s ease; }
@@ -922,123 +1278,390 @@ a { color: inherit; }
 .btn--ghost { background: transparent; border: 1px solid rgba(13,83,144,.24); color: var(--wigo-blue); box-shadow: none; }
 .btn--full { width: 100%; }
 
-.footer { padding: 30px 0; background: var(--dark); color: #cfe3ff; }
-
-@media (max-width: 640px) {
-  .footer__inner {
-    justify-content: center;
-    text-align: center;
-  }
-
-  .footer__legal {
-    justify-content: center;
-  }
-}
-
-/* ==============================
-   Legal pages
-============================== */
-
-.legal-page {
-  min-height: 100vh;
-  padding-top: 120px;
+/* ===== Footer ===== */
+.footer {
+  position: relative;
+  overflow: hidden;
+  padding: 60px 70px 26px;
+  border-radius: 36px 36px 0 0;
   background:
-    radial-gradient(circle at top left, rgba(11, 91, 158, 0.10), transparent 34rem),
-    radial-gradient(circle at bottom right, rgba(255, 164, 32, 0.12), transparent 30rem),
-    var(--soft);
-}
-
-.legal-card {
-  max-width: 980px;
-  margin: 0 auto;
-  padding: 42px;
-  border-radius: 28px;
-  background: rgba(255, 255, 255, 0.92);
-  border: 1px solid rgba(13, 43, 76, 0.08);
-  box-shadow: 0 24px 70px rgba(13, 43, 76, 0.12);
-}
-
-.legal-card__header {
-  margin-bottom: 28px;
-  padding-bottom: 22px;
-  border-bottom: 1px solid rgba(13, 43, 76, 0.10);
-}
-
-.legal-card__header .section__title {
-  margin-bottom: 12px;
-}
-
-.legal-card__header .section__lead {
-  margin-bottom: 0;
-  color: rgba(13, 43, 76, 0.68);
-}
-
-.legal-card__content {
-  color: rgba(13, 43, 76, 0.86);
-  font-size: 1rem;
-  line-height: 1.78;
-}
-
-.legal-card__content h2 {
-  margin: 30px 0 10px;
-  color: #0b5b9e;
-  font-size: 1.18rem;
-  line-height: 1.35;
-}
-
-.legal-card__content p {
-  margin: 0 0 14px;
-}
-
-.legal-card__content strong {
-  color: #0d2b4c;
+    radial-gradient(circle at 90% 12%, rgba(50,130,220,.14), transparent 30%),
+    linear-gradient(135deg, #082F5C 0%, var(--wigo-blue) 55%, #073767 100%);
+  color: rgba(255,255,255,.88);
 }
 
 .footer__inner {
+  position: relative;
+  z-index: 1;
+  width: min(1180px, 100%);
+  margin: 0 auto;
+}
+
+.footer__grid {
+  display: grid;
+  grid-template-columns: 1.35fr .8fr .8fr 1fr;
+  gap: 44px;
+}
+
+.footer__brand .footer__logo {
+  height: 46px;
+  width: auto;
+  object-fit: contain;
+  margin-bottom: 22px;
+}
+
+.footer__desc {
+  margin: 0;
+  max-width: 32ch;
+  color: rgba(255,255,255,.82);
+  font-size: .95rem;
+  line-height: 1.6;
+}
+
+.footer__tagline {
+  margin: 18px 0 0;
+  color: var(--wigo-orange);
+  font-weight: 800;
+  font-size: .92rem;
+  letter-spacing: .02em;
+}
+
+.footer__col {
+  padding-left: 40px;
+  border-left: 1px solid rgba(255,255,255,.08);
+}
+
+.footer__title {
+  margin: 0;
+  color: #fff;
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 1.12rem;
+}
+
+.footer__rule {
+  display: block;
+  width: 34px;
+  height: 3px;
+  margin: 10px 0 18px;
+  border-radius: 999px;
+  background: var(--wigo-orange);
+}
+
+.footer__links {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.footer__link {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 16px;
-  flex-wrap: wrap;
+  gap: 10px;
+  color: rgba(255,255,255,.88);
+  text-decoration: none;
+  font-size: .93rem;
+  font-weight: 600;
+  transition: transform .22s ease, color .22s ease;
 }
 
-.footer__legal {
+.footer__link-arrow {
+  width: 15px;
+  height: 15px;
+  flex: 0 0 auto;
+  color: rgba(255,255,255,.5);
+  transition: color .22s ease, transform .22s ease;
+}
+
+.footer__link:hover,
+.footer__link:focus-visible {
+  color: #fff;
+  transform: translateX(3px);
+}
+
+.footer__link:hover .footer__link-arrow,
+.footer__link:focus-visible .footer__link-arrow {
+  color: var(--wigo-orange);
+}
+
+.footer__link:focus-visible {
+  outline: 2px solid var(--wigo-orange);
+  outline-offset: 4px;
+  border-radius: 4px;
+}
+
+.footer__socials {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 22px;
+}
+
+.footer-social {
+  display: grid;
+  place-items: center;
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  background: rgba(255,255,255,.04);
+  border: 1px solid rgba(255,255,255,.30);
+  color: #fff;
+  text-decoration: none;
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: .82rem;
+  transition: background .22s ease, border-color .22s ease, transform .22s ease;
+}
+
+.footer-social svg { width: 19px; height: 19px; }
+
+.footer-social:hover,
+.footer-social:focus-visible {
+  background: var(--wigo-orange);
+  border-color: var(--wigo-orange);
+  transform: translateY(-3px);
+}
+
+.footer-social:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 3px;
+}
+
+/* Columna Contáctanos: email + teléfono con ícono circular, y el CTA
+   naranja debajo (ver .footer-cta más abajo). */
+.footer__contact-list {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin-bottom: 22px;
+}
+
+.footer__contact-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: rgba(255,255,255,.88);
+  text-decoration: none;
+  font-size: .88rem;
+  font-weight: 600;
+  transition: color .22s ease;
+}
+
+.footer__contact-item:hover,
+.footer__contact-item:focus-visible { color: #fff; }
+
+.footer__contact-item:focus-visible {
+  outline: 2px solid var(--wigo-orange);
+  outline-offset: 4px;
+  border-radius: 4px;
+}
+
+.footer__contact-icon {
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: rgba(255,255,255,.08);
+  border: 1px solid rgba(255,255,255,.24);
+  color: #fff;
+  flex-shrink: 0;
+}
+
+.footer__contact-icon svg { width: 16px; height: 16px; }
+
+/* CTA "Contáctanos" + logo "go": mismo espíritu que .hero-v2__cta (pill,
+   ícono a la derecha) pero sin flecha y siempre en naranja, según lo pedido
+   para el footer. */
+.footer-cta {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  padding: 13px 20px;
+  border-radius: 999px;
+  background: var(--wigo-orange);
+  color: #fff;
+  text-decoration: none;
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: .92rem;
+  box-shadow: 0 14px 28px rgba(0,0,0,.18);
+  transition: transform .22s ease, box-shadow .22s ease;
+}
+
+.footer-cta:hover,
+.footer-cta:focus-visible {
+  transform: translateY(-2px);
+  box-shadow: 0 18px 34px rgba(0,0,0,.26);
+}
+
+.footer-cta:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 3px;
+}
+
+.footer-cta__go { width: 32px; height: 32px; object-fit: contain; flex-shrink: 0; }
+
+/* Acordeón (Explora / Wigo / Contáctanos): en desktop y tablet el botón del
+   título queda inerte (el panel siempre visible, ver reglas base de
+   .footer__accordion-panel) — el comportamiento de abrir/cerrar solo se
+   activa en mobile, dentro del media query ≤768px más abajo. */
+.footer__accordion-toggle {
   display: flex;
   align-items: center;
   gap: 8px;
-  flex-wrap: wrap;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  cursor: default;
+}
+
+.footer__accordion-toggle:focus-visible {
+  outline: 2px solid var(--wigo-orange);
+  outline-offset: 4px;
+  border-radius: 4px;
+}
+
+.footer__accordion-chevron { display: none; }
+
+.footer__accordion-panel {
+  max-height: none;
+  overflow: visible;
+}
+
+/* Grid de 3 columnas (no flex space-between) para que "Política de
+   privacidad · Términos" quede realmente centrado en el medio del footer,
+   entre el copyright y "Dale go a tu talento" — no solo centrado como grupo
+   junto a uno de los otros dos. */
+.footer__bottom {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: 16px;
+  margin-top: 34px;
+  padding-top: 22px;
+  border-top: 1px solid rgba(255,255,255,.12);
+}
+
+.footer__copy { justify-self: start; }
+.footer__legal { justify-self: center; }
+.footer__made { justify-self: end; }
+
+.footer__copy,
+.footer__legal {
+  margin: 0;
+  color: rgba(255,255,255,.72);
+  font-size: .82rem;
 }
 
 .footer__legal a {
-  color: inherit;
+  color: rgba(255,255,255,.72);
   text-decoration: none;
-  font-size: 0.875rem;
-  opacity: 0.82;
+  transition: color .22s ease;
 }
 
-.footer__legal a:hover {
-  opacity: 1;
-  text-decoration: underline;
+.footer__legal a:hover,
+.footer__legal a:focus-visible { color: #fff; }
+
+.footer__made {
+  margin: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: rgba(255,255,255,.88);
+  font-size: .82rem;
+  font-weight: 600;
+}
+
+/* El PNG del "go" es blanco (pensado para ir sobre círculos de color); acá
+   se pide en naranja e integrado al texto, así que se aplica como
+   mask-image (misma técnica que .custom-cursor y .nav__tagline-icon) para
+   poder pintarlo con background-color en vez de <img>. */
+.footer__made-icon {
+  display: inline-block;
+  width: 22px;
+  height: 19px;
+  background-color: var(--wigo-orange);
+  -webkit-mask-image: url('../assets/sources/go_header01.png');
+  mask-image: url('../assets/sources/go_header01.png');
+  -webkit-mask-size: contain;
+  mask-size: contain;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  mask-position: center;
+}
+
+@media (max-width: 1050px) {
+  .footer { padding: 52px 40px 24px; border-radius: 32px 32px 0 0; }
+  .footer__grid {
+    grid-template-columns: repeat(2, minmax(0,1fr));
+    row-gap: 40px;
+    gap: 32px;
+  }
+  .footer__col { border-left: none; padding-left: 0; }
+  /* En este rango (769-1050px) también apilado y centrado, igual que el
+     breakpoint de abajo (≤768px) — antes solo se centraba el grupo en
+     fila (legal + "Dale go a tu talento" pegados uno al lado del otro),
+     no cada uno como línea propia centrada. .footer__bottom pasa de grid a
+     flex acá porque en columna no hace falta el truco de 3 columnas: cada
+     bloque ya ocupa su propia línea centrada. */
+  .footer__bottom { display: flex; flex-direction: column; align-items: center; text-align: center; gap: 10px; }
 }
 
 @media (max-width: 768px) {
-  .legal-page {
-    padding-top: 100px;
-  }
+  .footer { padding: 46px 24px 22px; border-radius: 26px 26px 0 0; }
+  .footer__grid { grid-template-columns: 1fr; row-gap: 34px; }
+  .footer__col { border-left: none; padding-left: 0; }
 
-  .legal-card {
-    padding: 26px 20px;
-    border-radius: 22px;
-  }
+  /* Marca: todo centrado (logo, descripción, tagline y redes). */
+  .footer__brand { display: flex; flex-direction: column; align-items: center; text-align: center; }
+  .footer__desc { max-width: 40ch; }
+  .footer-social { width: 48px; height: 48px; }
 
-  .legal-card__content {
-    font-size: 0.95rem;
-    line-height: 1.7;
+  /* Explora / Wigo / Contáctanos pasan a acordeón: el botón del título se
+     vuelve interactivo y el panel se colapsa con max-height (mismo patrón
+     que #navLinks en el menú hamburguesa). js/main.js alterna la clase
+     .is-open y aria-expanded al hacer click. */
+  .footer__accordion-toggle { cursor: pointer; }
+  .footer__accordion-chevron {
+    display: block;
+    width: 16px;
+    height: 16px;
+    margin-left: auto;
+    flex-shrink: 0;
+    color: var(--wigo-orange);
+    transition: transform .22s ease;
   }
+  .footer__accordion.is-open .footer__accordion-chevron { transform: rotate(180deg); }
+  .footer__accordion-panel { max-height: 0; overflow: hidden; transition: max-height .22s ease; }
+  .footer__accordion.is-open .footer__accordion-panel { max-height: 420px; }
+  .footer__accordion-panel .footer__links { padding-top: 4px; }
+  .footer__link { justify-content: center; }
 
-  .legal-card__content h2 {
-    font-size: 1.06rem;
-  }
+  /* Contáctanos dentro del acordeón: email/teléfono + CTA ancho. */
+  .footer__contact-list { padding-top: 4px; }
+  .footer-cta { max-width: 420px; height: 54px; padding: 0 22px; margin: 4px auto 0; }
+
+  .footer__bottom { display: flex; flex-direction: column; align-items: center; text-align: center; gap: 10px; margin-top: 32px; }
+}
+
+@media (max-width: 390px) {
+  .footer { padding: 38px 18px 20px; }
+  .footer__brand .footer__logo { height: 38px; }
+  .footer-social { width: 44px; height: 44px; }
+  .footer__copy, .footer__legal, .footer__made { font-size: .76rem; }
 }
 
 .reveal { opacity: 0; transform: translateY(18px); transition: opacity .55s ease, transform .55s ease; }
@@ -1047,8 +1670,10 @@ a { color: inherit; }
 @media (prefers-reduced-motion: reduce) { * { scroll-behavior: auto !important; transition: none !important; animation: none !important; } .reveal { opacity: 1; transform: none; } }
 
 @media (max-width: 980px) {
-  .hero, .download, .ferias { grid-template-columns: 1fr; }
+  .hero, .download, .ferias, .confianza-showcase { grid-template-columns: 1fr; }
   .hero__visual { min-height: 560px; }
+  .confianza-content { text-align: center; }
+  .confianza-content__list { justify-items: start; max-width: 320px; margin: 0 auto; }
   .download { gap: 20px; }
   #descargas .download__fan { margin: 0 auto; max-width: 340px; height: 310px; }
   #descargas .fan-phone[data-slot="left"] { left: 9%; }
@@ -1060,19 +1685,62 @@ a { color: inherit; }
   .features, .process { grid-template-columns: repeat(2, minmax(0,1fr)); }
   .team { grid-template-columns: 1fr; }
   .member--detailed { grid-template-columns: minmax(180px, .75fr) minmax(0, 1fr); }
-  .team-values { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .team-values article:nth-child(2) { border-right: 0; }
-  .team-values article:nth-child(n+3) { border-top: 1px solid rgba(13,43,76,.10); padding-top: 16px; margin-top: 10px; }
-  .map__frame { height: 460px; }
 }
 
 @media (max-width: 768px) {
   .nav__container { padding: .65rem .9rem; }
   .nav__toggle { display: inline-block; }
-  .nav__links { position: absolute; left: 10px; right: 10px; top: calc(100% + 8px); background: rgba(255,255,255,.96); border: 1px solid var(--line); border-radius: 22px; box-shadow: var(--shadow); flex-direction: column; align-items: stretch; gap: 0; max-height: 0; overflow: hidden; transition: max-height .25s ease, padding .25s ease; padding: 0 .75rem; backdrop-filter: blur(18px); }
+  .nav__links { position: absolute; left: 10px; right: 10px; top: calc(100% + 8px); background: rgba(255,255,255,.96); border: 1px solid var(--line); border-radius: 22px; box-shadow: var(--shadow); flex-direction: column; align-items: stretch; gap: 6px; max-height: 0; overflow: hidden; transition: max-height .25s ease, padding .25s ease; padding: 0 .75rem; backdrop-filter: blur(18px); }
   .nav__links.is-open { max-height: 520px; padding: .75rem; }
-  .nav__links a { width: 100%; justify-content: center; color: var(--wigo-blue); }
-  .nav__links a:hover, .nav__links a.is-active { background: rgba(13,83,144,.08); }
+  /* Cada fila centra su propio link/pastilla; el ancho de la pastilla lo da
+     el padding del link (ver regla de escritorio ".nav__links a" más arriba)
+     en vez de forzar width:100%, así que cada una queda del tamaño de su
+     palabra y no una barra estirada de punta a punta. */
+  .nav__links li { display: flex; justify-content: center; }
+  .nav__links a { justify-content: center; color: var(--wigo-blue); }
+  .nav__links a:hover { background: rgba(13,83,144,.08); }
+
+  /* Línea "Dale go a tu talento" después de "Contáctanos", solo en el menú
+     hamburguesa. */
+  .nav__tagline {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    margin-top: .6rem;
+    padding-top: .85rem;
+    border-top: 1px solid var(--line);
+    color: var(--muted);
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: .88rem;
+  }
+  /* El PNG del "go" es blanco (pensado para ir sobre círculos de color, como
+     en el resto del sitio); acá el fondo es blanco, así que en vez de <img>
+     se aplica como mask-image (misma técnica que .custom-cursor) para
+     poder pintarlo del azul de Wigo con background-color. */
+  .nav__tagline-icon {
+    display: inline-block;
+    width: 20px;
+    height: 17px;
+    background-color: var(--wigo-blue);
+    -webkit-mask-image: url('../assets/sources/go_header01.png');
+    mask-image: url('../assets/sources/go_header01.png');
+    -webkit-mask-size: contain;
+    mask-size: contain;
+    -webkit-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
+    -webkit-mask-position: center;
+    mask-position: center;
+  }
+  /* Sección donde está el usuario (link marcado is-active por el scrollspy
+     en js/main.js): fondo azul Wigo sólido + texto blanco, para que se
+     distinga claramente del resto en el menú desplegable móvil. !important
+     porque ".site-header.is-scrolled .nav__links a.is-active" (más arriba,
+     fuera de este media query) tiene mayor especificidad y si no, gana esa
+     regla apenas la página hace scroll (el header casi siempre está
+     "is-scrolled" cuando el usuario abre el menú). */
+  .nav__links a.is-active { background: var(--wigo-blue) !important; color: #fff !important; }
   .hero-section { padding-top: 172px; }
   .hero__title { 
       font-size: clamp(2.1rem, 11vw, 3.2rem);
@@ -1112,72 +1780,425 @@ a { color: inherit; }
   .member__photo--framed { min-height: 360px; }
   .member__info--detailed { padding: 8px 4px 0; }
   .member__tags { margin-top: 18px; }
-  .team-values { grid-template-columns: 1fr; }
-  .team-values article, .team-values article:nth-child(2), .team-values article:nth-child(n+3) { border-right: 0; border-top: 1px solid rgba(13,43,76,.10); padding: 16px 4px; margin: 0; }
-  .team-values article:first-child { border-top: 0; padding-top: 4px; }
   .section { padding: 88px 0; }
-  .form { padding: 20px; }
 }
 
 
 #historia.process-section {
   overflow: hidden;
+  padding-top: 64px;
+  padding-bottom: 64px;
   background:
     radial-gradient(circle at 12% 22%, rgba(13,83,144,.08), transparent 24%),
     radial-gradient(circle at 86% 18%, rgba(255,162,26,.12), transparent 26%),
     linear-gradient(180deg, #ffffff 0%, #f7fbff 100%);
 }
 #historia .process-bg { position:absolute; inset:0; pointer-events:none; background-image:radial-gradient(rgba(13,83,144,.13) 1px, transparent 1px); background-size:28px 28px; opacity:.22; }
-#historia .process-float { position:absolute; width:54px; height:54px; display:grid; place-items:center; border-radius:999px; background:rgba(255,255,255,.86); border:1px solid rgba(13,43,76,.08); color:var(--wigo-blue); box-shadow:0 16px 42px rgba(13,43,76,.10); font-weight:1000; }
-#historia .process-float--search { left:8%; top:23%; } #historia .process-float--cart { right:13%; top:13%; } #historia .process-float--box { right:4%; top:33%; color:var(--wigo-orange-2); }
 #historia .section-heading--process { width:min(920px, 100%); margin-bottom:42px; }
-#historia .section__lead strong { color:var(--wigo-blue); font-weight:1000; } #historia .section__lead strong:last-child { color:var(--wigo-orange-2); }
-#historia .process--cards { position:relative; display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:22px; }
-#historia .process-card { position:relative; min-height:382px; padding:24px 24px 92px; border-radius:26px; overflow:hidden; background:linear-gradient(180deg,rgba(255,255,255,.98),rgba(255,255,255,.91)) padding-box,linear-gradient(135deg,rgba(13,83,144,.18),rgba(255,162,26,.18)) border-box; border:1px solid transparent; box-shadow:0 22px 62px rgba(13,43,76,.10); transition:transform .25s ease, box-shadow .25s ease; }
-#historia .process-card:hover { transform:translateY(-7px); box-shadow:0 30px 78px rgba(13,43,76,.15); }
-#historia .process-card__number { width:44px; height:44px; display:grid; place-items:center; border-radius:13px; color:#fff; background:linear-gradient(135deg,var(--wigo-blue),#4ea0ff); font-weight:1000; font-size:1rem; box-shadow:0 12px 28px rgba(13,83,144,.20); }
-#historia .process-card--connect .process-card__number { background:linear-gradient(135deg,#167a5a,var(--wigo-blue)); }
-#historia .process-card--buy .process-card__number { background:linear-gradient(135deg,var(--wigo-orange),var(--wigo-orange-2)); }
-#historia .process-card--receive .process-card__number { background:linear-gradient(135deg,var(--wigo-blue),var(--wigo-orange)); }
-#historia .process-card__visual { height:118px; display:flex; align-items:center; justify-content:center; margin:8px 0 18px; border-radius:22px; background:linear-gradient(135deg,rgba(13,83,144,.07),rgba(255,162,26,.08)); }
-#historia .process-card__emoji { position:relative; z-index:2; font-size:3.8rem; line-height:1; filter:drop-shadow(0 14px 20px rgba(13,83,144,.16)); }
-#historia .process-card__ghost { position:absolute; right:30px; top:88px; font-size:3.2rem; opacity:.12; transform:rotate(-8deg); }
-#historia .process-card h3 { margin:0; color:var(--ink); font-size:1.55rem; letter-spacing:-.04em; }
-#historia .process-card__line { display:block; width:42px; height:3px; margin:10px 0 14px; border-radius:999px; background:linear-gradient(90deg,var(--wigo-blue),var(--wigo-orange)); }
-#historia .process-card p { margin:0; color:#51647b; font-size:.94rem; line-height:1.58; }
-#historia .process-card__footer { position:absolute; left:0; right:0; bottom:0; min-height:74px; display:grid; grid-template-columns:44px 1fr; gap:12px; align-items:center; padding:16px 20px; background:linear-gradient(135deg,rgba(13,83,144,.06),rgba(255,162,26,.08)); border-top:1px solid rgba(13,43,76,.06); }
-#historia .process-card__footer span { width:38px; height:38px; display:grid; place-items:center; border-radius:999px; color:var(--wigo-blue); background:#fff; box-shadow:0 10px 24px rgba(13,43,76,.09); font-weight:1000; }
-#historia .process-card__footer strong { color:var(--ink); font-size:.82rem; line-height:1.25; }
+#ferias .process-checklist__title { font-weight: 900; color: var(--wigo-blue); font-size: 1.05rem; margin-top: 16px; }
+#ferias .process-checklist {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px 28px;
+  margin: 14px 0 0;
+  padding: 0;
+}
+#ferias .process-checklist li { display: flex; align-items: center; gap: 8px; color: var(--ink); font-weight: 700; font-size: .92rem; }
+#ferias .process-checklist__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--wigo-orange);
+  color: #fff;
+  font-size: .68rem;
+  font-weight: 900;
+  flex-shrink: 0;
+}
+#historia .process--icons { position: relative; display: grid; grid-template-columns: repeat(5, minmax(0,1fr)); gap: 14px; max-width: 1040px; margin: 8px auto 0; }
+#historia .process-icon-item {
+  position: relative;
+  text-align: center;
+  padding: 22px 14px 24px;
+  border-radius: 18px;
+  background: #fff;
+  border: 1px solid rgba(13,43,76,.09);
+  transition: transform .25s ease, border-color .25s ease, box-shadow .25s ease;
+}
+#historia .process-icon-item:hover {
+  transform: translateY(-6px);
+  border-color: rgba(13,83,144,.22);
+  box-shadow: 0 18px 38px rgba(13,43,76,.12);
+}
+#historia .process-icon-item img { display: block; width: 170px; height: 170px; object-fit: contain; margin: 0 auto 14px; }
+#historia .process-icon-item h3 { margin: 0 0 6px; color: var(--wigo-blue); font-size: 1rem; font-weight: 800; }
+#historia .process-icon-item p { margin: 0; color: #51647b; font-size: .78rem; line-height: 1.5; }
 
+#ferias { padding-top: 64px; padding-bottom: 64px; }
 #ferias.ferias-section { background:radial-gradient(circle at 12% 12%,rgba(13,83,144,.10),transparent 28%),radial-gradient(circle at 90% 8%,rgba(255,162,26,.13),transparent 26%),linear-gradient(180deg,#f8fbff 0%,#ffffff 100%); }
+
+/* Íconos orbitando de fondo (decorativo): misma técnica que
+   ".impact-section__particle" / "@keyframes impact-particle-orbit" (ver
+   arriba, sección Impacto) — reutilizo ese mismo keyframe, ya es genérico
+   (mueve el elemento en círculo según --r). Acá sin la lógica de fusión
+   "ii/go/wigo" de esa sección, solo 6 íconos fijos dando vueltas. El
+   contenedor va DETRÁS del contenido (position:absolute + z-index bajo, y
+   el .container de la sección sube a z-index:2 para quedar siempre
+   encima). */
+#ferias .container { position: relative; z-index: 2; }
+.ferias-orbit { position: absolute; inset: 0; overflow: hidden; pointer-events: none; z-index: 1; }
+.ferias-orbit__item {
+  position: absolute;
+  display: block;
+  animation-name: impact-particle-orbit;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+.ferias-orbit__item img { width: 100%; height: 100%; object-fit: contain; filter: drop-shadow(0 8px 16px rgba(13,43,76,.18)); }
+
+.ferias-orbit__item--1 {
+  top: 14%; left: 9%; width: 110px; height: 110px;
+  --r: 60px; animation-duration: 22s; opacity: .55;
+}
+.ferias-orbit__item--2 {
+  top: 42%; left: 93%; width: 88px; height: 88px;
+  --r: 46px; animation-duration: 17s; animation-delay: -6s; animation-direction: reverse; opacity: .5;
+}
+.ferias-orbit__item--3 {
+  top: 88%; left: 48%; width: 100px; height: 100px;
+  --r: 70px; animation-duration: 26s; animation-delay: -12s; opacity: .45;
+}
+.ferias-orbit__item--4 {
+  top: 6%; left: 62%; width: 82px; height: 82px;
+  --r: 50px; animation-duration: 19s; animation-delay: -3s; animation-direction: reverse; opacity: .5;
+}
+.ferias-orbit__item--5 {
+  top: 66%; left: 4%; width: 92px; height: 92px;
+  --r: 56px; animation-duration: 24s; animation-delay: -9s; opacity: .5;
+}
+.ferias-orbit__item--6 {
+  top: 24%; left: 40%; width: 76px; height: 76px;
+  --r: 44px; animation-duration: 20s; animation-delay: -15s; animation-direction: reverse; opacity: .4;
+}
+
+@media (max-width: 700px) {
+  .ferias-orbit__item--1 { width: 82px; height: 82px; --r: 34px; }
+  .ferias-orbit__item--2 { width: 70px; height: 70px; --r: 26px; }
+  .ferias-orbit__item--3 { width: 76px; height: 76px; --r: 38px; }
+  .ferias-orbit__item--4 { width: 66px; height: 66px; --r: 30px; }
+  .ferias-orbit__item--5 { width: 72px; height: 72px; --r: 32px; }
+  .ferias-orbit__item--6 { width: 60px; height: 60px; --r: 24px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ferias-orbit__item { animation: none; }
+}
 #ferias .section-heading--ferias { width:min(820px,100%); margin-bottom:34px; }
 #ferias .ferias--showcase { display:grid; grid-template-columns:minmax(0,.95fr) minmax(0,1fr); gap:24px; align-items:stretch; }
-#ferias .map__frame { position:relative; height:610px; padding:22px; overflow:hidden; background:radial-gradient(circle at 50% 48%,rgba(13,83,144,.08),transparent 42%),linear-gradient(180deg,rgba(255,255,255,.98),rgba(255,255,255,.92)); border:1px solid rgba(13,43,76,.10); border-radius:28px; box-shadow:0 24px 70px rgba(13,43,76,.11); }
-#ferias .map__frame::before { content:""; position:absolute; inset:100px 42px 120px; background-image:radial-gradient(rgba(13,83,144,.14) 1px,transparent 1px); background-size:14px 14px; opacity:.4; pointer-events:none; }
-#ferias .map__svg { position:relative; z-index:1; width:100%; height:calc(100% - 104px); margin-top:42px; filter:drop-shadow(0 18px 24px rgba(13,83,144,.16)); }
-#ferias .province { fill:#4a97e6; opacity:.86; stroke:rgba(255,255,255,.95); stroke-width:1.1; } #ferias .province:hover { fill:#ffb24f; opacity:.98; } #ferias .province.active { fill:var(--wigo-orange); stroke:#fff; stroke-width:2; opacity:1; }
-#ferias .map__label { position:absolute; z-index:2; display:inline-flex; align-items:center; gap:10px; padding:10px 14px; border-radius:16px; background:rgba(255,255,255,.88); border:1px solid rgba(13,43,76,.08); color:var(--ink); box-shadow:0 12px 30px rgba(13,43,76,.08); backdrop-filter:blur(12px); }
-#ferias .map__label span { width:36px; height:36px; display:grid; place-items:center; border-radius:12px; background:rgba(13,83,144,.08); } #ferias .map__label strong { font-size:.85rem; line-height:1.15; } #ferias .map__label--left { left:24px; top:22px; } #ferias .map__label--right { right:24px; top:26px; }
-#ferias .map__stats { position:absolute; left:20px; right:20px; bottom:20px; z-index:2; display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:10px; }
-#ferias .map__stats article { min-height:86px; display:grid; place-items:center; padding:12px 8px; text-align:center; border-radius:16px; background:rgba(255,255,255,.88); border:1px solid rgba(13,43,76,.08); box-shadow:0 10px 26px rgba(13,43,76,.06); }
-#ferias .map__stats span { font-size:1.25rem; } #ferias .map__stats strong { color:var(--ink); font-size:1.12rem; line-height:1; } #ferias .map__stats small { color:var(--muted); font-size:.68rem; line-height:1.15; }
-#ferias .feria--featured { min-height:610px; justify-content:flex-start; padding:24px; border-radius:28px; background:linear-gradient(180deg,rgba(255,255,255,.98),rgba(255,255,255,.93)) padding-box,linear-gradient(135deg,rgba(13,83,144,.16),rgba(255,162,26,.20)) border-box; border:1px solid transparent; box-shadow:0 24px 70px rgba(13,43,76,.11); }
-#ferias .feria__province { align-self:center; margin-bottom:20px; padding:10px 18px; background:rgba(13,83,144,.08); color:var(--wigo-blue); border:1px solid rgba(13,83,144,.10); }
-#ferias .feria-image { position:relative; height:268px; margin-bottom:18px; overflow:hidden; border-radius:22px; background:linear-gradient(135deg,var(--wigo-blue),var(--wigo-orange)); box-shadow:inset 0 -70px 90px rgba(0,0,0,.18),0 18px 42px rgba(13,43,76,.12); }
+#ferias .map__frame { position:relative; height:600px; padding:22px; overflow:hidden; display:flex; flex-direction:column; background:radial-gradient(circle at 50% 48%,rgba(13,83,144,.08),transparent 42%),linear-gradient(180deg,rgba(255,255,255,.98),rgba(255,255,255,.92)); border:1px solid rgba(13,43,76,.10); border-radius:28px; box-shadow:0 24px 70px rgba(13,43,76,.11); }
+
+/* Fondo punteado — más fino, más tenue y con fade hacia los bordes (mask-image) para que
+   se sienta como una cuadrícula técnica delicada y no como un patrón protagonista. */
+#ferias .map__frame::before {
+  content:"";
+  position:absolute;
+  z-index:0;
+  inset:90px 36px 110px;
+  background-image:radial-gradient(rgba(13,83,144,.10) 1px,transparent 1.3px);
+  background-size:16px 16px;
+  opacity:.5;
+  -webkit-mask-image:radial-gradient(ellipse at 50% 45%,#000 42%,transparent 76%);
+  mask-image:radial-gradient(ellipse at 50% 45%,#000 42%,transparent 76%);
+  pointer-events:none;
+}
+
+/* Luz ambiental azul detrás del mapa — muy sutil, puramente decorativa. */
+#ferias .map__frame::after {
+  content:"";
+  position:absolute;
+  z-index:0;
+  inset:6%;
+  background:radial-gradient(ellipse at 50% 40%, rgba(57,143,202,.12) 0%, rgba(57,143,202,.04) 45%, transparent 72%);
+  pointer-events:none;
+}
+
+/* El SVG entero flota sobre el fondo con 2 niveles de sombra: una "de contacto" (chica, nítida,
+   justo debajo) y una "ambiental" (grande, difusa) — nada de nube gris gigante. El mapa se
+   mantiene 100% frontal: nunca se usa rotateX/rotateY/perspective aquí. */
+#ferias .map__svg {
+  position:relative;
+  z-index:1;
+  width:100%;
+  height:auto;
+  flex:1 1 auto;
+  min-height:0;
+  margin-top:1px;
+  filter:
+    drop-shadow(0 7px 5px rgba(8,37,64,.20))
+    drop-shadow(0 20px 22px rgba(13,83,144,.16));
+}
+
+/* Superficie: gradiente diagonal muy sutil (definido en el <defs> del SVG) en vez de azul
+   plano — celeste arriba-izquierda, azul corporativo al centro, azul oscuro abajo-derecha. */
+#ferias .province {
+  fill: url(#mapSurfaceGradient);
+  opacity: .96;
+  stroke: rgba(255,255,255,.86);
+  stroke-width: 1.1;
+  transition: filter .22s ease, transform .22s ease, stroke .2s ease, stroke-width .2s ease;
+  transform-box: fill-box;
+  transform-origin: center;
+  cursor: pointer;
+}
+
+/* Hover: microinteracción premium — NO cambia de color a naranja, solo se eleva un poco,
+   se aclara levemente y gana una sombra de contacto. .active siempre pisa esto porque su
+   regla está declarada después con la misma especificidad (empate → gana la última). */
+#ferias .province:hover {
+  filter: brightness(1.08) drop-shadow(0 5px 4px rgba(13,43,76,.20));
+  transform: translateY(-2px);
+}
+
+/* Provincia activa: la protagonista — naranja WIGO con gradiente muy sutil, elevación
+   moderada (4px, no 7-10), sombra de contacto + glow naranja elegante, borde blanco. */
+#ferias .province.active {
+  fill: url(#mapActiveGradient);
+  opacity: 1;
+  stroke: #fff;
+  stroke-width: 1.7;
+  transform: translateY(-4px);
+  filter:
+    drop-shadow(0 7px 5px rgba(170,90,0,.22))
+    drop-shadow(0 0 10px rgba(255,162,26,.30));
+}
+
+/* Capas de profundidad 2.5D (creadas por ferias.js, ver bootMapDepth) — puramente decorativas.
+   pointer-events:none también en CSS como refuerzo del inline style que pone el JS. */
+#ferias .province-depth {
+  pointer-events: none;
+}
+
+/* Pequeño extra de elevación para la región activa al pasar el cursor por encima. Especificidad
+   (0,0,3,0) — más alta que .province:hover y que .province.active por separado — así que gana
+   siempre sin depender del orden de declaración, y .active nunca pierde protagonismo frente al
+   simple hover de otra región. */
+#ferias .province.active:hover {
+  transform: translateY(-5px);
+}
+
+/* ===== Tooltip minimalista de hover (nombre de departamento) =====
+   Un solo elemento reutilizado para las 25 regiones (ver bootMapHover en ferias.js), reposicionado
+   dinámicamente con getBBox()/getScreenCTM(). Estructura: pastilla + línea fina + punto — sin
+   triángulo ni glow. Puramente decorativo: aria-hidden y pointer-events:none en todo momento,
+   nunca intercepta clicks ni compite con la interacción real del mapa.
+   El wrapper solo controla posición (translate -50%,-100% para centrar sobre el ancla y apoyar
+   el punto en ella) y una transición de opacity simple; cada hijo anima su propia entrada con
+   un pequeño transition-delay escalonado (pastilla → línea → punto), como pide el punto 7-9. */
+#ferias .map-hover-ui {
+  position: absolute;
+  z-index: 6;
+  top: 0;
+  left: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  pointer-events: none;
+  opacity: 0;
+  transform: translate(-50%, -100%);
+  transition: opacity .18s linear;
+}
+#ferias .map-hover-ui.is-visible {
+  opacity: 1;
+}
+
+#ferias .map-hover-label {
+  padding: 8px 16px;
+  border-radius: 999px;
+  background: rgba(255,255,255,.97);
+  color: #0D5390;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: .01em;
+  line-height: 1;
+  white-space: nowrap;
+  border: 1px solid rgba(13,83,144,.06);
+  box-shadow: 0 8px 22px rgba(13,43,76,.13), 0 2px 5px rgba(13,43,76,.06);
+  opacity: 0;
+  transform: translateY(5px) scale(.94);
+  transition: opacity .2s cubic-bezier(.16,1,.3,1), transform .2s cubic-bezier(.16,1,.3,1);
+}
+#ferias .map-hover-ui.is-visible .map-hover-label {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+#ferias .map-hover-line {
+  display: block;
+  width: 1.5px;
+  height: 24px;
+  background: rgba(255,255,255,.92);
+  box-shadow: 0 0 4px rgba(13,83,144,.10);
+  transform: scaleY(0);
+  transform-origin: top;
+  transition: transform .2s cubic-bezier(.16,1,.3,1);
+  transition-delay: .05s;
+}
+#ferias .map-hover-ui.is-visible .map-hover-line {
+  transform: scaleY(1);
+}
+
+#ferias .map-hover-dot {
+  display: block;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 0 0 2px rgba(135,202,245,.28), 0 2px 6px rgba(13,83,144,.16);
+  opacity: 0;
+  transform: scale(0);
+  transition: opacity .16s ease, transform .16s ease;
+  transition-delay: .11s;
+}
+#ferias .map-hover-ui.is-visible .map-hover-dot {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* Táctil: sin cursor real no hay "hover" que anclar, así que ocultamos el tooltip y dejamos
+   intacta la interacción por click/tap que ya existía. */
+@media (hover: none), (pointer: coarse) {
+  #ferias .map-hover-ui { display: none !important; }
+}
+
+/* Animación de entrada del mapa: reutiliza el mismo observer/clase .reveal que ya usa el
+   resto del sitio (bootReveal en main.js, sin cambios) — solo se sobreescribe la transición
+   y los valores para este elemento puntual, porque acá sí queremos scale() y un easing propio,
+   distinto del fade+slide genérico de .reveal. Nada de animaciones infinitas. */
+#ferias .map__frame.reveal {
+  opacity: 0;
+  transform: translateY(12px) scale(.985);
+  transition: opacity .62s cubic-bezier(.16,1,.3,1), transform .62s cubic-bezier(.16,1,.3,1);
+}
+#ferias .map__frame.reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+@media (prefers-reduced-motion: reduce) {
+  #ferias .map__frame.reveal { opacity: 1; transform: none; }
+}
+
+#ferias .map__badge {
+  position: relative;
+  z-index: 2;
+  flex-shrink: 0;
+  align-self: center;
+  margin-bottom: 30px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 22px 8px 12px;
+  border-radius: 999px;
+  background: var(--wigo-orange);
+  color: #fff;
+  font-weight: 900;
+  font-size: 1rem;
+  box-shadow: 0 10px 26px rgba(13,43,76,.2);
+  overflow: hidden;
+}
+#ferias .map__badge-icon { width: 30px; height: 30px; object-fit: contain; flex-shrink: 0; position: relative; }
+#ferias .map__badge::after {
+  content: "";
+  position: absolute;
+  top: -20%;
+  left: -60%;
+  width: 35%;
+  height: 140%;
+  background: linear-gradient(115deg, transparent, rgba(255,255,255,.85), transparent);
+  transform: skewX(-22deg);
+  animation: map-badge-shine 6s ease-in-out infinite;
+}
+@keyframes map-badge-shine {
+  0%, 55% { left: -60%; }
+  100% { left: 140%; }
+}
+@media (prefers-reduced-motion: reduce) {
+  #ferias .map__badge::after { animation: none; display: none; }
+}
+
+#ferias .feria--featured { display:flex; flex-direction:column; height:600px; overflow:hidden; justify-content:flex-start; padding:24px; border-radius:28px; background:linear-gradient(180deg,rgba(255,255,255,.98),rgba(255,255,255,.93)) padding-box,linear-gradient(135deg,rgba(13,83,144,.16),rgba(255,162,26,.20)) border-box; border:1px solid transparent; box-shadow:0 24px 70px rgba(13,43,76,.11); }
+#ferias .feria__province {
+  align-items: center;
+  gap: 8px;
+  align-self: center;
+  margin-bottom: 20px;
+  padding: 8px 22px 8px 12px;
+  background: var(--wigo-orange);
+  color: #fff;
+  font-weight: 900;
+  font-size: 1rem;
+  text-transform: none;
+  letter-spacing: normal;
+  border: none;
+  box-shadow: 0 10px 26px rgba(13,43,76,.2);
+  animation: eyebrow-float 3.2s ease-in-out infinite;
+}
+#ferias .feria__province-icon { width: 30px; height: 30px; object-fit: contain; flex-shrink: 0; }
+#ferias .feria-image { position:relative; height:225px; margin-bottom:16px; overflow:hidden; border-radius:22px; background:linear-gradient(135deg,var(--wigo-blue),var(--wigo-orange)); box-shadow:inset 0 -70px 90px rgba(0,0,0,.18),0 18px 42px rgba(13,43,76,.12); }
 #ferias .feria-image img { width:100%; height:100%; object-fit:cover; } #ferias .feria-image__fallback { width:100%; height:100%; display:grid; place-items:center; color:#fff; font-size:4rem; font-weight:1000; }
-#ferias .feria-info h3 { font-size:clamp(1.7rem,2.5vw,2.3rem); letter-spacing:-.045em; } #ferias .feria-description { font-size:.95rem; line-height:1.58; }
+/* Variante para logos/emblemas (p.ej. CONAMB): la imagen se muestra tal cual, sin fondo
+   añadido ni sombra encima — solo hereda el borde redondeado del contenedor. */
+#ferias .feria-image--logo { background: none; box-shadow: none; }
+#ferias .feria-image--logo img { object-fit: contain; padding: 0; }
+#ferias .feria-info { text-align: center; }
+#ferias .feria-info h3 { font-family: var(--font-display); font-size:clamp(1.25rem,1.8vw,1.55rem); letter-spacing:-.03em; } #ferias .feria-description { font-size:.9rem; line-height:1.5; }
+#ferias .feria-location { margin: 0 0 10px; color: var(--ink); font-weight: 700; font-size: .88rem; line-height: 1.4; }
+#ferias .feria-cta { display:inline-flex; align-items:center; justify-content:center; width:52px; height:52px; margin-top:14px; border:0; border-radius:50%; background:var(--wigo-orange); cursor:pointer; box-shadow:0 14px 30px rgba(255,162,26,.32); transition:transform .22s ease, box-shadow .22s ease, background .22s ease; }
+#ferias .feria-cta:hover { background:var(--wigo-orange-2); transform:translateY(-2px); box-shadow:0 18px 38px rgba(255,162,26,.38); }
+#ferias .feria-cta:focus-visible { outline:2px solid var(--wigo-blue); outline-offset:2px; }
+#ferias .feria-cta__icon { width:26px; height:26px; object-fit:contain; flex-shrink:0; }
 #ferias .feria-tags { display:flex; flex-wrap:wrap; gap:8px; margin-top:18px; } #ferias .feria-tags span { display:inline-flex; align-items:center; gap:6px; padding:8px 10px; border-radius:999px; background:rgba(13,83,144,.06); border:1px solid rgba(13,83,144,.10); color:var(--wigo-blue-2); font-size:.76rem; font-weight:850; }
 #ferias .feria-actions { display:flex; flex-wrap:wrap; gap:12px; margin-top:22px; } #ferias .btn--small { min-width:164px; padding:.78rem 1rem; font-size:.86rem; } #ferias .note--ferias { margin-top:18px; color:var(--muted); }
 
-@media (max-width:1100px) { #historia .process--cards { grid-template-columns:repeat(2,minmax(0,1fr)); } #ferias .ferias--showcase { grid-template-columns:1fr; } #ferias .map__frame, #ferias .feria--featured { min-height:auto; } }
-@media (max-width:768px) { #historia .process-float { display:none; } #historia .process--cards { grid-template-columns:1fr; } #historia .process-card { min-height:340px; } #ferias .map__frame { height:540px; padding:16px; } #ferias .map__label--right { display:none; } #ferias .map__svg { height:calc(100% - 126px); margin-top:50px; } #ferias .map__stats { grid-template-columns:repeat(2,minmax(0,1fr)); } #ferias .feria--featured { min-height:auto; padding:18px; } #ferias .feria-image { height:220px; } }
-@media (max-width:480px) { #ferias .map__frame { height:500px; } #ferias .map__stats article { min-height:72px; } #ferias .feria-actions .btn--small { width:100%; } }
-
-#historia .section__title--impact,
-#ferias .section__title--impact {
-  letter-spacing: -.055em;
-  line-height: .98;
+@media (max-width:1100px) { #historia .process--icons { grid-template-columns:repeat(3,minmax(0,1fr)); row-gap:32px; } #ferias .ferias--showcase { grid-template-columns:1fr; } #ferias .map__frame { min-height:auto; } #ferias .feria--featured { height:auto; min-height:auto; overflow:visible; } }
+@media (max-width:768px) {
+  #historia .process--icons { grid-template-columns:repeat(2,minmax(0,1fr)); }
+  /* Solo la tarjeta "Calendario" (última, queda sola en su fila en el grid
+     de 2 columnas): en responsive ocupa las 2 columnas (más delgada y más
+     larga en vez de cuadrada) para que el ícono quepa a su tamaño original
+     al costado del texto, y el conjunto queda centrado dentro de la
+     tarjeta. Las otras 4 tarjetas mantienen el layout centrado de siempre. */
+  #historia .process-icon-item--calendar {
+    grid-column: 1 / -1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    text-align: left;
+    padding: 18px 20px;
+  }
+  #historia .process-icon-item--calendar img {
+    margin: 0;
+    flex-shrink: 0;
+  }
+  #historia .process-icon-item--calendar .process-icon-item__text { flex: 0 1 auto; min-width: 0; }
+  #ferias .map__frame { height:660px; padding:16px; }
+  #ferias .map__svg {
+    margin-top:7px;
+    filter:
+      drop-shadow(0 5px 4px rgba(8,37,64,.18))
+      drop-shadow(0 12px 14px rgba(13,83,144,.14));
+  }
+  #ferias .province.active { transform: translateY(-3px); filter: drop-shadow(0 5px 4px rgba(170,90,0,.20)) drop-shadow(0 0 8px rgba(255,162,26,.26)); }
+  #ferias .province:hover { transform: translateY(-1.5px); filter: brightness(1.06) drop-shadow(0 4px 3px rgba(13,43,76,.16)); }
+  #ferias .map__badge { margin-bottom:24px; }
+  #ferias .feria--featured { height:auto; min-height:auto; overflow:visible; padding:18px; }
+  #ferias .feria-image { height:210px; }
 }
+@media (max-width:480px) { #ferias .map__frame { height:540px; } #ferias .feria-actions .btn--small { width:100%; } }
 
 #historia .text-blue,
 #ferias .text-blue { color: var(--wigo-blue); }
@@ -1207,134 +2228,160 @@ a { color: inherit; }
 .text-blue { color: var(--wigo-blue); }
 .text-orange { color: var(--wigo-orange-2); }
 
-.value-grid {
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 22px;
-  margin-top: 34px;
+/* padding-bottom en 0: el espacio hacia #historia lo aporta ÚNICAMENTE el
+   padding-top de #historia (64px), para que ese espacio (arriba de la
+   pastilla "Ferias Digitales") sea igual al espacio de #historia hacia abajo
+   (su propio padding-bottom, también 64px, antes de la tarjeta Calendario).
+   Antes se sumaban los dos paddings (96 + 64 = 160px arriba vs 64px abajo). */
+#quienes-somos { padding-top: 64px; padding-bottom: 0; }
+
+/* Con el teléfono ya completamente contenido (ver altura fija de
+   .confianza-fan más abajo, junto a su regla base), este margen es solo un
+   respiro fijo antes de #historia. El padding-top de acá iguala el espacio
+   de arriba (del inicio de la sección a la pastilla "Validaciones") con el
+   de abajo (del mockup al final de la sección, que es exactamente
+   .confianza-showcase margin-bottom, dado que #quienes-somos ya quedó con
+   padding-bottom:0 más arriba) — 64px en ambos casos, el mismo espacio que
+   ya se usa en el resto del sitio entre secciones (#historia, #ferias,
+   #contacto). Solo en escritorio (≥981px, layout de 2 columnas); en móvil
+   el padding-top base (64px) ya coincide con este mismo valor. */
+@media (min-width: 981px) {
+  .confianza-showcase { margin-bottom: 64px; }
+  #quienes-somos { padding-top: 64px; }
 }
 
-.value-card {
-  --card-accent: var(--wigo-blue);
+.confianza-showcase {
+  display: grid;
+  grid-template-columns: minmax(280px, 420px) 1fr;
+  gap: 40px;
+  align-items: center;
+  margin-top: 12px;
+}
+/* Este override YA existe en el bloque @media (max-width: 980px) más arriba
+   (línea ~933, junto a .hero/.download/.ferias), pero como la regla base de
+   arriba se declara DESPUÉS en el archivo, gana la cascada por orden de
+   aparición y el showcase nunca colapsaba a 1 columna en móvil (mismo tipo
+   de bug documentado en el informe, sección 6.1.2). Se repite aquí, después
+   de la regla base, para que sí tome efecto. */
+@media (max-width: 980px) {
+  .confianza-showcase { grid-template-columns: 1fr; }
+}
+.confianza-fan {
   position: relative;
-  min-height: 390px;
-  padding: 24px;
-  border-radius: 26px;
-  background:
-    linear-gradient(180deg, rgba(255,255,255,.96), rgba(255,255,255,.90)) padding-box,
-    linear-gradient(135deg, rgba(13,83,144,.24), rgba(255,162,26,.24)) border-box;
-  border: 1px solid transparent;
-  box-shadow: 0 18px 54px rgba(13,43,76,.09);
+  width: 100%;
+  max-width: 380px;
+  height: clamp(300px, 34vw, 380px);
+  margin: 0 auto;
+}
+
+/* En escritorio (grilla de 2 columnas, ≥981px) el teléfono "front" del fan
+   (.confianza-fan__phone[data-slot="front"]) es más alto que el contenedor
+   .confianza-fan (queda posicionado con position:absolute, así que no empuja
+   la altura del contenedor) y sobresalía por debajo de él. La altura de
+   arriba, clamp(300px,34vw,380px), está atada al ANCHO DE PANTALLA,
+   independiente de su propio ancho real (que en cambio salta en escalones
+   fijos 380/340px según breakpoint dentro de este rango). Eso hacía que el
+   sobresaliente del teléfono variara mucho (de ~6px a ~51px) según el ancho
+   exacto de pantalla, así que un colchón fijo de abajo nunca calzaba parejo
+   con el espacio de arriba en todos los tamaños. Estas reglas van DESPUÉS de
+   la base de arriba (misma especificidad, gana la que aparece después) y
+   fijan una altura en px por cada escalón de ancho (425px para 380px de
+   ancho, 380px para 340px de ancho), calculada para que el teléfono quede
+   COMPLETO dentro del contenedor (sin sobresaliente); así el margen de abajo
+   ya no depende del ancho de pantalla y un solo valor fijo alcanza para
+   igualar arriba/abajo en todo el rango. Solo aplica desde 981px porque por
+   debajo de eso el layout pasa a 1 columna (el texto se apila debajo del
+   fan) y ya sobra espacio de forma natural. */
+@media (min-width: 981px) {
+  .confianza-fan { height: 425px; }
+}
+@media (min-width: 981px) and (max-width: 1100px) {
+  /* En este tramo .confianza-fan mide 340px de ancho (la regla de
+     max-width:340px vive más abajo, dentro de @media(max-width:1100px)),
+     así que necesita una altura menor para seguir conteniendo el teléfono
+     sin sobresaliente. */
+  .confianza-fan { height: 380px; }
+}
+
+.confianza-fan__phone {
+  position: absolute;
+  border-radius: 22px;
+  padding: 6px;
   overflow: hidden;
-  transition: transform .25s ease, box-shadow .25s ease;
+  cursor: pointer;
+  transition:
+    left .85s cubic-bezier(.22,.61,.36,1),
+    top .85s cubic-bezier(.22,.61,.36,1),
+    width .85s cubic-bezier(.22,.61,.36,1),
+    transform .85s cubic-bezier(.22,.61,.36,1),
+    background .6s ease,
+    box-shadow .6s ease;
 }
-
-.value-card::before {
-  content: "";
-  position: absolute;
-  inset: auto 0 0 0;
-  height: 4px;
-  background: linear-gradient(90deg, var(--wigo-blue) 50%, var(--wigo-orange) 50%);
+.confianza-fan__phone img { width: 100%; height: 100%; object-fit: cover; border-radius: 17px; display: block; }
+.confianza-fan__phone[data-slot="back"] {
+  left: 4%;
+  top: 10%;
+  width: 44%;
+  aspect-ratio: 9 / 19;
+  background: var(--wigo-blue);
+  box-shadow: 0 16px 38px rgba(13,43,76,.16);
+  transform: rotate(-8deg);
+  z-index: 1;
 }
-
-.value-card::after {
-  content: "";
-  position: absolute;
-  width: 170px;
-  height: 170px;
-  right: -78px;
-  top: -78px;
-  border-radius: 999px;
-  background: radial-gradient(circle, rgba(255,162,26,.16), rgba(13,83,144,.06) 52%, transparent 70%);
-  pointer-events: none;
+.confianza-fan__phone[data-slot="front"] {
+  left: 34%;
+  top: -2%;
+  width: 54%;
+  aspect-ratio: 9 / 19;
+  background: var(--wigo-orange);
+  box-shadow: 0 22px 50px rgba(13,43,76,.24);
+  transform: rotate(0deg);
+  z-index: 2;
 }
-
-.value-card:hover {
-  transform: translateY(-7px);
-  box-shadow: 0 26px 70px rgba(13,43,76,.14);
-}
-
-.value-card--blue,
-.value-card--green,
-.value-card--orange,
-.value-card--purple {
-  --card-accent: var(--wigo-blue);
-}
-
-.value-card__icon {
-  width: 58px;
-  height: 58px;
-  display: grid;
-  place-items: center;
-  margin-bottom: 22px;
-  border-radius: 18px;
-  background: linear-gradient(135deg, rgba(13,83,144,.12), rgba(255,162,26,.18));
-  color: var(--wigo-blue);
-  font-size: 1.75rem;
-  box-shadow: 0 12px 28px rgba(13,83,144,.12);
-}
-
-.value-card h3 {
-  margin: 0 0 18px;
-  color: var(--ink);
-  font-size: clamp(1.08rem, 1.35vw, 1.35rem);
-  line-height: 1.12;
-  letter-spacing: -.025em;
-}
-
-.value-card h3 span {
-  display: block;
-  color: var(--wigo-blue);
-}
-
-.value-card h3::after {
-  content: "";
-  display: block;
-  width: 48px;
-  height: 3px;
-  margin-top: 16px;
-  border-radius: 999px;
-  background: linear-gradient(90deg, var(--wigo-blue) 50%, var(--wigo-orange) 50%);
-}
-
-.value-card p {
-  margin: 0 0 20px;
-  color: var(--text);
-  font-size: .94rem;
-  line-height: 1.58;
-}
-
-.value-card ul {
-  display: grid;
-  gap: 9px;
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-
-.value-card li {
+.confianza-content { text-align: center; }
+.confianza-content h3 { margin: 0 0 12px; color: var(--wigo-blue); font-family: var(--font-display); font-size: clamp(1.5rem, 2.2vw, 2.1rem); font-weight: 800; }
+.confianza-content > p { margin: 0 0 20px; color: #51647b; font-size: 1rem; line-height: 1.6; }
+.confianza-content__list { list-style: none; margin: 0 auto; padding: 0; display: grid; gap: 10px; justify-items: start; width: fit-content; max-width: 100%; }
+.confianza-content__list li {
   position: relative;
-  padding-left: 24px;
-  color: #344a64;
-  font-size: .88rem;
-  line-height: 1.38;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 20px 10px 12px;
+  border-radius: 14px;
+  background: rgba(13,83,144,.05);
+  color: var(--ink);
+  font-weight: 600;
+  font-size: .96rem;
+  opacity: 0;
+  transform: translateX(-14px);
+  animation: hero-check-in .5s ease forwards;
+  transition: background .2s ease, transform .2s ease;
 }
-
-.value-card li::before {
+.confianza-content__list li:hover { background: rgba(13,83,144,.09); transform: translateX(3px); }
+.confianza-content__list li:nth-child(1) { animation-delay: .1s; }
+.confianza-content__list li:nth-child(2) { animation-delay: .25s; }
+.confianza-content__list li:nth-child(3) { animation-delay: .4s; }
+.confianza-content__list li::before {
   content: "✓";
-  position: absolute;
-  left: 0;
-  top: .08rem;
-  width: 16px;
-  height: 16px;
-  display: grid;
-  place-items: center;
-  border-radius: 999px;
+  position: static;
+  width: 22px;
+  height: 22px;
+  min-width: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
   background: var(--wigo-orange);
   color: #fff;
-  font-size: .68rem;
-  font-weight: 1000;
+  font-size: .7rem;
+  font-weight: 900;
+  box-shadow: 0 6px 14px rgba(255,162,26,.35);
 }
+@media (prefers-reduced-motion: reduce) {
+  .confianza-content__list li { animation: none; opacity: 1; transform: none; }
+}
+
 
 /* Sección Equipo */
 .team-section {
@@ -1427,24 +2474,8 @@ a { color: inherit; }
   font-size: .68rem;
 }
 
-.member__link {
-  padding-top: 8px;
-  font-size: .84rem;
-}
-
-.team-values {
-  background:
-    linear-gradient(180deg, rgba(255,255,255,.96), rgba(255,255,255,.90));
-}
-
-.team-values__icon {
-  background: linear-gradient(135deg, rgba(13,83,144,.12), rgba(255,162,26,.17));
-  color: var(--wigo-blue);
-}
-
 @media (max-width: 1100px) {
-  .value-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .value-card { min-height: 330px; }
+  .confianza-fan { max-width: 340px; }
   .team--detailed { grid-template-columns: 1fr; }
   .member--detailed {
     grid-template-columns: minmax(220px, .72fr) minmax(0, 1fr);
@@ -1458,8 +2489,7 @@ a { color: inherit; }
     line-height: 1.04;
   }
 
-  .value-grid { grid-template-columns: 1fr; }
-  .value-card { min-height: auto; padding: 20px; }
+  .confianza-fan { max-width: 280px; }
 
   .member--detailed {
     grid-template-columns: 1fr;
@@ -1477,7 +2507,6 @@ a { color: inherit; }
 
 @media (max-width: 480px) {
   .member__photo--framed { height: 330px; }
-  .team-values { padding: 14px; }
   #descargas .download__fan { max-width: 280px; height: 280px; }
 }
 
@@ -1528,10 +2557,6 @@ a { color: inherit; }
 
 .member__tags {
   margin-top: 16px;
-}
-
-.member__link {
-  margin-top: auto;
 }
 
 /* Desktop ancho: un poco más aireado */
@@ -1594,11 +2619,13 @@ a { color: inherit; }
   }
 }
 
+#nosotros { padding-top: 64px; padding-bottom: 64px; }
+
 #nosotros .team--detailed {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 22px;
-  align-items: stretch;
+  align-items: start;
 }
 
 #nosotros .member--detailed {
@@ -1606,11 +2633,12 @@ a { color: inherit; }
   display: grid;
   grid-template-columns: 168px minmax(0, 1fr);
   column-gap: 18px;
-  height: 440px;
-  min-height: 440px;
+  row-gap: 14px;
   padding: 16px;
-  padding-bottom: 96px;
+  height: auto;
+  min-height: 0;
   align-items: start;
+  align-content: start;
   border-radius: 26px;
   overflow: hidden;
   background:
@@ -1675,20 +2703,18 @@ a { color: inherit; }
   box-shadow: 0 10px 24px rgba(13,83,144,.10);
 }
 
+/* Tamaño base pensado para la grilla de escritorio en 3 columnas (foto ~168-176px + columna de
+   texto angosta): más chico para que "Milton Maqque" entre siempre en una sola línea sin
+   desbordar la tarjeta. En el breakpoint ≤1100px la tarjeta pasa a una sola columna con mucho
+   más ancho disponible, así que ahí se restaura el tamaño original (ver @media más abajo). */
 #nosotros .member__info h3 {
-  margin: 0 0 8px;
+  margin: 0 0 14px;
   color: var(--ink);
-  font-size: 1.42rem;
-  line-height: 1.02;
-  letter-spacing: -.045em;
-}
-
-#nosotros .member__line {
-  width: 44px;
-  height: 3px;
-  margin-bottom: 13px;
-  border-radius: 999px;
-  background: linear-gradient(90deg, var(--wigo-blue) 50%, var(--wigo-orange) 50%);
+  font-size: 1rem;
+  line-height: 1.1;
+  letter-spacing: -.02em;
+  white-space: nowrap;
+  text-align: center;
 }
 
 #nosotros .member__role {
@@ -1697,6 +2723,7 @@ a { color: inherit; }
   font-size: .9rem;
   font-weight: 1000;
   line-height: 1.18;
+  text-align: center;
 }
 
 #nosotros .member__bio {
@@ -1704,69 +2731,148 @@ a { color: inherit; }
   color: #42566f;
   font-size: .79rem;
   line-height: 1.42;
+  text-align: left;
 }
 
 #nosotros .member__tags {
-  position: absolute;
-  left: 16px;
-  right: 16px;
-  bottom: 55px;
+  grid-column: 1 / -1;
   display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
+  flex-wrap: nowrap;
+  justify-content: center;
+  gap: 5px;
   margin: 0;
   padding: 0;
 }
 
+/* Pastillas de habilidades: tamaño compacto para que las 3 + el botón "go"
+   entren siempre en una sola línea, incluso en la grilla de escritorio de 3
+   columnas (columna de texto angosta) y en móvil angosto. */
 #nosotros .member__tags span {
+  position: relative;
+  overflow: hidden;
   display: inline-flex;
   align-items: center;
-  min-height: 28px;
-  padding: 6px 10px;
-  border-radius: 10px;
-  background: rgba(13,83,144,.07);
+  min-height: 24px;
+  padding: 4px 7px;
+  border-radius: 9px;
+  background: var(--wigo-blue);
   border: 1px solid rgba(13,83,144,.10);
-  color: var(--wigo-blue-2);
-  font-size: .68rem;
+  color: #fff;
+  font-size: .56rem;
   font-weight: 850;
   line-height: 1;
   white-space: nowrap;
+  box-shadow: 0 8px 18px rgba(13,83,144,.22);
 }
 
-#nosotros .member__link {
+#nosotros .member__tags span::after {
+  content: "";
   position: absolute;
-  left: 16px;
-  right: 16px;
-  bottom: 13px;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  min-height: 32px;
-  margin: 0;
-  padding: 0;
-  color: var(--ink);
-  font-size: .82rem;
-  font-weight: 950;
-  line-height: 1.15;
-  text-decoration: none;
+  top: -20%;
+  left: -60%;
+  width: 35%;
+  height: 140%;
+  background: linear-gradient(115deg, transparent, rgba(255,255,255,.85), transparent);
+  transform: skewX(-22deg);
+  animation: member-tag-shine 9s ease-in-out infinite;
 }
 
-#nosotros .member__link .linkedin-icon {
-  width: 28px;
-  height: 28px;
-  display: grid;
-  place-items: center;
+/* Destello propio (más corto y predecible que map-badge-shine, que usan otras
+   insignias del sitio con un ritmo más lento) para poder encadenar con
+   precisión: pasa por las 3 pastillas y recién ahí se activa el pulso del
+   botón "go" — ver member-go-pulse más abajo. */
+@keyframes member-tag-shine {
+  0%, 5% { left: -60%; }
+  16% { left: 140%; }
+  100% { left: 140%; }
+}
+
+/* Cascada secuencial: primero las habilidades de Daniel, luego Amir, luego Milton
+   (no las tres tarjetas destellando a la vez). */
+#nosotros .team--detailed > .member:nth-child(1) .member__tags span:nth-child(1)::after { animation-delay: 0s; }
+#nosotros .team--detailed > .member:nth-child(1) .member__tags span:nth-child(2)::after { animation-delay: .225s; }
+#nosotros .team--detailed > .member:nth-child(1) .member__tags span:nth-child(3)::after { animation-delay: .45s; }
+
+#nosotros .team--detailed > .member:nth-child(2) .member__tags span:nth-child(1)::after { animation-delay: 3s; }
+#nosotros .team--detailed > .member:nth-child(2) .member__tags span:nth-child(2)::after { animation-delay: 3.225s; }
+#nosotros .team--detailed > .member:nth-child(2) .member__tags span:nth-child(3)::after { animation-delay: 3.45s; }
+
+#nosotros .team--detailed > .member:nth-child(3) .member__tags span:nth-child(1)::after { animation-delay: 6s; }
+#nosotros .team--detailed > .member:nth-child(3) .member__tags span:nth-child(2)::after { animation-delay: 6.225s; }
+#nosotros .team--detailed > .member:nth-child(3) .member__tags span:nth-child(3)::after { animation-delay: 6.45s; }
+
+@media (prefers-reduced-motion: reduce) {
+  #nosotros .member__tags span::after { animation: none; display: none; }
+}
+
+/* Botón "go" → LinkedIn: reemplaza el ícono "in" + texto "Ver perfil en
+   LinkedIn" de antes. Vive dentro de .member__tags, justo al costado de las
+   pastillas de habilidades. En vez de destello, tiene su propio efecto:
+   crece un poco y se pone amarillo/naranja (el mismo look que al pasar el
+   mouse), pero disparado automáticamente justo cuando termina el destello
+   de sus 3 pastillas vecinas — ver member-go-pulse y los delays más abajo. */
+#nosotros .member__go-btn {
+  position: relative;
+  overflow: hidden;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   flex: 0 0 auto;
-  border-radius: 8px;
-  background: var(--wigo-blue);
-  color: #fff;
+  width: 38px;
+  height: 38px;
+  margin-left: 3px;
+  border-radius: 50%;
+  background-color: var(--wigo-blue);
+  box-shadow: 0 8px 18px rgba(13,83,144,.28);
+  transition: transform .25s ease, box-shadow .25s ease, background-color .25s ease;
+  animation: member-go-pulse 9s ease-in-out infinite;
+}
+
+#nosotros .member__go-btn img {
+  position: relative;
+  z-index: 1;
+  width: 20px;
+  height: 20px;
+  object-fit: contain;
+}
+
+/* Crece, se pone naranja y vuelve a la normalidad — dura ~0.75s dentro del
+   ciclo de 9s compartido con las pastillas, arrancando justo después de que
+   termina el destello de la 3ª pastilla de su misma tarjeta. */
+@keyframes member-go-pulse {
+  0%, 20% { transform: scale(1) translateY(0); background-color: var(--wigo-blue); }
+  24% { transform: scale(1.2) translateY(-4px); background-color: var(--wigo-orange); }
+  28%, 100% { transform: scale(1) translateY(0); background-color: var(--wigo-blue); }
+}
+
+#nosotros .member__go-btn:hover,
+#nosotros .member__go-btn:focus-visible {
+  /* "animation: none" (no solo pausar) para que el hover mande de verdad:
+     una animación en curso gana por encima de transition/estilo base para
+     las mismas propiedades, así que si solo se pausara, el hover podía
+     quedar "atrapado" mostrando el frame en el que iba el pulso automático
+     en vez del estado hover real. */
+  animation: none;
+  transform: translateY(-4px) scale(1.1);
+  box-shadow: 0 14px 28px rgba(13,83,144,.36);
+  background-color: var(--wigo-orange);
+  outline: none;
+}
+
+/* Mismo grupo/tarjeta que sus pastillas vecinas: arranca en el mismo
+   instante que la 1ª pastilla, pero el pulso en sí (20%-28%) queda ubicado
+   más adelante en su propio ciclo, justo después del destello de las 3. */
+#nosotros .team--detailed > .member:nth-child(1) .member__go-btn { animation-delay: 0s; }
+#nosotros .team--detailed > .member:nth-child(2) .member__go-btn { animation-delay: 3s; }
+#nosotros .team--detailed > .member:nth-child(3) .member__go-btn { animation-delay: 6s; }
+
+@media (prefers-reduced-motion: reduce) {
+  #nosotros .member__go-btn { animation: none; }
 }
 
 @media (min-width: 1180px) {
   #nosotros .member--detailed {
     grid-template-columns: 176px minmax(0, 1fr);
-    height: 452px;
-    min-height: 452px;
   }
 
   #nosotros .member__photo--framed {
@@ -1782,8 +2888,6 @@ a { color: inherit; }
 
   #nosotros .member--detailed {
     grid-template-columns: 220px minmax(0, 1fr);
-    height: 390px;
-    min-height: 390px;
   }
 
   #nosotros .member__photo--framed {
@@ -1794,39 +2898,98 @@ a { color: inherit; }
   #nosotros .member__bio {
     font-size: .88rem;
   }
+
+  /* Aquí la tarjeta ya es de una sola columna (foto + texto apilados en ancho completo), sobra
+     espacio horizontal de sobra, así que el nombre vuelve a su tamaño original. */
+  #nosotros .member__info h3 {
+    font-size: 1.42rem;
+    line-height: 1.02;
+    letter-spacing: -.045em;
+  }
+
+  /* En responsive las pastillas de habilidades y el botón "go" pueden ser un
+     poco más grandes que en el escritorio (ahí siguen compactos, ver la
+     regla sin media query más arriba) porque aquí ya no comparten fila con
+     una grilla de 3 columnas angosta. Los tramos de abajo (≤400px, ≤340px)
+     siguen reduciendo un poco más para que las 3 pastillas + el botón "go"
+     sigan entrando siempre en una sola línea en teléfonos angostos. */
+  #nosotros .member__tags { gap: 6px; }
+  #nosotros .member__tags span {
+    min-height: 28px;
+    padding: 5px 9px;
+    font-size: .62rem;
+  }
+  #nosotros .member__go-btn {
+    width: 42px;
+    height: 42px;
+    margin-left: 4px;
+  }
+  #nosotros .member__go-btn img {
+    width: 22px;
+    height: 22px;
+  }
 }
 
 @media (max-width: 768px) {
   #nosotros .member--detailed {
     grid-template-columns: 1fr;
-    height: auto;
-    min-height: 0;
-    padding-bottom: 18px;
   }
 
   #nosotros .member__photo--framed {
     width: min(100%, 300px);
     height: 340px;
     min-height: 340px;
-    margin: 0 auto 16px;
+    margin: 0 auto;
   }
 
   #nosotros .member__info--detailed {
     padding: 0 4px;
   }
 
-  #nosotros .member__tags,
-  #nosotros .member__link {
-    position: static;
-  }
-
-  #nosotros .member__tags {
-    margin-top: 18px;
-    margin-bottom: 14px;
-  }
-
   #nosotros .member__bio {
     font-size: .92rem;
+  }
+}
+
+/* Debajo de ~400px el ancho de la tarjeta (foto apilada, columna única) ya
+   no alcanza para las 3 pastillas + el botón "go" en una sola línea con el
+   tamaño de arriba, así que se reducen un poco más. */
+@media (max-width: 400px) {
+  #nosotros .member__tags { gap: 5px; }
+  #nosotros .member__tags span {
+    min-height: 25px;
+    padding: 4px 6px;
+    font-size: .54rem;
+  }
+  #nosotros .member__go-btn {
+    width: 36px;
+    height: 36px;
+    margin-left: 3px;
+  }
+  #nosotros .member__go-btn img {
+    width: 19px;
+    height: 19px;
+  }
+}
+
+/* Teléfonos muy angostos (≤340px, p. ej. iPhone SE) necesitan un último
+   recorte para que "Ciberseguridad"/"Experiencia de Usuario" + el botón
+   "go" sigan entrando en una sola línea. */
+@media (max-width: 340px) {
+  #nosotros .member__tags { gap: 4px; }
+  #nosotros .member__tags span {
+    min-height: 22px;
+    padding: 3px 5px;
+    font-size: .48rem;
+  }
+  #nosotros .member__go-btn {
+    width: 31px;
+    height: 31px;
+    margin-left: 2px;
+  }
+  #nosotros .member__go-btn img {
+    width: 16px;
+    height: 16px;
   }
 }
 
@@ -1906,4 +3069,185 @@ a { color: inherit; }
   .app-zoom__nav:hover { background: rgba(255,255,255,.42); }
   .app-zoom__nav--prev { left: 8px; }
   .app-zoom__nav--next { right: 8px; }
+}
+
+/* ============================================================================
+   CURSOR PERSONALIZADO — solo escritorio con mouse real
+   ============================================================================
+   Dos formas, según el estado:
+   - Normal / click (sin hover sobre algo interactivo): ícono de marca
+     (assets/sources/cursor.png) aplicado como mask-image (no <img>): el
+     navegador usa el canal alfa del PNG como plantilla y lo "pinta" con
+     background-color, así se recolorea (azul/blanco/naranja) según el
+     fondo sin necesitar un archivo de imagen distinto por color.
+   - Hover sobre un elemento interactivo: el mask se desactiva y aparece el
+     logo "go" (assets/sources/go_header01.png, el mismo que ya usa el sitio
+     en el header) como <img> dentro de una insignia circular; el fondo de
+     esa insignia sigue el mismo sistema de temas/colores.
+   Reemplaza el cursor nativo del sistema. Cambia de color según el fondo
+   bajo el cursor (data-cursor-theme="light|blue|yellow" en el HTML) y da
+   feedback en hover/click. Puramente decorativo: pointer-events:none +
+   aria-hidden en el HTML, no intercepta clics ni interfiere con foco de
+   teclado. Ver js/cursor.js (no necesitó cambios: sigue solo alternando
+   estas mismas clases).
+
+   Posición vs. tamaño van por caminos separados a propósito: la POSICIÓN se
+   mueve con transform:translate3d(x,y,0) actualizado por JS en cada frame,
+   SIN transition en esa propiedad, para que el seguimiento del mouse sea
+   inmediato (sin lag). El TAMAÑO (hover/click) sí se anima con transition
+   normal vía width/height/margin — al no compartir la misma propiedad CSS
+   que la posición, una nunca frena a la otra. */
+
+@media (hover: hover) and (pointer: fine) {
+  /* Oculta el cursor nativo del sistema en todo el sitio. Necesita
+     !important: hay muchas reglas puntuales "cursor: pointer" en botones,
+     links, dots, etc. a lo largo de esta hoja de estilos, con más
+     especificidad que un "*{cursor:none}" suelto, así que sin !important
+     seguirían ganando ellas y el cursor nativo reaparecería sobre esos
+     elementos. */
+  * { cursor: none !important; }
+}
+
+.custom-cursor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden; /* recorta el <img> del logo "go" en círculo durante el hover */
+  width: 24px;
+  height: 32px;
+  margin: -16px 0 0 -12px; /* centra el ícono sobre la coordenada del mouse */
+  border-radius: 0;
+  -webkit-mask-image: url('../assets/sources/cursor.png');
+  mask-image: url('../assets/sources/cursor.png');
+  -webkit-mask-size: contain;
+  mask-size: contain;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  mask-position: center;
+  background-color: var(--wigo-blue);
+  filter: drop-shadow(0 4px 10px rgba(13,43,76,.35));
+  pointer-events: none;
+  z-index: 10000;
+  opacity: 0;
+  transform: translate3d(-9999px, -9999px, 0);
+  transition:
+    width .18s cubic-bezier(.16,1,.3,1),
+    height .18s cubic-bezier(.16,1,.3,1),
+    margin .18s cubic-bezier(.16,1,.3,1),
+    border-radius .18s ease,
+    background-color .15s ease,
+    opacity .2s ease;
+}
+
+/* Logo "go" dentro de la insignia circular de hover. Oculto por defecto
+   (mientras se ve el ícono "i" vía mask-image); solo se hace visible en
+   .is-hovering, ver más abajo. No se recolorea (mask no aplica a un <img>
+   multicolor sin destruir el logo) — el logo mantiene sus colores propios,
+   y lo que cambia según el tema/click es el fondo de la insignia detrás. */
+.custom-cursor__icon {
+  width: 78%;
+  height: 78%;
+  object-fit: contain;
+  opacity: 0;
+  transition: opacity .15s ease;
+}
+
+/* Hover sobre elemento interactivo (a, button, input, textarea, select,
+   [role="button"], regiones del mapa, etc. — ver HOVER_SELECTOR en
+   js/cursor.js): se desactiva el mask (ícono "i") y aparece el logo "go"
+   dentro de una insignia circular. */
+.custom-cursor.is-hovering {
+  -webkit-mask-image: none;
+  mask-image: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  margin: -20px 0 0 -20px;
+}
+.custom-cursor.is-hovering .custom-cursor__icon { opacity: 1; }
+
+/* Click: el ícono "i" se achica un poco para dar sensación de respuesta
+   inmediata. Transición más corta (100-150ms) que el resto de estados. */
+.custom-cursor.is-clicking {
+  width: 19px;
+  height: 25px;
+  margin: -12.5px 0 0 -9.5px;
+  transition: width .12s ease, height .12s ease, margin .12s ease, background-color .12s ease, opacity .2s ease;
+}
+/* Click mientras se hace hover (insignia del "go"): se achica manteniendo
+   la forma circular, sin volver a mostrar el mask del ícono "i". */
+.custom-cursor.is-hovering.is-clicking {
+  width: 32px;
+  height: 32px;
+  margin: -16px 0 0 -16px;
+}
+
+/* Tema según el fondo. "light" es el estado por defecto (no necesita que
+   HTML tenga data-cursor-theme; js/cursor.js cae en "light" cuando no
+   encuentra ningún ancestro con ese atributo). */
+.custom-cursor.on-light { background-color: var(--wigo-blue); }
+.custom-cursor.on-light.is-clicking { background-color: var(--wigo-orange); }
+
+/* "blue": fondo azul Wigo sólido (p.ej. #impacto) — el ícono pasa a blanco. */
+.custom-cursor.on-blue { background-color: #fff; }
+.custom-cursor.on-blue.is-clicking { background-color: var(--wigo-orange); }
+
+/* "yellow": elementos/fondos naranja Wigo (botones "go", CTAs). En click NO
+   se pone naranja (perdería contraste sobre naranja) — se pone blanco. */
+.custom-cursor.on-yellow { background-color: var(--wigo-blue); }
+.custom-cursor.on-yellow.is-clicking { background-color: #fff; }
+
+/* Insignia de hover (logo "go"): el círculo detrás del logo hace CONTRASTE
+   con el elemento/fondo sobre el que está el cursor, en vez de copiar su
+   color:
+   - Sobre "light" (mapa, contacto, la mayoría del sitio) y sobre "blue"
+     (sección #impacto, botones de fondo azul): insignia NARANJA.
+   - Sobre "yellow" (botones/íconos "go" de fondo naranja, como el CTA
+     "Contáctanos" o el badge "Provincias"): insignia AZUL, para no
+     mezclarse con el naranja de abajo.
+   Estos selectores de 3 clases empatan en especificidad con los
+   ".on-light/.on-blue/.on-yellow" de arriba; van al final a propósito para
+   ganarles por orden de aparición. El ícono "i" (fuera de hover) sigue
+   usando el color de tema normal, sin cambios. */
+.custom-cursor.is-hovering.on-light,
+.custom-cursor.is-hovering.on-blue {
+  background-color: var(--wigo-orange);
+}
+.custom-cursor.is-hovering.on-yellow {
+  background-color: var(--wigo-blue);
+}
+
+/* Excepción "sin insignia": para elementos que ya son logos/íconos
+   circulares propios (p.ej. los logos de fuente CAPECE/Gestión/INEI en
+   #impacto, ver [data-cursor-nobadge] en el HTML), un círculo de color
+   detrás del cursor se ve como "otro círculo encima" y se ve recargado.
+   Se quita el fondo de la insignia y queda solo el logo "go" (blanco,
+   sin fondo propio) flotando. Va DESPUÉS de los ".is-hovering.on-*" de
+   arriba para ganarles por orden, y ANTES del flash de click de abajo
+   para que un click encima siga mostrando el flash blanco normalmente. */
+.custom-cursor.is-hovering.no-badge {
+  background-color: transparent;
+}
+
+/* Click mientras hay hover: flash blanco para dar feedback de "presionado",
+   se ve bien tanto sobre la insignia naranja como la azul (y también
+   encima de la excepción "sin insignia" de arriba, por ir después). */
+.custom-cursor.is-hovering.is-clicking {
+  background-color: #fff;
+}
+
+/* Móvil / táctil: nunca mostrar el cursor personalizado ni ocultar el
+   nativo (el cursor:none de arriba ya está scopeado a hover:hover +
+   pointer:fine, así que en touch ni siquiera aplica). No se toca ninguna
+   interacción táctil existente. */
+@media (hover: none), (pointer: coarse) {
+  .custom-cursor { display: none !important; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .custom-cursor { transition: none; }
 }
